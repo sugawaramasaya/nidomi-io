@@ -3,6 +3,101 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #1A89FF;
+  --on-primary: #FFFFFF;
+  --primary-container: #59AAFF;
+  --on-primary-container: #FFFFFF;
+  --secondary: #DEDEDE;
+  --on-secondary: #262626;
+  --secondary-container: #9D9D9D;
+  --on-secondary-container: #313131;
+  --tertiary: #BADCFF;
+  --on-tertiary: #1A89FF;
+  --tertiary-container: #EAF4FF;
+  --on-tertiary-container: #1A89FF;
+  --error: #FF5151;
+  --on-error: #FFFFFF;
+  --error-container: #FF8282;
+  --on-error-container: #FFFFFF;
+  --outline: #FFFFFFD9;
+  --outline-variant: #FFFFFF26;
+  --background-token: #FFFFFF0D;
+  --on-background: #DEDEDE;
+  --surface: #262626;
+  --surface-dim: #313131;
+  --on-surface: #DEDEDE;
+  --surface-variant: #FFFFFF0D;
+  --on-surface-variant: #9D9D9D;
+  --inverse-surface: #DEDEDE;
+  --inverse-on-surface: #262626;
+  --inverse-surface-variant: #0000000D;
+  --inverse-on-surface-variant: #737373;
+  --shadow: #000000;
+  --scrim: #FFFFFF1A;
+  --surface-tint: #3C3C3C;
+  --inverse-primary: #FFFFFF;
+  --inverse-on-primary: #1A89FF;
+  --inverse-primary-container: #FFFFFF;
+  --inverse-on-primary-container: #59AAFF;
+  --inverse-secondary: #262626;
+  --inverse-on-secondary: #DEDEDE;
+  --inverse-secondary-container: #313131;
+  --inverse-on-secondary-container: #BEBEBE;
+  --inverse-tertiary: #1A89FF;
+  --inverse-on-tertiary: #BADCFF;
+  --inverse-tertiary-container: #1A89FF;
+  --inverse-on-tertiary-container: #EAF4FF;
+  --inverse-error: #FFFFFF;
+  --inverse-on-error: #FF5151;
+  --inverse-error-container: #FFFFFF;
+  --inverse-on-error-container: #FF8282;
+
+  /* Spacing Tokens */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-44: 44px;
+  --space-48: 48px;
+  --space-52: 52px;
+  --space-56: 56px;
+  --space-60: 60px;
+  --space-64: 64px;
+  --space-72: 72px;
+  --space-76: 76px;
+  --space-80: 80px;
+  --space-84: 84px;
+
+  /* Radius Tokens */
+  --radius-12: 12px;
+  --radius-24: 24px;
+  --radius-full: 999px;
+
+  /* Typography Tokens */
+  --font-family-base: 'Noto Sans JP', sans-serif;
+
+  /* Large */
+  --font-size-large: 21px;
+  --line-height-large: 28px;
+  --font-weight-large-bold: 700;
+  --font-weight-large-regular: 400;
+
+  /* Medium */
+  --font-size-medium: 18px;
+  --line-height-medium: 24px;
+  --font-weight-medium-bold: 700;
+  --font-weight-medium-regular: 400;
+
+  /* Small */
+  --font-size-small: 12px;
+  --line-height-small: 16px;
+  --font-weight-small-bold: 700;
+  --font-weight-small-regular: 400;
 }
 
 @theme inline {
