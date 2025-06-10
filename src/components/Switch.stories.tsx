@@ -1,0 +1,27 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import Switch from "./Switch";
+
+const meta: Meta<typeof Switch> = {
+  component: Switch,
+  title: "Components/Switch",
+  tags: ["autodocs"],
+};
+export default meta;
+type Story = StoryObj<typeof Switch>;
+
+export const Default: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return <Switch {...args} checked={checked} onChange={setChecked} />;
+  },
+  args: { label: "スイッチ" },
+};
+
+export const Disabled: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return <Switch {...args} checked={checked} onChange={setChecked} disabled />;
+  },
+  args: { label: "無効状態" },
+};
