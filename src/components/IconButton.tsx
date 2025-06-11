@@ -2,7 +2,7 @@ import React from "react";
 
 type IconButtonProps = {
   icon: React.ReactNode;
-  variant?: "filled" | "inverse";
+  variant?: "filled" | "inverse" | "fab";
   disabled?: boolean;
   size?: number; // px, default 40
   className?: string;
@@ -20,9 +20,19 @@ const IconButton: React.FC<IconButtonProps> = ({
   onClick,
 }) => {
   // Figmaトークンに基づく色分岐
-  const bgColor = variant === "inverse" ? "var(--inverse-surface)" : "var(--surface)";
+  const bgColor =
+    variant === "inverse"
+      ? "var(--inverse-surface)"
+      : variant === "fab"
+      ? "var(--surface-tint)"
+      : "var(--surface)";
   // Filled: アイコン色はon-surface, Inverse: inverse-on-surface
-  const iconColor = variant === "inverse" ? "var(--inverse-on-surface)" : "var(--on-surface)";
+  const iconColor =
+    variant === "inverse"
+      ? "var(--inverse-on-surface)"
+      : variant === "fab"
+      ? "var(--on-surface)"
+      : "var(--on-surface)";
 
   return (
     <button
