@@ -18,8 +18,8 @@ const Button: React.FC<ButtonProps> = ({
   children,
   disabled = false,
   fullWidth = false,
-  leftIcon,
-  rightIcon,
+  // leftIcon,
+  // rightIcon,
   className = "",
   type = "button",
   onClick,
@@ -29,19 +29,34 @@ const Button: React.FC<ButtonProps> = ({
       className={[
         "inline-block",
         fullWidth ? "w-full" : "",
-        "h-[var(--space-40)]",
+        "min-h-[40px] min-w-[40px]",
         "rounded-[var(--radius-full)]",
         "relative"
       ].join(" ")}
-      style={{ position: "relative" }}
+      style={{ position: "relative", width: fullWidth ? "100%" : undefined }}
     >
-      {/* 背景レイヤー（常にsurface、disabled時のみopacity10%） */}
+      {/* surface下地 */}
       <span
-        className={[
-          "absolute left-0 top-0 w-full h-full rounded-[var(--radius-full)]",
-          "bg-[var(--surface)]",
-          disabled ? "opacity-10" : "opacity-0"
-        ].join(" ")}
+        className="absolute left-0 top-0 w-full h-full rounded-[var(--radius-full)]"
+        style={{
+          background: "var(--surface)",
+          borderRadius: "var(--radius-full)",
+          inset: 0,
+          zIndex: 0
+        }}
+        aria-hidden="true"
+      />
+      {/* primaryレイヤー */}
+      <span
+        className="absolute left-0 top-0 w-full h-full rounded-[var(--radius-full)]"
+        style={{
+          background: "var(--primary)",
+          borderRadius: "var(--radius-full)",
+          inset: 0,
+          zIndex: 1,
+          opacity: disabled ? 0.1 : 1,
+          pointerEvents: "none"
+        }}
         aria-hidden="true"
       />
       {/* ボタン本体 */}
@@ -50,36 +65,49 @@ const Button: React.FC<ButtonProps> = ({
         className={[
           "relative z-10",
           "inline-flex items-center justify-center",
-          "h-full w-full min-w-[40px]",
-          "rounded-[var(--radius-full)]",
-          "bg-[var(--inverse-surface)]",
-          "px-[var(--space-16)]",
-          fullWidth ? "w-full" : "",
-          disabled ? "cursor-not-allowed" : "hover:bg-[var(--inverse-surface)]",
           "select-none transition-colors duration-150",
-          "border border-transparent",
-          "focus:outline-none focus:ring-2 focus:ring-[var(--primary)]",
+          "border-none outline-none",
+          "rounded-[var(--radius-full)]",
+          "text-[var(--on-primary)]",
+          "font-[var(--font-weight-medium-bold)]",
+          "font-[var(--font-family-base)]",
+          "text-[var(--font-size-medium)]",
+          "leading-[var(--line-height-medium)]",
+          "min-h-[40px] min-w-[40px]",
+          fullWidth ? "w-full" : "",
+          disabled ? "cursor-not-allowed" : "",
           className
         ].join(" ")}
+        style={{
+          borderRadius: "var(--radius-full)",
+          background: "transparent",
+          color: "var(--on-primary)",
+          fontFamily: "var(--font-family-base)",
+          fontWeight: 700,
+          fontSize: "var(--font-size-medium)",
+          lineHeight: "var(--line-height-medium)",
+          minHeight: 40,
+          minWidth: 40,
+          width: fullWidth ? "100%" : undefined,
+          padding: "var(--space-8) var(--space-16)",
+          cursor: disabled ? "not-allowed" : "pointer",
+          transition: "opacity 0.15s"
+        }}
         disabled={disabled}
         onClick={onClick}
-        style={{}}
       >
-        <span className="flex items-center w-full justify-center px-[var(--space-8)]">
-          {leftIcon && <span className="mr-2">{leftIcon}</span>}
-          <span
-            className={[
-              "font-[var(--font-weight-medium-bold)]",
-              "font-[var(--font-family-base)]",
-              "text-[var(--font-size-medium)]",
-              "leading-[var(--line-height-medium)]",
-              "text-[var(--inverse-on-surface)]",
-              "whitespace-nowrap"
-            ].join(" ")}
-          >
-            {children}
-          </span>
-          {rightIcon && <span className="ml-2">{rightIcon}</span>}
+        <span
+          style={{
+            display: "inline-block",
+            paddingLeft: "var(--space-8)",
+            paddingRight: "var(--space-8)",
+            width: "100%",
+            boxSizing: "border-box",
+            textAlign: "center",
+            lineHeight: "40px",
+          }}
+        >
+          {children}
         </span>
       </button>
     </span>
