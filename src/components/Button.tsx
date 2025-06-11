@@ -2,28 +2,27 @@ import React from "react";
 
 type ButtonProps = {
   children?: React.ReactNode;
-  variant?: "filled" | "text" | "icon";
-  size?: "medium" | "small";
+  variant?: "primary" | "secondary"; // ← ここでvariantをprimary/secondaryに
   disabled?: boolean;
   fullWidth?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-
 const Button: React.FC<ButtonProps> = ({
   children,
+  variant = "primary", // ← デフォルトはprimary
   disabled = false,
   fullWidth = false,
-  // leftIcon,
-  // rightIcon,
   className = "",
   type = "button",
   onClick,
 }) => {
+  // カラートークンをvariantで分岐
+  const mainColor = variant === "secondary" ? "var(--secondary)" : "var(--primary)";
+  const onMainColor = variant === "secondary" ? "var(--on-secondary)" : "var(--on-primary)";
+
   return (
     <span
       className={[
@@ -46,11 +45,11 @@ const Button: React.FC<ButtonProps> = ({
         }}
         aria-hidden="true"
       />
-      {/* primaryレイヤー */}
+      {/* mainColorレイヤー */}
       <span
         className="absolute left-0 top-0 w-full h-full rounded-[var(--radius-full)]"
         style={{
-          background: "var(--primary)",
+          background: mainColor,
           borderRadius: "var(--radius-full)",
           inset: 0,
           zIndex: 1,
@@ -68,7 +67,6 @@ const Button: React.FC<ButtonProps> = ({
           "select-none transition-colors duration-150",
           "border-none outline-none",
           "rounded-[var(--radius-full)]",
-          "text-[var(--on-primary)]",
           "font-[var(--font-weight-medium-bold)]",
           "font-[var(--font-family-base)]",
           "text-[var(--font-size-medium)]",
@@ -81,7 +79,7 @@ const Button: React.FC<ButtonProps> = ({
         style={{
           borderRadius: "var(--radius-full)",
           background: "transparent",
-          color: "var(--on-primary)",
+          color: onMainColor,
           fontFamily: "var(--font-family-base)",
           fontWeight: 700,
           fontSize: "var(--font-size-medium)",
@@ -105,6 +103,8 @@ const Button: React.FC<ButtonProps> = ({
             boxSizing: "border-box",
             textAlign: "center",
             lineHeight: "40px",
+            opacity: disabled ? 0.1 : 1,
+            transition: "opacity 0.15s"
           }}
         >
           {children}
