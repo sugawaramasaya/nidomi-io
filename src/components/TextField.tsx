@@ -31,13 +31,13 @@ const TextField: React.FC<TextFieldProps> = ({
 
   // スタイル分岐
   const base =
-    "w-full px-4 py-3 text-[16px] rounded-[8px] outline-none transition-colors duration-150";
+    "w-full px-4 py-3 text-[16px] rounded-[8px] outline-none transition-colors duration-150 font-['Noto_Sans_JP','sans-serif']";
   const filled =
-    "bg-[var(--surface-variant)] border border-transparent focus:bg-[var(--surface)]";
+    "bg-[#f2f2f2] border border-transparent focus:bg-white";
   const outlined =
-    "bg-transparent border border-[var(--outline-variant)] focus:border-[var(--primary)]";
+    "bg-white border border-[#E0E0E0] focus:border-[#0057FF]";
   const errorStyle =
-    "border-[var(--error)] focus:border-[var(--error)] bg-[var(--error-container)]";
+    "border-[#D32F2F] focus:border-[#D32F2F] bg-[#FFEBEE]";
   const disabledStyle = "opacity-50 cursor-not-allowed";
 
   const inputClass =
@@ -52,7 +52,7 @@ const TextField: React.FC<TextFieldProps> = ({
       {label && (
         <label
           htmlFor={inputId}
-          className="text-[var(--on-surface-variant)] text-[14px] font-medium mb-1"
+          className="text-[#737373] text-[14px] font-medium mb-1"
         >
           {label}
         </label>
@@ -72,7 +72,7 @@ const TextField: React.FC<TextFieldProps> = ({
         <span
           id={`${inputId}-helper`}
           className={`text-xs mt-1 ${
-            error ? "text-[var(--error)]" : "text-[var(--on-surface-variant)]"
+            error ? "text-[#D32F2F]" : "text-[#737373]"
           }`}
         >
           {helperText}

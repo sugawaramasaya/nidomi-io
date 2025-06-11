@@ -30,7 +30,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         checked={checked}
         disabled={disabled}
         onChange={e => onChange(e.target.checked)}
-        className="peer appearance-none w-5 h-5 rounded-[4px] border border-solid border-[var(--outline-variant)] bg-[var(--surface)] checked:bg-[var(--primary)] checked:border-[var(--primary)] transition-colors duration-150 outline-none focus:ring-2 focus:ring-[var(--primary)]"
+        className="peer appearance-none w-5 h-5 rounded-[4px] border border-solid border-[#E0E0E0] bg-white checked:bg-[#0057FF] checked:border-[#0057FF] transition-colors duration-150 outline-none focus:ring-2 focus:ring-[#0057FF]"
         style={{
           minWidth: 20,
           minHeight: 20,
@@ -46,7 +46,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
               d="M4 8.5L7 11.5L12 5.5"
-              stroke="var(--on-primary)"
+              stroke="#fff"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

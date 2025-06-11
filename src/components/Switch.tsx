@@ -24,33 +24,36 @@ const Switch: React.FC<SwitchProps> = ({
       htmlFor={switchId}
       className={`inline-flex items-center gap-2 cursor-pointer select-none ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
     >
-      <span className="relative inline-block w-10 h-6">
+      <span className="relative inline-block w-10 h-6" style={{ width: 40, height: 24 }}>
         <input
           id={switchId}
           type="checkbox"
           checked={checked}
           disabled={disabled}
           onChange={e => onChange(e.target.checked)}
-          className="peer opacity-0 w-10 h-6 absolute left-0 top-0 m-0 cursor-pointer"
+          className="peer opacity-0 absolute left-0 top-0 m-0 cursor-pointer"
+          style={{ width: 40, height: 24 }}
         />
         {/* トラック */}
         <span
           className={`
-            absolute left-0 top-0 w-10 h-6 rounded-full transition-colors duration-150
-            ${checked ? "bg-[var(--primary)]" : "bg-[var(--outline-variant)]"}
+            absolute left-0 top-0 rounded-full transition-colors duration-150
+            ${checked ? "bg-[#0057FF]" : "bg-[#E0E0E0]"}
           `}
+          style={{ width: 40, height: 24, borderRadius: 999 }}
         />
         {/* サム */}
         <span
           className={`
-            absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-150
+            absolute top-1 left-1 transition-transform duration-150
             ${checked ? "translate-x-4" : ""}
           `}
           style={{
-            background: checked
-              ? "var(--on-primary)"
-              : "var(--surface)",
-            boxShadow: "0 1px 4px 0 var(--shadow)",
+            width: 16,
+            height: 16,
+            borderRadius: 999,
+            background: "#fff",
+            boxShadow: "0 1px 4px 0 rgba(0,0,0,0.08)",
           }}
         />
       </span>
