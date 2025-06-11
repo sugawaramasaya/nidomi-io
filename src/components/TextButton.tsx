@@ -43,15 +43,11 @@ const TextButton: React.FC<TextButtonProps> = ({
         className
       ].join(" ")}
       style={{
-        color: labelColor,
-        fontFamily: "var(--font-family-base)",
-        fontWeight: 700,
-        fontSize,
-        lineHeight,
-        minHeight: 40,
-        minWidth: 40,
         width: fullWidth ? "100%" : undefined,
-        padding: "0 var(--space-8)",
+        height: 56,
+        padding: "var(--space-8) var(--space-16)",
+        borderRadius: "var(--radius-full)",
+        background: "transparent",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.1 : 1,
         transition: "opacity 0.15s"
@@ -61,11 +57,16 @@ const TextButton: React.FC<TextButtonProps> = ({
     >
       <span
         style={{
-          display: "inline-block",
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
           width: "100%",
-          boxSizing: "border-box",
-          textAlign: "center",
-          lineHeight,
+          height: 40,
+          color: labelColor,
+        fontFamily: "var(--font-family-base)",
+        fontWeight: 700,
+        fontSize,
+        lineHeight,
           opacity: 1,
           transition: "opacity 0.15s"
         }}

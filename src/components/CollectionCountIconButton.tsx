@@ -1,9 +1,9 @@
 import React from "react";
-import HeartFilledIcon from '../icons/size40/heart-filled.svg';
-import HeartOutlinedIcon from '../icons/size40/heart-outlined.svg';
+import AddCollectionFilledIcon from '../icons/size40/add-collection-filled.svg';
+import AddCollectionOutlinedIcon from '../icons/size40/add-collection-outlined.svg';
 import BaseCountIconButton from "./BaseCountIconButton";
 
-type CountIconButtonProps = {
+type CollectionCountIconButtonProps = {
   checked: boolean;
   count: number;
   disabled?: boolean;
@@ -12,7 +12,7 @@ type CountIconButtonProps = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const CountIconButton: React.FC<CountIconButtonProps> = ({
+const CollectionCountIconButton: React.FC<CollectionCountIconButtonProps> = ({
   checked,
   count,
   disabled = false,
@@ -30,13 +30,13 @@ const CountIconButton: React.FC<CountIconButtonProps> = ({
       onClick={onClick}
       renderIcon={(checked, size, color) =>
         checked ? (
-          <HeartFilledIcon style={{ color, width: size, height: size }} />
+          <AddCollectionFilledIcon style={{ color, width: size, height: size }} />
         ) : (
-          <HeartOutlinedIcon style={{ color, width: size, height: size }} />
+          <AddCollectionOutlinedIcon style={{ color, width: size, height: size }} />
         )
       }
     />
   );
 };
 
-export default CountIconButton;
+export default CollectionCountIconButton;
