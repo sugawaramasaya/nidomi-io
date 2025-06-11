@@ -1,68 +1,58 @@
 import React from "react";
+import CircleIcon from "../icons/size40/circle.svg";
+import CircleCheckFilledIcon from "../icons/size40/circle-check-filled.svg";
 
-type CheckboxProps = {
+export type Checkbox = {
   checked: boolean;
-  onChange: (checked: boolean) => void;
-  label?: string;
+  onChange?: (checked: boolean) => void;
   disabled?: boolean;
   className?: string;
-  id?: string;
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox: React.FC<Checkbox> = ({
   checked,
   onChange,
-  label,
   disabled = false,
   className = "",
-  id,
 }) => {
-  const checkboxId = id || `checkbox-${Math.random().toString(36).slice(2, 9)}`;
-
   return (
-    <label
-      htmlFor={checkboxId}
-      className={`inline-flex items-center gap-2 cursor-pointer select-none ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
+    <button
+      type="button"
+      className={[
+        "inline-flex items-center justify-center",
+        "border-none outline-none bg-transparent",
+        "select-none transition-opacity duration-150",
+        disabled ? "cursor-not-allowed" : "cursor-pointer",
+        className
+      ].join(" ")}
+      style={{
+        width: 56,
+        height: 56,
+        padding: 8,
+        background: "transparent",
+        opacity: disabled ? 0.1 : 1,
+        transition: "opacity 0.15s"
+      }}
+      onClick={() => !disabled && onChange?.(!checked)}
+      disabled={disabled}
+      aria-checked={checked}
+      role="checkbox"
+      tabIndex={0}
     >
-      <input
-        id={checkboxId}
-        type="checkbox"
-        checked={checked}
-        disabled={disabled}
-        onChange={e => onChange(e.target.checked)}
-        className="peer appearance-none w-5 h-5 rounded-[4px] border border-solid border-[#E0E0E0] bg-white checked:bg-[#0057FF] checked:border-[#0057FF] transition-colors duration-150 outline-none focus:ring-2 focus:ring-[#0057FF]"
-        style={{
-          minWidth: 20,
-          minHeight: 20,
-        }}
-      />
-      {/* チェックマーク */}
-      <span
-        className="pointer-events-none absolute w-5 h-5 flex items-center justify-center"
-        style={{ marginLeft: -24 }}
-        aria-hidden="true"
-      >
-        {checked && (
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path
-              d="M4 8.5L7 11.5L12 5.5"
-              stroke="#fff"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        )}
-      </span>
-      {label && (
-        <span
-          className="text-[var(--on-surface)] text-[16px] font-normal"
-          style={{ marginLeft: 8 }}
-        >
-          {label}
-        </span>
+      {checked ? (
+        <CircleCheckFilledIcon
+          width={40}
+          height={40}
+          style={{ color: "var(--surface)", mixBlendMode: "multiply" }}
+        />
+      ) : (
+        <CircleIcon
+          width={40}
+          height={40}
+          style={{ color: "var(--surface)", mixBlendMode: "multiply" }}
+        />
       )}
-    </label>
+    </button>
   );
 };
 

@@ -15,7 +15,6 @@ export const Default: Story = {
     const [checked, setChecked] = useState(false);
     return <Switch {...args} checked={checked} onChange={setChecked} />;
   },
-  args: { label: "スイッチ" },
 };
 
 export const Disabled: Story = {
@@ -23,5 +22,4 @@ export const Disabled: Story = {
     const [checked, setChecked] = useState(false);
     return <Switch {...args} checked={checked} onChange={setChecked} disabled />;
   },
-  args: { label: "無効状態" },
 };
