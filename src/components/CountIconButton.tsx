@@ -1,17 +1,21 @@
 import React from "react";
 
-type IconButtonProps = {
+// variant: filled/inverse, size: 40px固定, count: number, icon: React.ReactNode
+// Figma: https://www.figma.com/design/pjwYh0evbCR17YmoGEy8VH/nidomi.io?node-id=3479-4131&t=PPYIONa8QKfaexzu-1
+
+type CountIconButtonProps = {
   icon: React.ReactNode;
-  variant?: "filled" | "inverse" | "fab";
+  count: number;
+  variant?: "filled" | "inverse";
   disabled?: boolean;
-  size?: number; // px, default 40
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const IconButton: React.FC<IconButtonProps> = ({
+const CountIconButton: React.FC<CountIconButtonProps> = ({
   icon,
+  count,
   variant = "filled",
   disabled = false,
   size = 40,
@@ -20,19 +24,11 @@ const IconButton: React.FC<IconButtonProps> = ({
   onClick,
 }) => {
   // Figmaトークンに基づく色分岐
-  const bgColor =
-    variant === "inverse"
-      ? "var(--inverse-surface)"
-      : variant === "fab"
-      ? "var(--surface-tint)"
-      : "var(--surface)";
-  // Filled: アイコン色はon-surface, Inverse: inverse-on-surface
   const iconColor =
     variant === "inverse"
       ? "var(--inverse-on-surface)"
-      : variant === "fab"
-      ? "var(--on-surface)"
       : "var(--on-surface)";
+  const countColor = iconColor;
 
   return (
     <button
@@ -46,11 +42,10 @@ const IconButton: React.FC<IconButtonProps> = ({
         className
       ].join(" ")}
       style={{
-        width: "unset",
         height: "unset",
+        minWidth: "unset",
         padding: "var(--space-8)",
         borderRadius: "var(--radius-full)",
-        background: bgColor,
         color: iconColor,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.1 : 1,
@@ -58,15 +53,28 @@ const IconButton: React.FC<IconButtonProps> = ({
       }}
       disabled={disabled}
       onClick={onClick}
-      aria-label="icon button"
+      aria-label="icon count button"
     >
       <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: size, height: size }}>
         {React.isValidElement(icon)
           ? React.cloneElement(icon, { style: { color: iconColor, width: size, height: size, ...icon.props.style } })
           : icon}
       </span>
+      <span
+        style={{
+          color: countColor,
+          padding: "0 var(--space-8)",
+          fontFamily: "var(--font-family-base)",
+          fontWeight: 700,
+          fontSize: "var(--font-size-large)",
+          lineHeight: "var(--line-height-large)",
+          userSelect: "none"
+        }}
+      >
+        {count}
+      </span>
     </button>
   );
 };
 
-export default IconButton;
+export default CountIconButton;
