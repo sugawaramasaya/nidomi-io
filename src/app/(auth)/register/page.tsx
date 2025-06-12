@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import Image from "next/image";
+import logo from "@/assets/logo.svg";
+import nidomy from "@/assets/nidomy/nidomy.png";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -30,99 +32,154 @@ export default function RegisterPage() {
     }
     setError(null);
     setLoading(true);
-    // ここでAPIリクエストを実装
     setTimeout(() => {
       setLoading(false);
-      // 成功時の処理
     }, 1000);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)]">
-      <div className="w-full max-w-[480px] flex flex-col items-center px-4 pt-[60px] pb-8">
-        {/* ロゴ */}
-        <Image
-          src="/nidomy/nidomy.png"
-          alt="nidomi logo"
-          width={64}
-          height={64}
-          className="mb-8"
-          priority
-        />
-        {/* タイトル */}
-        <h1 className="text-[28px] leading-[36px] font-bold text-[var(--on-surface)] mb-4">
-          新規登録
-        </h1>
-        {/* 説明文 */}
-        <p className="text-[16px] leading-[24px] text-[var(--on-surface-variant)] font-medium mb-8 text-center w-full">
-          メールアドレスとパスワードでアカウントを作成します。
-        </p>
-        <form className="w-full" onSubmit={handleSubmit}>
-          {/* メールアドレス */}
-          <div className="w-full mb-4">
-            <TextField
-              label="メールアドレス"
-              value={email}
-              onChange={setEmail}
-              placeholder="example@email.com"
-              type="email"
-              error={!!error && error.includes("メールアドレス")}
-              errorMessage={
-                error && error.includes("メールアドレス") ? error : undefined
-              }
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface font-['Noto_Sans_JP']">
+      <div className="w-[390px] mx-auto flex flex-col items-center px-0 pt-0 pb-0 relative">
+        {/* ロゴまわり */}
+        <div className="flex flex-col justify-center items-center w-full p-[24px]">
+          <div className="flex justify-center items-center w-[300px] h-[54px]">
+            <Image
+              src={logo}
+              alt="nidomi logo"
+              width={300}
+              height={54}
+              priority
+              style={{ objectFit: "contain" }}
             />
           </div>
-          {/* パスワード */}
-          <div className="w-full mb-4">
-            <TextField
-              label="パスワード"
-              value={password}
-              onChange={setPassword}
-              type="password"
-              variant="password"
-              autoComplete="new-password"
-              error={
-                !!error &&
-                error.includes("パスワード") &&
-                !error.includes("一致")
-              }
-              errorMessage={
-                error && error.includes("パスワード") && !error.includes("一致")
-                  ? error
-                  : undefined
-              }
-            />
-          </div>
-          {/* パスワード確認 */}
-          <div className="w-full mb-8">
-            <TextField
-              label="パスワード（確認）"
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-              type="password"
-              variant="password"
-              autoComplete="new-password"
-              error={!!error && error.includes("一致")}
-              errorMessage={error && error.includes("一致") ? error : undefined}
-            />
-          </div>
-          {/* 登録ボタン */}
-          <Button fullWidth className="mb-4" type="submit" disabled={loading}>
-            {loading ? "登録中..." : "登録"}
-          </Button>
-        </form>
-        {/* Googleで登録ボタン */}
-        <Button fullWidth variant="secondary" className="mb-8">
-          Googleで登録
-        </Button>
-        {/* ログイン画面へのリンク */}
-        <div className="w-full flex justify-center">
-          <a
-            href="/login"
-            className="text-[var(--primary)] text-[16px] font-bold underline underline-offset-4"
+        </div>
+        {/* グラフィック画像まわり */}
+        <div className="flex justify-center items-center w-full h-[418px] flex-shrink-0 self-stretch">
+          <div
+            className="flex justify-center items-center"
+            style={{ width: 256, height: 256 }}
           >
-            ログインはこちら
-          </a>
+            <Image
+              src={nidomy}
+              alt="nidomy graphic"
+              width={256}
+              height={256}
+              priority
+              style={{ aspectRatio: "1/1" }}
+            />
+          </div>
+        </div>
+        {/* メインフォーム領域 */}
+        <div className="flex flex-col items-start gap-[12px] w-full self-stretch">
+          {/* Googleで登録ボタンを囲うコンテナ */}
+          <div className="flex flex-col items-start w-full self-stretch px-[16px]">
+            <Button
+              fullWidth
+              className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-primary text-onPrimary mb-0"
+              variant="primary"
+            >
+              Googleで登録
+            </Button>
+          </div>
+          {/* Googleボタンとまたは・メール登録ボタン間 */}
+          <div className="flex flex-col items-start w-full self-stretch gap-[12px]">
+            {/* または */}
+            <div className="flex flex-col items-center w-full self-stretch px-[24px]">
+              <div className="w-full text-center text-onSurfaceVariant text-base font-bold font-['Noto_Sans_JP']">
+                または
+              </div>
+            </div>
+            {/* メールアドレス登録フォームと注釈を囲うコンテナ */}
+            <div className="flex flex-col items-start w-full self-stretch gap-[12px] px-[16px]">
+              <form
+                className="flex flex-col gap-3 w-full"
+                onSubmit={handleSubmit}
+              >
+                <TextField
+                  label="メールアドレス"
+                  value={email}
+                  onChange={setEmail}
+                  placeholder="example@email.com"
+                  type="email"
+                  error={!!error && error.includes("メールアドレス")}
+                  errorMessage={
+                    error && error.includes("メールアドレス")
+                      ? error
+                      : undefined
+                  }
+                />
+                <TextField
+                  label="パスワード"
+                  value={password}
+                  onChange={setPassword}
+                  type="password"
+                  variant="password"
+                  autoComplete="new-password"
+                  error={
+                    !!error &&
+                    error.includes("パスワード") &&
+                    !error.includes("一致")
+                  }
+                  errorMessage={
+                    error &&
+                    error.includes("パスワード") &&
+                    !error.includes("一致")
+                      ? error
+                      : undefined
+                  }
+                />
+                <TextField
+                  label="パスワード（確認）"
+                  value={confirmPassword}
+                  onChange={setConfirmPassword}
+                  type="password"
+                  variant="password"
+                  autoComplete="new-password"
+                  error={!!error && error.includes("一致")}
+                  errorMessage={
+                    error && error.includes("一致") ? error : undefined
+                  }
+                />
+                <Button
+                  fullWidth
+                  className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-primary text-onPrimary"
+                  type="submit"
+                  disabled={loading}
+                  variant="primary"
+                >
+                  {loading ? "登録中..." : "メールアドレスで登録"}
+                </Button>
+                {/* 注釈を囲うコンテナ */}
+                <div className="flex justify-center items-center w-full self-stretch px-[24px]">
+                  <div className="w-full text-center text-[12px] leading-[18px] font-bold font-['Noto_Sans_JP'] text-onSurfaceVariant">
+                    <span>続行することで、</span>
+                    <a href="#" className="text-blue-70 underline">
+                      利用規約
+                    </a>
+                    <span>と</span>
+                    <a href="#" className="text-blue-70 underline">
+                      プライバシーポリシー
+                    </a>
+                    <span>（</span>
+                    <a href="#" className="text-blue-70 underline">
+                      Cookieの使用
+                    </a>
+                    <span>を含む）に同意したとみなされます。</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          {/* ログインボタンを囲うコンテナ */}
+          <div className="flex flex-col items-start w-full self-stretch px-[16px] pb-[40px]">
+            <Button
+              fullWidth
+              className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-secondary text-onSecondary"
+              variant="secondary"
+            >
+              ログイン
+            </Button>
+          </div>
         </div>
       </div>
     </div>

@@ -7,12 +7,23 @@ const nextConfig = {
       issuer: /\.[jt]sx?$/,
       use: [
         {
-          loader: "@svgr/webpack",
+          loader: require.resolve("@svgr/webpack"),
           options: {
-            icon: true,
+            svgo: true,
+            svgoConfig: {
+              plugins: [
+                {
+                  name: "removeViewBox",
+                  active: false,
+                },
+              ],
+            },
+            titleProp: true,
+            ref: true,
           },
         },
       ],
+      type: "javascript/auto",
     });
     return config;
   },

@@ -1,40 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #DEDEDE;
+  --background: #262626;
+  --foreground: #dedede;
+  --primary: #dedede;
   --on-primary: #262626;
   --secondary: #313131;
-  --on-secondary: #DEDEDE;
-  --error: #FF5151;
-  --on-error: #FFFFFF;
-  --error-container: #FF8282;
-  --on-error-container: #FFFFFF;
-  --outline: #FFFFFFD9;
-  --outline-variant: #FFFFFF26;
-  --background: #FFFFFF0D;
-  --on-background: #DEDEDE;
+  --on-secondary: #dedede;
+  --error: #ff5151;
+  --on-error: #ffffff;
+  --error-container: #ff8282;
+  --on-error-container: #ffffff;
+  --outline: #ffffffd9;
+  --outline-variant: #ffffff26;
+  --background: #ffffff0d;
+  --on-background: #dedede;
   --surface: #262626;
   --surface-dim: #313131;
-  --on-surface: #DEDEDE;
-  --surface-variant: #FFFFFF0D;
-  --on-surface-variant: #9D9D9D;
-  --inverse-surface: #DEDEDE;
+  --on-surface: #dedede;
+  --surface-variant: #ffffff0d;
+  --on-surface-variant: #9d9d9d;
+  --inverse-surface: #dedede;
   --inverse-on-surface: #262626;
-  --inverse-surface-variant: #0000000D;
+  --inverse-surface-variant: #0000000d;
   --inverse-on-surface-variant: #737373;
   --shadow: #000000;
-  --scrim: #FFFFFF1A;
-  --surface-tint: #3C3C3C;
+  --scrim: #ffffff1a;
+  --surface-tint: #3c3c3c;
   --inverse-primary: #262626;
-  --inverse-on-primary: #DEDEDE;
-  --inverse-secondary: #DEDEDE;
+  --inverse-on-primary: #dedede;
+  --inverse-secondary: #dedede;
   --inverse-on-secondary: #313131;
-  --inverse-error: #FFFFFF;
-  --inverse-on-error: #FF5151;
-  --inverse-error-container: #FFFFFF;
-  --inverse-on-error-container: #FF8282;
+  --inverse-error: #ffffff;
+  --inverse-on-error: #ff5151;
+  --inverse-error-container: #ffffff;
+  --inverse-on-error-container: #ff8282;
 
   /* Spacing Tokens */
   --space-4: 4px;
@@ -63,7 +63,7 @@
   --radius-full: 999px;
 
   /* Typography Tokens */
-  --font-family-base: 'Noto Sans JP', sans-serif;
+  --font-family-base: "Noto Sans JP", sans-serif;
 
   /* Large */
   --font-size-large: 21px;
@@ -84,17 +84,12 @@
   --font-weight-small-regular: 400;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Removed unsupported @theme at-rule */
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #262626;
+    --foreground: #dedede;
   }
 }
 

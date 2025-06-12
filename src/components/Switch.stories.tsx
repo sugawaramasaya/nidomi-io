@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import { useState } from "react";
 import Switch from "./Switch";
 
@@ -20,6 +20,8 @@ export const Default: Story = {
 export const Disabled: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
-    return <Switch {...args} checked={checked} onChange={setChecked} disabled />;
+    return (
+      <Switch {...args} checked={checked} onChange={setChecked} disabled />
+    );
   },
 };

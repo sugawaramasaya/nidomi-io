@@ -2,6 +2,7 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "crypto";
+import axios from "axios";
 
 // Figma Webhookの署名検証
 function verifySignature(req: NextApiRequest, secret: string) {
@@ -15,9 +16,42 @@ function verifySignature(req: NextApiRequest, secret: string) {
   return signature === digest;
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+async function fetchFigmaNode(fileId: string, nodeId: string, token: string) {
+  const url = `https://api.figma.com/v1/files/${fileId}/nodes?ids=${nodeId}`;
+  const res = await axios.get(url, {
+    headers: { "X-Figma-Token": token },
+  });
+  return res.data;
+}
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  // GET /api/figma-mcp?fileId=...&nodeId=...
+  if (req.method === "GET") {
+    const { fileId, nodeId } = req.query;
+    const token = process.env.FIGMA_PERSONAL_ACCESS_TOKEN;
+    if (!fileId || !nodeId || !token) {
+      return res
+        .status(400)
+        .json({ error: "Missing fileId, nodeId, or token" });
+    }
+    try {
+      const data = await fetchFigmaNode(
+        fileId as string,
+        nodeId as string,
+        token
+      );
+      return res.status(200).json(data);
+    } catch (e: any) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
+  // POST (Webhook)は従来通り
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
+    res.setHeader("Allow", ["POST", "GET"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
