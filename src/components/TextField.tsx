@@ -82,7 +82,7 @@ const TextField: React.FC<TextFieldProps> = ({
         {variant === "password" ? (
           <input
             id={inputId}
-            type="password"
+            type={type || "password"}
             value={value}
             onChange={e => {
               if (!disabled) onChange(e.target.value);
@@ -123,7 +123,7 @@ const TextField: React.FC<TextFieldProps> = ({
             onChange={e => {
               if (!disabled) onChange(e.target.value);
             }}
-            onFocus={e => setFocused(true)}
+            onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             placeholder={placeholder}
             disabled={disabled}
