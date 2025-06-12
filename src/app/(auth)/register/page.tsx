@@ -8,7 +8,35 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // TODO: バリデーションや状態管理は後続で実装
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const validate = () => {
+    if (!email) return "メールアドレスを入力してください";
+    if (!/^[\w\-.]+@[\w\-.]+\.[a-zA-Z]{2,}$/.test(email))
+      return "メールアドレスの形式が正しくありません";
+    if (!password) return "パスワードを入力してください";
+    if (password.length < 8) return "パスワードは8文字以上で入力してください";
+    if (password !== confirmPassword) return "パスワードが一致しません";
+    return null;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const err = validate();
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError(null);
+    setLoading(true);
+    // ここでAPIリクエストを実装
+    setTimeout(() => {
+      setLoading(false);
+      // 成功時の処理
+    }, 1000);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)]">
       <div className="w-full max-w-[480px] flex flex-col items-center px-4 pt-[60px] pb-8">
@@ -27,45 +55,62 @@ export default function RegisterPage() {
         </h1>
         {/* 説明文 */}
         <p className="text-[16px] leading-[24px] text-[var(--on-surface-variant)] font-medium mb-8 text-center w-full">
-          メールアドレスとパスワードで新規登録してください。
+          メールアドレスとパスワードでアカウントを作成します。
         </p>
-        {/* メールアドレス */}
-        <div className="w-full mb-4">
-          <TextField
-            label="メールアドレス"
-            value={email}
-            onChange={(v) => setEmail(v)}
-            placeholder="example@email.com"
-            type="email"
-            autoComplete="email"
-          />
-        </div>
-        {/* パスワード */}
-        <div className="w-full mb-4">
-          <TextField
-            label="パスワード"
-            value={password}
-            onChange={(v) => setPassword(v)}
-            type="password"
-            variant="password"
-            autoComplete="new-password"
-          />
-        </div>
-        {/* パスワード確認 */}
-        <div className="w-full mb-8">
-          <TextField
-            label="パスワード（確認）"
-            value={confirmPassword}
-            onChange={(v) => setConfirmPassword(v)}
-            type="password"
-            variant="password"
-            autoComplete="new-password"
-          />
-        </div>
-        {/* 登録ボタン */}
-        <Button fullWidth className="mb-4" type="submit">
-          登録
-        </Button>
+        <form className="w-full" onSubmit={handleSubmit}>
+          {/* メールアドレス */}
+          <div className="w-full mb-4">
+            <TextField
+              label="メールアドレス"
+              value={email}
+              onChange={setEmail}
+              placeholder="example@email.com"
+              type="email"
+              error={!!error && error.includes("メールアドレス")}
+              errorMessage={
+                error && error.includes("メールアドレス") ? error : undefined
+              }
+            />
+          </div>
+          {/* パスワード */}
+          <div className="w-full mb-4">
+            <TextField
+              label="パスワード"
+              value={password}
+              onChange={setPassword}
+              type="password"
+              variant="password"
+              autoComplete="new-password"
+              error={
+                !!error &&
+                error.includes("パスワード") &&
+                !error.includes("一致")
+              }
+              errorMessage={
+                error && error.includes("パスワード") && !error.includes("一致")
+                  ? error
+                  : undefined
+              }
+            />
+          </div>
+          {/* パスワード確認 */}
+          <div className="w-full mb-8">
+            <TextField
+              label="パスワード（確認）"
+              value={confirmPassword}
+              onChange={setConfirmPassword}
+              type="password"
+              variant="password"
+              autoComplete="new-password"
+              error={!!error && error.includes("一致")}
+              errorMessage={error && error.includes("一致") ? error : undefined}
+            />
+          </div>
+          {/* 登録ボタン */}
+          <Button fullWidth className="mb-4" type="submit" disabled={loading}>
+            {loading ? "登録中..." : "登録"}
+          </Button>
+        </form>
         {/* Googleで登録ボタン */}
         <Button fullWidth variant="secondary" className="mb-8">
           Googleで登録
@@ -76,7 +121,7 @@ export default function RegisterPage() {
             href="/login"
             className="text-[var(--primary)] text-[16px] font-bold underline underline-offset-4"
           >
-            ログイン画面へ
+            ログインはこちら
           </a>
         </div>
       </div>

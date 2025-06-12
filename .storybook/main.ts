@@ -1,38 +1,22 @@
-import type { StorybookConfig } from "@storybook/nextjs";
+import type { StorybookConfig } from "@storybook/nextjs-vite";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  addons: [
-    "@storybook/addon-onboarding",
+  "stories": [
+    "../src/**/*.mdx",
+    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
+  ],
+  "addons": [
     "@chromatic-com/storybook",
     "@storybook/addon-docs",
     "@storybook/addon-a11y",
-    "@storybook/addon-vitest",
+    "@storybook/addon-vitest"
   ],
-  framework: {
-    name: "@storybook/nextjs",
-    options: {},
+  "framework": {
+    "name": "@storybook/nextjs-vite",
+    "options": {}
   },
-  staticDirs: ["../public"],
-  webpackFinal: async (config) => {
-    // 既存のsvgルールを除外
-    const fileLoaderRule = config.module.rules.find(
-      (rule) => rule.test && rule.test.toString().includes("svg")
-    );
-    if (fileLoaderRule) {
-      fileLoaderRule.exclude = /\.svg$/;
-    }
-    // SVGR追加
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        {
-          loader: "@svgr/webpack",
-          options: { icon: true },
-        },
-      ],
-    });
-    return config;
-  },
+  "staticDirs": [
+    "../public"
+  ]
 };
 export default config;
