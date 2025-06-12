@@ -1,4 +1,4 @@
-import React, { useState, FocusEvent } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export type TextFieldProps = {
   label: string;
@@ -33,6 +33,8 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
   const inputId = id || `textfield-${Math.random().toString(36).slice(2, 9)}`;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   // カウンター表示
   const counter = typeof maxLength === "number" ? `${value.length} / ${maxLength}` : undefined;
   const showError = error && !!errorMessage;
@@ -45,6 +47,15 @@ const TextField: React.FC<TextFieldProps> = ({
 
   // Disabled時のopacity
   const opacity = disabled ? 0.2 : 1;
+
+  // textareaの高さ自動調整
+  useEffect(() => {
+    if (variant !== "password" && textareaRef.current) {
+      const el = textareaRef.current;
+      el.style.height = "auto";
+      el.style.height = el.scrollHeight + "px";
+    }
+  }, [value, variant]);
 
   return (
     <div
@@ -67,7 +78,7 @@ const TextField: React.FC<TextFieldProps> = ({
         {label}
       </label>
       {/* Inputコンテナ */}
-      <div style={{ minHeight: 56, display: "flex", alignItems: "center" }}>
+      <div style={{ minHeight: 56, display: "flex", alignItems: "center", width: "100%" }}>
         {variant === "password" ? (
           <input
             id={inputId}
@@ -95,31 +106,25 @@ const TextField: React.FC<TextFieldProps> = ({
               outline: "none",
               padding: 0,
               marginBottom: 8,
-              boxSizing: "border-box"
+              boxSizing: "border-box",
+              overflowWrap: "break-word",
+              wordBreak: "break-word"
             }}
             aria-invalid={error}
             aria-describedby={showError ? `${inputId}-error` : showHelper ? `${inputId}-helper` : undefined}
+            autoComplete="off"
+            spellCheck={false}
           />
         ) : (
           <textarea
+            ref={textareaRef}
             id={inputId}
             value={value}
             onChange={e => {
               if (!disabled) onChange(e.target.value);
             }}
-            onFocus={e => {
-              setFocused(true);
-              // textareaの高さ自動調整
-              const el = e.target;
-              el.style.height = 'auto';
-              el.style.height = el.scrollHeight + 'px';
-            }}
+            onFocus={e => setFocused(true)}
             onBlur={() => setFocused(false)}
-            onInput={e => {
-              const el = e.currentTarget;
-              el.style.height = 'auto';
-              el.style.height = el.scrollHeight + 'px';
-            }}
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
@@ -145,6 +150,8 @@ const TextField: React.FC<TextFieldProps> = ({
             aria-invalid={error}
             aria-describedby={showError ? `${inputId}-error` : showHelper ? `${inputId}-helper` : undefined}
             rows={1}
+            autoComplete="off"
+            spellCheck={false}
           />
         )}
       </div>
