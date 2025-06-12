@@ -1,7 +1,5 @@
 import React from "react";
 
-// Figma: https://www.figma.com/design/pjwYh0evbCR17YmoGEy8VH/nidomi.io?node-id=3479-18557&t=PPYIONa8QKfaexzu-1
-
 type FABProps = {
   icon: React.ReactNode;
   disabled?: boolean;
@@ -19,7 +17,6 @@ const FAB: React.FC<FABProps> = ({
   type = "button",
   onClick,
 }) => {
-  // Figmaトークンに基づく色
   const bgColor = "var(--surface-tint)";
   const iconColor = "var(--on-surface)";
 
@@ -59,12 +56,13 @@ const FAB: React.FC<FABProps> = ({
         }}
       >
         {React.isValidElement(icon)
-          ? React.cloneElement(icon as React.ReactElement, {
+          ? React.cloneElement(icon as React.ReactElement<any>, {
+              ...(icon.props || {}),
               style: {
+                ...(icon.props && icon.props.style ? icon.props.style : {}),
                 color: iconColor,
                 width: size - 16,
                 height: size - 16,
-                ...(icon.props && icon.props.style ? icon.props.style : {}),
               },
             })
           : icon}
