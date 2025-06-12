@@ -56,15 +56,18 @@ const FAB: React.FC<FABProps> = ({
         }}
       >
         {React.isValidElement(icon)
-          ? React.cloneElement(icon as React.ReactElement<any>, {
-              ...(icon.props || {}),
-              style: {
-                ...(icon.props && icon.props.style ? icon.props.style : {}),
-                color: iconColor,
-                width: size - 16,
-                height: size - 16,
-              },
-            })
+          ? React.cloneElement(
+              icon as React.ReactElement<Record<string, unknown>>,
+              {
+                ...(icon.props || {}),
+                style: {
+                  ...(icon.props && icon.props.style ? icon.props.style : {}),
+                  color: iconColor,
+                  width: size - 16,
+                  height: size - 16,
+                },
+              }
+            )
           : icon}
       </span>
     </button>
