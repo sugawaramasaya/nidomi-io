@@ -59,9 +59,11 @@ const FAB: React.FC<FABProps> = ({
           ? React.cloneElement(
               icon as React.ReactElement<{ style?: React.CSSProperties }>,
               {
-                ...icon.props,
                 style: {
-                  ...(icon.props && "style" in icon.props && icon.props.style
+                  ...(typeof icon.props === "object" &&
+                  icon.props &&
+                  "style" in icon.props &&
+                  icon.props.style
                     ? icon.props.style
                     : {}),
                   color: iconColor,
