@@ -39,7 +39,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-surface font-['Noto_Sans_JP']">
-      <div className="w-[390px] mx-auto flex flex-col items-center px-0 pt-0 pb-0 relative">
+      <div
+        className="w-full max-w-[480px] min-w-0 mx-auto flex flex-col items-center px-0 pt-0 pb-0 relative"
+        style={{ width: "100%" }}
+      >
         {/* ロゴまわり */}
         <div className="flex flex-col justify-center items-center w-full p-[24px]">
           <div className="flex justify-center items-center w-[300px] h-[54px]">
@@ -73,11 +76,7 @@ export default function RegisterPage() {
         <div className="flex flex-col items-start gap-[12px] w-full self-stretch">
           {/* Googleで登録ボタンを囲うコンテナ */}
           <div className="flex flex-col items-start w-full self-stretch px-[16px]">
-            <Button
-              fullWidth
-              className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-primary text-onPrimary mb-0"
-              variant="primary"
-            >
+            <Button fullWidth variant="primary">
               Googleで登録
             </Button>
           </div>
@@ -95,54 +94,8 @@ export default function RegisterPage() {
                 className="flex flex-col gap-3 w-full"
                 onSubmit={handleSubmit}
               >
-                <TextField
-                  label="メールアドレス"
-                  value={email}
-                  onChange={setEmail}
-                  placeholder="example@email.com"
-                  type="email"
-                  error={!!error && error.includes("メールアドレス")}
-                  errorMessage={
-                    error && error.includes("メールアドレス")
-                      ? error
-                      : undefined
-                  }
-                />
-                <TextField
-                  label="パスワード"
-                  value={password}
-                  onChange={setPassword}
-                  type="password"
-                  variant="password"
-                  autoComplete="new-password"
-                  error={
-                    !!error &&
-                    error.includes("パスワード") &&
-                    !error.includes("一致")
-                  }
-                  errorMessage={
-                    error &&
-                    error.includes("パスワード") &&
-                    !error.includes("一致")
-                      ? error
-                      : undefined
-                  }
-                />
-                <TextField
-                  label="パスワード（確認）"
-                  value={confirmPassword}
-                  onChange={setConfirmPassword}
-                  type="password"
-                  variant="password"
-                  autoComplete="new-password"
-                  error={!!error && error.includes("一致")}
-                  errorMessage={
-                    error && error.includes("一致") ? error : undefined
-                  }
-                />
                 <Button
                   fullWidth
-                  className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-primary text-onPrimary"
                   type="submit"
                   disabled={loading}
                   variant="primary"
@@ -153,15 +106,15 @@ export default function RegisterPage() {
                 <div className="flex justify-center items-center w-full self-stretch px-[24px]">
                   <div className="w-full text-center text-[12px] leading-[18px] font-bold font-['Noto_Sans_JP'] text-onSurfaceVariant">
                     <span>続行することで、</span>
-                    <a href="#" className="text-blue-70 underline">
+                    <a href="#" className="text-nidomi-blue-70 underline">
                       利用規約
                     </a>
                     <span>と</span>
-                    <a href="#" className="text-blue-70 underline">
+                    <a href="#" className="text-nidomi-blue-70 underline">
                       プライバシーポリシー
                     </a>
                     <span>（</span>
-                    <a href="#" className="text-blue-70 underline">
+                    <a href="#" className="text-nidomi-blue-70 underline">
                       Cookieの使用
                     </a>
                     <span>を含む）に同意したとみなされます。</span>
@@ -172,11 +125,7 @@ export default function RegisterPage() {
           </div>
           {/* ログインボタンを囲うコンテナ */}
           <div className="flex flex-col items-start w-full self-stretch px-[16px] pb-[40px]">
-            <Button
-              fullWidth
-              className="rounded-full py-3 h-[48px] text-base font-bold font-['Noto_Sans_JP'] bg-secondary text-onSecondary"
-              variant="secondary"
-            >
+            <Button fullWidth variant="secondary">
               ログイン
             </Button>
           </div>
