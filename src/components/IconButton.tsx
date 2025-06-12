@@ -43,7 +43,7 @@ const IconButton: React.FC<IconButtonProps> = ({
         "border-none outline-none",
         "rounded-[var(--radius-full)]",
         disabled ? "cursor-not-allowed" : "",
-        className
+        className,
       ].join(" ")}
       style={{
         width: "unset",
@@ -54,15 +54,38 @@ const IconButton: React.FC<IconButtonProps> = ({
         color: iconColor,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s"
+        transition: "opacity 0.15s",
       }}
       disabled={disabled}
       onClick={onClick}
       aria-label="icon button"
     >
-      <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: size, height: size }}>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: size,
+          height: size,
+        }}
+      >
         {React.isValidElement(icon)
-          ? React.cloneElement(icon, { style: { color: iconColor, width: size, height: size, ...icon.props.style } })
+          ? React.cloneElement(
+              icon as React.ReactElement<{ style?: React.CSSProperties }>,
+              {
+                style: {
+                  ...(typeof icon.props === "object" &&
+                  icon.props &&
+                  "style" in icon.props &&
+                  icon.props.style
+                    ? icon.props.style
+                    : {}),
+                  color: iconColor,
+                  width: size,
+                  height: size,
+                },
+              }
+            )
           : icon}
       </span>
     </button>
