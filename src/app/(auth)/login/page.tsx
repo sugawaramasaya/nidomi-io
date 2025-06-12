@@ -34,7 +34,7 @@ export default function LoginPage() {
           <TextField
             label="メールアドレス"
             value={email}
-            onChange={setEmail}
+            onChange={(v) => setEmail(v)}
             placeholder="example@email.com"
             type="email"
           />
@@ -44,7 +44,7 @@ export default function LoginPage() {
           <TextField
             label="パスワード"
             value={password}
-            onChange={setPassword}
+            onChange={(v) => setPassword(v)}
             type="password"
             variant="password"
             autoComplete="current-password"

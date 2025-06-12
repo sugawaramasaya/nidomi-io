@@ -34,7 +34,7 @@ export default function RegisterPage() {
           <TextField
             label="メールアドレス"
             value={email}
-            onChange={setEmail}
+            onChange={(v) => setEmail(v)}
             placeholder="example@email.com"
             type="email"
             autoComplete="email"
@@ -45,7 +45,7 @@ export default function RegisterPage() {
           <TextField
             label="パスワード"
             value={password}
-            onChange={setPassword}
+            onChange={(v) => setPassword(v)}
             type="password"
             variant="password"
             autoComplete="new-password"
@@ -56,7 +56,7 @@ export default function RegisterPage() {
           <TextField
             label="パスワード（確認）"
             value={confirmPassword}
-            onChange={setConfirmPassword}
+            onChange={(v) => setConfirmPassword(v)}
             type="password"
             variant="password"
             autoComplete="new-password"
