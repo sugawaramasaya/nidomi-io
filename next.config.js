@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   /* config options here */
   webpack(config) {
     config.module.rules.push({
@@ -10,7 +9,6 @@ const nextConfig: NextConfig = {
         {
           loader: "@svgr/webpack",
           options: {
-            // SVGRのオプション（必要に応じて）
             icon: true,
           },
         },
@@ -20,4 +18,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
