@@ -32,7 +32,7 @@ const FAB: React.FC<FABProps> = ({
         "border-none outline-none",
         "rounded-[var(--radius-full)]",
         disabled ? "cursor-not-allowed" : "",
-        className
+        className,
       ].join(" ")}
       style={{
         width: size,
@@ -43,15 +43,30 @@ const FAB: React.FC<FABProps> = ({
         color: iconColor,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s"
+        transition: "opacity 0.15s",
       }}
       disabled={disabled}
       onClick={onClick}
       aria-label="fab button"
     >
-      <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: size - 16, height: size - 16 }}>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: size - 16,
+          height: size - 16,
+        }}
+      >
         {React.isValidElement(icon)
-          ? React.cloneElement(icon, { style: { color: iconColor, width: size - 16, height: size - 16, ...icon.props.style } })
+          ? React.cloneElement(icon as React.ReactElement, {
+              style: {
+                color: iconColor,
+                width: size - 16,
+                height: size - 16,
+                ...(icon.props && icon.props.style ? icon.props.style : {}),
+              },
+            })
           : icon}
       </span>
     </button>
