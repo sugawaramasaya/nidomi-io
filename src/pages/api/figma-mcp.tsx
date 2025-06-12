@@ -1,9 +1,10 @@
 // Figma Dev Mode MCPサーバー用APIエンドポイント（雛形）
 
+import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "crypto";
 
 // Figma Webhookの署名検証
-function verifySignature(req, secret) {
+function verifySignature(req: NextApiRequest, secret: string) {
   const signature = req.headers["x-figma-signature"];
   if (!signature || !secret) return false;
   const hmac = crypto.createHmac("sha256", secret);
@@ -14,7 +15,7 @@ function verifySignature(req, secret) {
   return signature === digest;
 }
 
-export default function handler(req, res) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
