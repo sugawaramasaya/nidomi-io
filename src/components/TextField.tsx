@@ -10,10 +10,11 @@ export type TextFieldProps = {
   helperText?: string;
   errorMessage?: string;
   maxLength?: number;
-  type?: string; // input type属性（通常はtext、variantがpasswordのときは自動でpasswordになる）
+  type?: string;
   variant?: "default" | "password";
   className?: string;
   id?: string;
+  autoComplete?: string; // ← これを追加
 };
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -30,20 +31,22 @@ const TextField: React.FC<TextFieldProps> = ({
   variant = "default",
   className = "",
   id,
+  autoComplete,
 }) => {
   const [focused, setFocused] = useState(false);
   const inputId = id || `textfield-${Math.random().toString(36).slice(2, 9)}`;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // カウンター表示
-  const counter = typeof maxLength === "number" ? `${value.length} / ${maxLength}` : undefined;
+  const counter =
+    typeof maxLength === "number"
+      ? `${value.length} / ${maxLength}`
+      : undefined;
   const showError = error && !!errorMessage;
   const showHelper = (!!helperText || !!counter) && !showError;
 
   // Dividerカラー
-  const dividerColor = focused
-    ? "var(--outline)"
-    : "var(--outline-variant)";
+  const dividerColor = focused ? "var(--outline)" : "var(--outline-variant)";
 
   // Disabled時のopacity
   const opacity = disabled ? 0.2 : 1;
@@ -60,7 +63,11 @@ const TextField: React.FC<TextFieldProps> = ({
   return (
     <div
       className={className}
-      style={{ minHeight: 56, opacity, userSelect: disabled ? "none" : undefined }}
+      style={{
+        minHeight: 56,
+        opacity,
+        userSelect: disabled ? "none" : undefined,
+      }}
     >
       {/* Label */}
       <label
@@ -72,19 +79,26 @@ const TextField: React.FC<TextFieldProps> = ({
           fontSize: "var(--font-size-medium)",
           lineHeight: "var(--line-height-medium)",
           marginBottom: 8,
-          display: "block"
+          display: "block",
         }}
       >
         {label}
       </label>
       {/* Inputコンテナ */}
-      <div style={{ minHeight: 56, display: "flex", alignItems: "center", width: "100%" }}>
+      <div
+        style={{
+          minHeight: 56,
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         {variant === "password" ? (
           <input
             id={inputId}
             type={type || "password"}
             value={value}
-            onChange={e => {
+            onChange={(e) => {
               if (!disabled) onChange(e.target.value);
             }}
             onFocus={() => setFocused(true)}
@@ -108,11 +122,17 @@ const TextField: React.FC<TextFieldProps> = ({
               marginBottom: 8,
               boxSizing: "border-box",
               overflowWrap: "break-word",
-              wordBreak: "break-word"
+              wordBreak: "break-word",
             }}
             aria-invalid={error}
-            aria-describedby={showError ? `${inputId}-error` : showHelper ? `${inputId}-helper` : undefined}
-            autoComplete="off"
+            aria-describedby={
+              showError
+                ? `${inputId}-error`
+                : showHelper
+                ? `${inputId}-helper`
+                : undefined
+            }
+            autoComplete={autoComplete || "off"}
             spellCheck={false}
           />
         ) : (
@@ -120,7 +140,7 @@ const TextField: React.FC<TextFieldProps> = ({
             ref={textareaRef}
             id={inputId}
             value={value}
-            onChange={e => {
+            onChange={(e) => {
               if (!disabled) onChange(e.target.value);
             }}
             onFocus={() => setFocused(true)}
@@ -145,12 +165,18 @@ const TextField: React.FC<TextFieldProps> = ({
               marginBottom: 8,
               overflowWrap: "break-word",
               wordBreak: "break-word",
-              boxSizing: "border-box"
+              boxSizing: "border-box",
             }}
             aria-invalid={error}
-            aria-describedby={showError ? `${inputId}-error` : showHelper ? `${inputId}-helper` : undefined}
+            aria-describedby={
+              showError
+                ? `${inputId}-error`
+                : showHelper
+                ? `${inputId}-helper`
+                : undefined
+            }
             rows={1}
-            autoComplete="off"
+            autoComplete={autoComplete || "off"}
             spellCheck={false}
           />
         )}
@@ -162,7 +188,7 @@ const TextField: React.FC<TextFieldProps> = ({
           height: 2,
           borderRadius: 999,
           background: dividerColor,
-          marginBottom: 12
+          marginBottom: 12,
         }}
       />
       {/* Supporting Text */}
@@ -178,11 +204,15 @@ const TextField: React.FC<TextFieldProps> = ({
               lineHeight: "var(--line-height-small)",
               display: "flex",
               alignItems: "center",
-              gap: 8
+              gap: 8,
             }}
           >
             {errorMessage}
-            {counter && <span style={{ marginLeft: errorMessage ? 8 : 0 }}>{counter}</span>}
+            {counter && (
+              <span style={{ marginLeft: errorMessage ? 8 : 0 }}>
+                {counter}
+              </span>
+            )}
           </span>
         )}
         {showHelper && (helperText || counter) && (
@@ -196,11 +226,13 @@ const TextField: React.FC<TextFieldProps> = ({
               lineHeight: "var(--line-height-small)",
               display: "flex",
               alignItems: "center",
-              gap: 8
+              gap: 8,
             }}
           >
             {helperText}
-            {counter && <span style={{ marginLeft: helperText ? 8 : 0 }}>{counter}</span>}
+            {counter && (
+              <span style={{ marginLeft: helperText ? 8 : 0 }}>{counter}</span>
+            )}
           </span>
         )}
       </div>
