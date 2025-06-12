@@ -1,2 +1,5 @@
+"use client";
 // ハートしたユーザー一覧
-export default function HeartedUsersPage() { return null; }
+export default function HeartedUsersPage() {
+  return null;
+}

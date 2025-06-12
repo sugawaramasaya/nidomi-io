@@ -1,2 +1,5 @@
+"use client";
 // マイページ
-export default function MyPage() { return null; }
+export default function MyPage() {
+  return null;
+}

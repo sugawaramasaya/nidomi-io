@@ -1,2 +1,5 @@
+"use client";
 // ホーム（みんなの投稿）
-export default function HomePage() { return null; }
+export default function HomePage() {
+  return null;
+}
