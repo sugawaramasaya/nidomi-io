@@ -29,14 +29,17 @@ const FAB: React.FC<FABProps> = ({
 
   const iconWithStyle =
     isValidStyledIcon && React.isValidElement(icon)
-      ? React.cloneElement(icon, {
-          style: {
-            ...icon.props.style,
-            color: iconColor,
-            width: size - 16,
-            height: size - 16,
-          },
-        })
+      ? React.cloneElement(
+          icon as any, // 型アサーションをより柔軟に
+          {
+            style: {
+              ...(icon as any).props?.style,
+              color: iconColor,
+              width: size - 16,
+              height: size - 16,
+            },
+          }
+        )
       : icon;
 
   return (
