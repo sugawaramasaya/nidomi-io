@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 import Button from "@/components/Button";
 import nidomy from "@/assets/nidomy/nidomy.png";
 import LogoSvg from "@/assets/logo.svg";
@@ -35,8 +36,6 @@ export default function RegisterPage() {
     }, 1000);
   };
 
-  const isStorybook = !!process.env.STORYBOOK;
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-surface font-['Noto_Sans_JP']">
       <div
@@ -59,23 +58,14 @@ export default function RegisterPage() {
             className="flex justify-center items-center"
             style={{ width: 256, height: 256 }}
           >
-            {isStorybook ? (
-              <img
-                src={nidomy.src}
-                alt="nidomy graphic"
-                width={256}
-                height={256}
-              />
-            ) : (
-              <Image
-                src={nidomy}
-                alt="nidomy graphic"
-                width={256}
-                height={256}
-                priority
-                style={{ aspectRatio: "1 / 1" }}
-              />
-            )}
+            <Image
+              src={nidomy.src}
+              alt="nidomy graphic"
+              width={256}
+              height={256}
+              priority
+              style={{ aspectRatio: "1 / 1" }}
+            />
           </div>
         </div>
         {/* メインフォーム領域 */}

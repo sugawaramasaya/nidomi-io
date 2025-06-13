@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 type FABProps = {
-  icon: React.ReactNode;
+  icon: ReactElement<{ style?: React.CSSProperties }> | React.ReactNode;
   disabled?: boolean;
-  size?: number; // px, default 56
+  size?: number;
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -19,6 +19,28 @@ const FAB: React.FC<FABProps> = ({
 }) => {
   const bgColor = "var(--surface-tint)";
   const iconColor = "var(--on-surface)";
+
+  const isValidStyledIcon =
+    React.isValidElement(icon) &&
+    typeof icon === "object" &&
+    "props" in icon &&
+    icon.props &&
+    typeof icon.props === "object";
+
+  const iconWithStyle =
+    isValidStyledIcon && React.isValidElement(icon)
+      ? React.cloneElement(
+          icon as any, // 型アサーションをより柔軟に
+          {
+            style: {
+              ...(icon as any).props?.style,
+              color: iconColor,
+              width: size - 16,
+              height: size - 16,
+            },
+          }
+        )
+      : icon;
 
   return (
     <button
@@ -55,24 +77,7 @@ const FAB: React.FC<FABProps> = ({
           height: size - 16,
         }}
       >
-        {React.isValidElement(icon)
-          ? React.cloneElement(
-              icon as React.ReactElement<{ style?: React.CSSProperties }>,
-              {
-                style: {
-                  ...(typeof icon.props === "object" &&
-                  icon.props &&
-                  "style" in icon.props &&
-                  icon.props.style
-                    ? icon.props.style
-                    : {}),
-                  color: iconColor,
-                  width: size - 16,
-                  height: size - 16,
-                },
-              }
-            )
-          : icon}
+        {iconWithStyle}
       </span>
     </button>
   );

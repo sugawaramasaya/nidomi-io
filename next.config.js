@@ -9,6 +9,7 @@ const nextConfig = {
         {
           loader: require.resolve("@svgr/webpack"),
           options: {
+            icon: true,
             svgo: true,
             svgoConfig: {
               plugins: [
