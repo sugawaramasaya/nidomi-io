@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs";
 
-import { expect, userEvent, within } from "storybook/test";
+// NOTE: Storybook v9 専用の test API。v8 では未対応のためコメントアウト。
+// import { expect, userEvent, within } from "storybook/test";
 
 import { Page } from "./Page";
 

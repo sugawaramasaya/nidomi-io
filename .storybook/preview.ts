@@ -3,11 +3,12 @@ import type { Preview } from "@storybook/nextjs";
 
 const preview: Preview = {
   parameters: {
+    layout: "fullscreen",
     backgrounds: {
-      default: "surface",
+      default: "dark mode",
       values: [
-        { name: "surface", value: "#262626" },
-        { name: "white", value: "#fff" },
+        { name: "dark mode", value: "var(--surface)" },
+        { name: "light mode", value: "var(--surface)" },
       ],
     },
     controls: {
