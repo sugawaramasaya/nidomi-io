@@ -97,6 +97,7 @@ export default function RegisterPage() {
                   fontSize: "var(--font-size-medium)",
                   lineHeight: "var(--line-height-medium)",
                   fontWeight: "var(--font-weight-medium-bold)",
+                  color: "var(--on-surface-variant)",
                 }}
               >
                 または
@@ -127,6 +128,7 @@ export default function RegisterPage() {
                         fontSize: "var(--font-size-small)",
                         lineHeight: "var(--line-height-small)",
                         fontWeight: "var(--font-weight-small-bold)",
+                        color: "var(--on-surface-variant)",
                       }}
                     >
                       <span>続行することで、</span>
