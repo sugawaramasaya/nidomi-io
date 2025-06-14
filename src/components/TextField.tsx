@@ -17,6 +17,8 @@ export type TextFieldProps = {
   id?: string;
   autoComplete?: string;
   inputRef?: React.RefObject<HTMLInputElement>; // ← 追加
+  onFocus?: () => void;
+  onBlur?: () => void;
 };
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -35,6 +37,8 @@ const TextField: React.FC<TextFieldProps> = ({
   id,
   autoComplete,
   inputRef, // ← 追加
+  onFocus,
+  onBlur,
 }) => {
   const [focused, setFocused] = useState(false);
   const inputId = id || `textfield-${Math.random().toString(36).slice(2, 9)}`;
@@ -104,8 +108,14 @@ const TextField: React.FC<TextFieldProps> = ({
             onChange={(e) => {
               if (!disabled) onChange(e.target.value);
             }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onFocus={() => {
+              setFocused(true);
+              if (onFocus) onFocus();
+            }}
+            onBlur={() => {
+              setFocused(false);
+              if (onBlur) onBlur();
+            }}
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}
@@ -147,8 +157,14 @@ const TextField: React.FC<TextFieldProps> = ({
             onChange={(e) => {
               if (!disabled) onChange(e.target.value);
             }}
-            onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
+            onFocus={() => {
+              setFocused(true);
+              if (onFocus) onFocus();
+            }}
+            onBlur={() => {
+              setFocused(false);
+              if (onBlur) onBlur();
+            }}
             placeholder={placeholder}
             disabled={disabled}
             maxLength={maxLength}

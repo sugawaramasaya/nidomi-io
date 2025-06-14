@@ -30,6 +30,10 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailFocused, setEmailFocused] = useState(false);
+
+  const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const isFormValid = isEmailValid && password.length > 0;
 
   return (
     <div className="h-screen overflow-y-hidden flex flex-col items-center">
@@ -44,9 +48,18 @@ export default function LoginPage() {
               onChange={setEmail}
               inputRef={emailRef}
               autoComplete="email"
+              error={!emailFocused && email.length > 0 && !isEmailValid}
+              errorMessage={
+                !emailFocused && email.length > 0 && !isEmailValid
+                  ? "入力内容をご確認ください"
+                  : ""
+              }
+              onFocus={() => setEmailFocused(true)}
+              onBlur={() => setEmailFocused(false)}
             />
             <TextField
               label="パスワード"
+              variant="password"
               type="password"
               value={password}
               onChange={setPassword}
@@ -62,7 +75,7 @@ export default function LoginPage() {
             background: "var(--background, #fff)",
           }}
         >
-          <Button fullWidth variant="primary">
+          <Button fullWidth variant="primary" disabled={!isFormValid}>
             新規登録
           </Button>
         </div>
