@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import clsx from "clsx";
 
 export type TextFieldProps = {
   label: string;
@@ -95,6 +96,7 @@ const TextField: React.FC<TextFieldProps> = ({
       >
         {variant === "password" ? (
           <input
+            className={clsx("textfield-input", className)}
             id={inputId}
             type={type || "password"}
             value={value}
@@ -110,7 +112,6 @@ const TextField: React.FC<TextFieldProps> = ({
               width: "100%",
               minHeight: 40,
               height: "auto",
-              color: "var(--on-surface)",
               fontFamily: "var(--font-family-base)",
               fontWeight: 700,
               fontSize: "var(--font-size-large)",
@@ -137,6 +138,7 @@ const TextField: React.FC<TextFieldProps> = ({
           />
         ) : (
           <textarea
+            className="textfield-input"
             ref={textareaRef}
             id={inputId}
             value={value}
@@ -153,7 +155,6 @@ const TextField: React.FC<TextFieldProps> = ({
               minHeight: 40,
               height: "auto",
               resize: "none",
-              color: "var(--on-surface)",
               fontFamily: "var(--font-family-base)",
               fontWeight: 700,
               fontSize: "var(--font-size-large)",
