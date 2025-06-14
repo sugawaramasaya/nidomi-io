@@ -35,6 +35,8 @@ export default function LoginPage() {
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isFormValid = isEmailValid && password.length > 0;
 
+  const isLogin = false; // 条件に応じて切り替え
+
   return (
     <div className="h-screen overflow-y-hidden flex flex-col items-center">
       <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
@@ -42,7 +44,7 @@ export default function LoginPage() {
         <div className="flex flex-col w-full items-center flex-1 min-h-0 pb-[120px]">
           <div className="w-full p-[24px] flex flex-col gap-[48px]">
             <TextField
-              label="メールアドレス"
+              label={isLogin ? "メールアドレス" : "新規登録メールアドレス"}
               type="email"
               value={email}
               onChange={setEmail}
@@ -76,7 +78,7 @@ export default function LoginPage() {
           }}
         >
           <Button fullWidth variant="primary" disabled={!isFormValid}>
-            新規登録
+            {isLogin ? "ログイン" : "新規登録"}
           </Button>
         </div>
       </div>
