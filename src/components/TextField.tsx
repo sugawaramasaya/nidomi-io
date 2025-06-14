@@ -15,7 +15,8 @@ export type TextFieldProps = {
   variant?: "default" | "password";
   className?: string;
   id?: string;
-  autoComplete?: string; // ← これを追加
+  autoComplete?: string;
+  inputRef?: React.RefObject<HTMLInputElement>; // ← 追加
 };
 
 const TextField: React.FC<TextFieldProps> = ({
@@ -33,10 +34,12 @@ const TextField: React.FC<TextFieldProps> = ({
   className = "",
   id,
   autoComplete,
+  inputRef, // ← 追加
 }) => {
   const [focused, setFocused] = useState(false);
   const inputId = id || `textfield-${Math.random().toString(36).slice(2, 9)}`;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const internalInputRef = useRef<HTMLInputElement>(null);
 
   // カウンター表示
   const counter =
@@ -70,7 +73,6 @@ const TextField: React.FC<TextFieldProps> = ({
         userSelect: disabled ? "none" : undefined,
       }}
     >
-      {/* Label */}
       <label
         htmlFor={inputId}
         style={{
@@ -85,7 +87,6 @@ const TextField: React.FC<TextFieldProps> = ({
       >
         {label}
       </label>
-      {/* Inputコンテナ */}
       <div
         style={{
           minHeight: 56,
@@ -135,6 +136,7 @@ const TextField: React.FC<TextFieldProps> = ({
             }
             autoComplete={autoComplete || "off"}
             spellCheck={false}
+            ref={inputRef || internalInputRef} // ← 外部から渡されてなければ内部で用意したrefを使う
           />
         ) : (
           <textarea
@@ -182,7 +184,6 @@ const TextField: React.FC<TextFieldProps> = ({
           />
         )}
       </div>
-      {/* Divider */}
       <div
         style={{
           width: "100%",
@@ -192,7 +193,6 @@ const TextField: React.FC<TextFieldProps> = ({
           marginBottom: 12,
         }}
       />
-      {/* Supporting Text */}
       <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
         {showError && (errorMessage || counter) && (
           <span

@@ -1,6 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
-import TextField from "@/components/TextField";
+import TextField, { TextFieldProps } from "@/components/TextField";
 import Button from "@/components/Button";
 
 export default function LoginPage() {
@@ -70,3 +70,8 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export type TextFieldProps = {
+  // ...既存のprops...
+  inputRef?: React.RefObject<HTMLInputElement>;
+};
