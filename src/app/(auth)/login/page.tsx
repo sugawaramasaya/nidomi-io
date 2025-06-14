@@ -70,8 +70,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-export type TextFieldProps = {
-  // ...既存のprops...
-  inputRef?: React.RefObject<HTMLInputElement>;
-};
