@@ -12,4 +12,14 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof LoginPage>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    isLogin: false,
+  },
+};
+
+export const Login: Story = {
+  args: {
+    isLogin: true,
+  },
+};
