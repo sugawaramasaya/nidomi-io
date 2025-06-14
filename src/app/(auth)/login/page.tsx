@@ -1,71 +1,70 @@
 "use client";
-import React, { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
-import Image from "next/image";
 
 export default function LoginPage() {
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  // モバイル端末で遷移時にメールアドレスに自動フォーカス
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      /iPhone|Android.+Mobile/.test(navigator.userAgent)
+    ) {
+      emailRef.current?.focus();
+    }
+  }, []);
+
+  // ソフトウェアキーボード表示判定
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    let initialHeight = window.innerHeight;
+    const onResize = () => {
+      setIsKeyboardOpen(window.innerHeight < initialHeight - 100);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)]">
-      <div className="w-full max-w-[480px] flex flex-col items-center px-4 pt-[60px] pb-8">
-        {/* ロゴ */}
-        <Image
-          src="/nidomy/nidomy.png"
-          alt="nidomi logo"
-          width={64}
-          height={64}
-          className="mb-8"
-          priority
-        />
-        {/* タイトル */}
-        <h1 className="text-[28px] leading-[36px] font-bold text-[var(--on-surface)] mb-4">
-          ログイン
-        </h1>
-        {/* 説明文 */}
-        <p className="text-[16px] leading-[24px] text-[var(--on-surface-variant)] font-medium mb-8 text-center w-full">
-          nidomi.ioへようこそ！
-          <br />
-          メールアドレスとパスワードでログインしてください。
-        </p>
-        {/* メールアドレス */}
-        <div className="w-full mb-4">
-          <TextField
-            label="メールアドレス"
-            value={email}
-            onChange={(v) => setEmail(v)}
-            placeholder="example@email.com"
-            type="email"
-          />
+    <div className="h-screen overflow-y-hidden flex flex-col items-center">
+      <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
+        {/* 入力フォーム */}
+        <div className="flex flex-col w-full items-center flex-1 min-h-0 pb-[120px]">
+          <div className="w-full p-[24px] flex flex-col gap-[48px]">
+            <TextField
+              label="メールアドレス"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              inputRef={emailRef}
+              autoComplete="email"
+            />
+            <TextField
+              label="パスワード"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              autoComplete="new-password"
+            />
+          </div>
         </div>
-        {/* パスワード */}
-        <div className="w-full mb-8">
-          <TextField
-            label="パスワード"
-            value={password}
-            onChange={(v) => setPassword(v)}
-            type="password"
-            variant="password"
-            autoComplete="current-password"
-          />
-        </div>
-        {/* ログインボタン */}
-        <Button fullWidth className="mb-4" type="submit">
-          ログイン
-        </Button>
-        {/* Googleで登録ボタン */}
-        <Button fullWidth variant="secondary" className="mb-8">
-          Googleで登録
-        </Button>
-        {/* メールアドレスで登録リンク */}
-        <div className="w-full flex justify-center">
-          <a
-            href="/register"
-            className="text-[var(--primary)] text-[16px] font-bold underline underline-offset-4"
-          >
-            メールアドレスで登録
-          </a>
+        {/* 下部固定ボタン */}
+        <div
+          className="fixed left-1/2 bottom-0 -translate-x-1/2 w-full max-w-[480px] px-[16px] z-20"
+          style={{
+            paddingBottom: isKeyboardOpen ? 16 : 40,
+            background: "var(--background, #fff)",
+          }}
+        >
+          <Button fullWidth variant="primary">
+            新規登録
+          </Button>
         </div>
       </div>
     </div>
