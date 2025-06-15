@@ -1,3 +1,4 @@
+import path from "path";
 import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
@@ -24,6 +25,11 @@ const config: StorybookConfig = {
     if (fileLoaderRule && typeof fileLoaderRule !== "string") {
       fileLoaderRule.exclude = /\.svg$/i;
     }
+
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      "@": path.resolve(__dirname, "../src"),
+    };
 
     config.module?.rules?.push({
       test: /\.svg$/i,
