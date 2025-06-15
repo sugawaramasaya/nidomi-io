@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import SignupTopPage from "@/app/(auth)/register/SignupTopPage";
+// ❌ これだと解決できない
+// import SignupTopPage from "@/app/(auth)/register/page";
+
+// ✅ 相対パスで書き換え
+import SignupTopPage from "../app/(auth)/register/page";
 
 const meta = {
   title: "Auth/SignupTopPage",
