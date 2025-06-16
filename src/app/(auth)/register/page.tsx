@@ -4,10 +4,11 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import nidomy from "@/assets/nidomy/nidomy.png";
 import LogoSvg from "@/assets/logo.svg";
+import FixedBottomContainer from "@/components/FixedBottomContainer";
 
 export default function RegisterPage() {
   return (
-    <div className="h-screen overflow-y-hidden flex flex-col items-center">
+    <div className="h-screen flex flex-col justify-between">
       <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
         {/* ロゴ・nidomy画像を縦flexで並べる。下部ブロック分スペースを空ける */}
         <div className="flex flex-col w-full items-center flex-1 min-h-0 pb-[300px]">
@@ -32,64 +33,20 @@ export default function RegisterPage() {
           </div>
         </div>
         {/* メインフォーム＋ログインボタンを下部固定の1ブロックにまとめる */}
-        <div className="w-full max-w-[480px] flex flex-col items-stretch gap-[24px] px-[16px] z-20 fixed left-1/2 bottom-0 -translate-x-1/2 pb-[40px]">
-          {/* Googleで登録・または・メール登録（＋注釈）ブロック */}
+        <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
           <div className="flex flex-col items-stretch w-full gap-[12px]">
             {/* Googleで登録ボタン */}
             <Button fullWidth variant="primary">
               Googleで登録
             </Button>
             {/* または */}
-            <div className="flex justify-center items-center w-full px-[8px]">
-              <div
-                className="w-full text-center"
-                style={{
-                  fontSize: "var(--font-size-medium)",
-                  fontWeight: "var(--font-weight-small-medium)",
-                  lineHeight: "var(--line-height-medium)",
-                  color: "var(--on-surface-variant)",
-                }}
-              >
-                または
-              </div>
-            </div>
-            {/* メールアドレスで登録ボタン */}
-            <form className="flex flex-col gap-[12px] w-full">
-              <Button fullWidth type="submit" variant="primary">
-                メールアドレスで登録
-              </Button>
-              <div className="flex justify-center items-center w-full px-[8px]">
-                <div
-                  className="w-full text-center"
-                  style={{
-                    fontSize: "var(--font-size-small)",
-                    fontWeight: "var(--font-weight-small-bold)",
-                    lineHeight: "var(--line-height-small)",
-                    color: "var(--on-surface-variant)",
-                  }}
-                >
-                  <span>続行することで、</span>
-                  <a href="#" className="text-nidomi-blue-70 underline">
-                    利用規約
-                  </a>
-                  <span>と</span>
-                  <a href="#" className="text-nidomi-blue-70 underline">
-                    プライバシーポリシー
-                  </a>
-                  <span>（</span>
-                  <a href="#" className="text-nidomi-blue-70 underline">
-                    Cookieの使用
-                  </a>
-                  <span>を含む）に同意したとみなされます。</span>
-                </div>
-              </div>
-            </form>
+            <div className="text-center text-sm text-gray-500">または</div>
+            {/* メール登録ボタン */}
+            <Button fullWidth variant="secondary">
+              メールで登録
+            </Button>
           </div>
-          {/* ログインボタン */}
-          <Button fullWidth variant="secondary">
-            ログイン
-          </Button>
-        </div>
+        </FixedBottomContainer>
       </div>
     </div>
   );

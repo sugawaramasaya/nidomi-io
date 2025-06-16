@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import TextButton from "@/components/TextButton";
+import FixedBottomContainer from "@/components/FixedBottomContainer";
 
 export default function VerifyCodePage() {
   const [code, setCode] = useState("");
@@ -21,7 +22,7 @@ export default function VerifyCodePage() {
   const isCodeValid = code.length === 6;
 
   return (
-    <div className="h-screen overflow-y-hidden flex flex-col items-center">
+    <div className="h-screen flex flex-col justify-between">
       <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
         {/* メッセージと確認コード入力 */}
         <div className="flex flex-col w-full p-[24px] gap-[48px] flex-1">
@@ -37,35 +38,27 @@ export default function VerifyCodePage() {
           >
             新規登録メールを送信しました。
             <br />
-            メールをご確認ください。
+            メール内の確認コードを入力してください。
           </div>
-          {/* 確認コード入力フィールド */}
+          {/* 確認コード入力 */}
           <TextField
             label="確認コード"
             value={code}
             onChange={setCode}
-            helperText="届いたメールを確認し、メールに記載の6桁の確認コードを入力してください。"
+            maxLength={6}
+            variant="default"
+            autoComplete="off"
           />
         </div>
-        {/* 下部固定ボタン */}
-        <div
-          className="fixed left-1/2 bottom-0 -translate-x-1/2 w-full max-w-[480px] px-[16px] gap-[20px] z-20 flex flex-col"
-          style={{ paddingBottom: isKeyboardOpen ? 16 : 40 }}
-        >
-          <Button
-            fullWidth
-            variant="primary"
-            disabled={!isCodeValid}
-            onClick={() => console.log("確認コード送信")}
-          >
-            確認コードを送信
+        {/* 下部固定のボタン */}
+        <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
+          <Button fullWidth variant="primary" disabled={!isCodeValid}>
+            確認
           </Button>
-          {!isKeyboardOpen && (
-            <TextButton fullWidth variant="primary">
-              すでにアカウントをお持ちの方
-            </TextButton>
-          )}
-        </div>
+          <TextButton fullWidth variant="secondary">
+            コードを再送信
+          </TextButton>
+        </FixedBottomContainer>
       </div>
     </div>
   );

@@ -1,26 +1,22 @@
+// .storybook/preview.tsx
+import React from "react";
+import type { Preview, StoryFn, StoryContext } from "@storybook/react";
 import "../src/app/globals.css";
-import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark mode",
-      values: [
-        { name: "dark mode", value: "var(--surface)" },
-        { name: "light mode", value: "var(--surface)" },
-      ],
-    },
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
-    },
-    a11y: {
-      test: "todo",
-    },
   },
 };
+
+export const decorators = [
+  (Story: StoryFn, context: StoryContext) => {
+    return React.createElement(
+      "div",
+      { style: { minHeight: "100vh", backgroundColor: "var(--background)" } },
+      Story({}, context)
+    );
+  },
+];
 
 export default preview;
