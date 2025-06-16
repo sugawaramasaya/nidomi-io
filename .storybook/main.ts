@@ -1,5 +1,6 @@
 import path from "path";
 import type { StorybookConfig } from "@storybook/nextjs";
+import type { RuleSetRule } from "webpack";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -14,22 +15,18 @@ const config: StorybookConfig = {
     options: {},
   },
   webpackFinal: async (config) => {
-    // SVGをReactコンポーネントとして扱うためのSVGR設定
     const fileLoaderRule = config.module?.rules?.find(
-      (rule) =>
+      (rule): rule is RuleSetRule =>
+        rule !== null &&
+        rule !== undefined &&
         typeof rule !== "string" &&
-        rule?.test instanceof RegExp &&
-        rule.test.test(".svg")
+        (rule as RuleSetRule).test instanceof RegExp &&
+        ((rule as RuleSetRule).test as RegExp).test(".svg")
     );
 
-    if (fileLoaderRule && typeof fileLoaderRule !== "string") {
-      fileLoaderRule.exclude = /\.svg$/i;
+    if (fileLoaderRule) {
+      (fileLoaderRule as RuleSetRule).exclude = /\.svg$/i;
     }
-
-    config.resolve.alias = {
-      ...(config.resolve.alias || {}),
-      "@": path.resolve(__dirname, "../src"),
-    };
 
     config.module?.rules?.push({
       test: /\.svg$/i,
@@ -42,6 +39,13 @@ const config: StorybookConfig = {
         },
       ],
     });
+
+    if (config.resolve) {
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        "@": path.resolve(__dirname, "../src"),
+      };
+    }
 
     return config;
   },
