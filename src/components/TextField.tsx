@@ -16,7 +16,8 @@ export type TextFieldProps = {
   className?: string;
   id?: string;
   autoComplete?: string;
-  inputRef?: React.RefObject<HTMLInputElement>; // ← 追加
+  // 修正後（nullも許容するように変更）
+  inputRef?: React.RefObject<HTMLInputElement | null>;
   onFocus?: () => void;
   onBlur?: () => void;
 };
