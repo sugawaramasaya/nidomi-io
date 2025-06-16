@@ -52,7 +52,12 @@ export default function VerifyCodePage() {
           className="fixed left-1/2 bottom-0 -translate-x-1/2 w-full max-w-[480px] px-[16px] gap-[20px] z-20 flex flex-col"
           style={{ paddingBottom: isKeyboardOpen ? 16 : 40 }}
         >
-          <Button fullWidth variant="primary" disabled={!isCodeValid}>
+          <Button
+            fullWidth
+            variant="primary"
+            disabled={!isCodeValid}
+            onClick={() => console.log("確認コード送信")}
+          >
             確認コードを送信
           </Button>
           {!isKeyboardOpen && (

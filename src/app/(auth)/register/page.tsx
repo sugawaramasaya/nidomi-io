@@ -53,12 +53,11 @@ export default function RegisterPage() {
                 または
               </div>
             </div>
-            {/* メールアドレス登録フォーム＋注釈 */}
+            {/* メールアドレスで登録ボタン */}
             <form className="flex flex-col gap-[12px] w-full">
               <Button fullWidth type="submit" variant="primary">
                 メールアドレスで登録
               </Button>
-              {/* 注釈を囲うコンテナ */}
               <div className="flex justify-center items-center w-full px-[8px]">
                 <div
                   className="w-full text-center"
@@ -86,7 +85,7 @@ export default function RegisterPage() {
               </div>
             </form>
           </div>
-          {/* ログインボタン（下40スペース含む） */}
+          {/* ログインボタン */}
           <Button fullWidth variant="secondary">
             ログイン
           </Button>
