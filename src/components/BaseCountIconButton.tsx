@@ -1,52 +1,84 @@
-import React, { ReactNode, useState, useEffect } from "react";
+import React from "react";
 
-interface Props {
-  children: ReactNode;
+type BaseCountIconButtonProps = {
+  checked: boolean;
+  count: number;
+  disabled?: boolean;
   className?: string;
-  withKeyboardAware?: boolean;
-}
+  type?: "button" | "submit" | "reset";
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  renderIcon: (
+    checked: boolean,
+    size: number,
+    color: string
+  ) => React.ReactNode;
+};
 
-const FixedBottomContainer: React.FC<Props> = ({
-  children,
+const BaseCountIconButton: React.FC<BaseCountIconButtonProps> = ({
+  checked,
+  count,
+  disabled = false,
   className = "",
-  withKeyboardAware = false,
+  type = "button",
+  onClick,
+  renderIcon,
 }) => {
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-
-  useEffect(() => {
-    if (!withKeyboardAware || typeof window === "undefined") return;
-
-    const initialHeight = window.innerHeight;
-    const onResize = () => {
-      setIsKeyboardOpen(window.innerHeight < initialHeight - 100);
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [withKeyboardAware]);
-
-  const containerPaddingBottom = withKeyboardAware
-    ? isKeyboardOpen
-      ? "pb-[var(--space-16)]"
-      : "pb-[var(--space-40)]"
-    : "pb-[var(--space-40)]";
-
-  const childrenArray = React.Children.toArray(children);
+  const iconColor = "var(--on-surface-variant)";
+  const countColor = iconColor;
+  const size = 40;
 
   return (
-    <div
-      className={`fixed bottom-0 left-0 w-full z-[1000] ${containerPaddingBottom} ${className}`}
+    <button
+      type={type}
+      className={[
+        "inline-flex items-center justify-center",
+        "select-none transition-colors duration-150",
+        "border-none outline-none",
+        "rounded-[var(--radius-full)]",
+        disabled ? "cursor-not-allowed" : "",
+        className,
+      ].join(" ")}
+      style={{
+        backgroundColor: "transparent", // これを追加
+        height: "unset",
+        minWidth: "unset",
+        padding: "var(--space-8)",
+        borderRadius: "var(--radius-full)",
+        color: iconColor,
+        cursor: disabled ? "not-allowed" : "pointer",
+        opacity: disabled ? 0.1 : 1,
+        transition: "opacity 0.15s",
+      }}
+      disabled={disabled}
+      onClick={onClick}
+      aria-label="icon count button"
     >
-      <div className="max-w-[480px] mx-auto px-[var(--space-16)] w-full">
-        <div className="flex flex-col gap-[var(--space-20)]">
-          {withKeyboardAware && isKeyboardOpen
-            ? childrenArray.length > 0
-              ? childrenArray[0]
-              : null
-            : children}
-        </div>
-      </div>
-    </div>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: size,
+          height: size,
+        }}
+      >
+        {renderIcon(checked, size, iconColor)}
+      </span>
+      <span
+        style={{
+          color: countColor,
+          padding: "0 var(--space-8)",
+          fontFamily: "var(--font-family-base)",
+          fontWeight: 700,
+          fontSize: "var(--font-size-large)",
+          lineHeight: "var(--line-height-large)",
+          userSelect: "none",
+        }}
+      >
+        {count}
+      </span>
+    </button>
   );
 };
 
-export default FixedBottomContainer;
+export default BaseCountIconButton;

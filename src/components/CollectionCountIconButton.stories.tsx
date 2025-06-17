@@ -14,7 +14,7 @@ export const Toggle = () => {
     <CollectionCountIconButton
       checked={checked}
       count={count}
-      onClick={() => setChecked(v => !v)}
+      onClick={() => setChecked((v) => !v)}
     />
   );
 };
