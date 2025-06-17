@@ -9,7 +9,7 @@ import FixedBottomContainer from "@/components/FixedBottomContainer";
 export default function RegisterPage() {
   return (
     <div className="h-screen flex flex-col justify-between">
-      <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
+      <div className="w-full max-w-[480px] mx-auto flex flex-col items-center h-screen">
         {/* ロゴ・nidomy画像を縦flexで並べる。下部ブロック分スペースを空ける */}
         <div className="flex flex-col w-full items-center flex-1 min-h-0 pb-[300px]">
           {/* ロゴ */}

@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
-import TextButton from "@/components/TextButton";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
 
 export default function VerifyCodePage() {
@@ -23,7 +22,7 @@ export default function VerifyCodePage() {
 
   return (
     <div className="h-screen flex flex-col justify-between">
-      <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
+      <div className="w-full max-w-[480px] mx-auto flex flex-col items-center h-screen">
         {/* メッセージと確認コード入力 */}
         <div className="flex flex-col w-full p-[24px] gap-[48px] flex-1">
           {/* メッセージ */}
@@ -32,7 +31,7 @@ export default function VerifyCodePage() {
             style={{
               fontSize: "var(--font-size-large)",
               lineHeight: "var(--line-height-large)",
-              fontWeight: "var(--font-weight-large-bold)",
+              fontWeight: "var(--font-weight-bold)",
               color: "var(--on-surface)",
             }}
           >
@@ -52,12 +51,12 @@ export default function VerifyCodePage() {
         </div>
         {/* 下部固定のボタン */}
         <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
-          <Button fullWidth variant="primary" disabled={!isCodeValid}>
+          <Button variant="primary" fullWidth disabled={!isCodeValid}>
             確認
           </Button>
-          <TextButton fullWidth variant="secondary">
+          <Button variant="text-secondary" fullWidth>
             コードを再送信
-          </TextButton>
+          </Button>
         </FixedBottomContainer>
       </div>
     </div>

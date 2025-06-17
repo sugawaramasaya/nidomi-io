@@ -1,5 +1,5 @@
-import React from 'react';
-import CloseIcon from '../icons/size20/close.svg';
+import React from "react";
+import CloseIcon from "../icons/size20/close.svg";
 
 interface TagDeleteButtonProps {
   label: string;
@@ -15,7 +15,7 @@ const TagDeleteButton: React.FC<TagDeleteButtonProps> = ({
   label,
   onClick,
   disabled = false,
-  className = '',
+  className = "",
 }) => {
   return (
     <button
@@ -26,7 +26,7 @@ const TagDeleteButton: React.FC<TagDeleteButtonProps> = ({
         "border-none outline-none bg-transparent",
         "select-none transition-opacity duration-150",
         disabled ? "cursor-not-allowed" : "cursor-pointer",
-        className
+        className,
       ].join(" ")}
       style={{
         padding: "var(--space-8)",
@@ -34,24 +34,28 @@ const TagDeleteButton: React.FC<TagDeleteButtonProps> = ({
         color: "var(--on-surface)",
         borderRadius: "var(--radius-full)",
         opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s"
+        transition: "opacity 0.15s",
       }}
       onClick={onClick}
       disabled={disabled}
-      aria-label={label + 'を削除'}
+      aria-label={label + "を削除"}
     >
       <span style={{ display: "flex", alignItems: "center" }}>
-        <CloseIcon width={20} height={20} style={{ color: "var(--on-surface)" }} />
+        <CloseIcon
+          width={20}
+          height={20}
+          style={{ color: "var(--on-surface)" }}
+        />
       </span>
       <span
         style={{
           fontFamily: "var(--font-family-base)",
-          fontWeight: 700,
+          fontWeight: "var(--font-weight-bold)",
           fontSize: "var(--font-size-large)",
           lineHeight: "var(--line-height-large)",
           paddingLeft: "var(--space-8)",
           paddingRight: "var(--space-8)",
-          userSelect: "none"
+          userSelect: "none",
         }}
       >
         {label}
