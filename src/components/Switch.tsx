@@ -20,8 +20,16 @@ const Switch: React.FC<SwitchProps> = ({
   return (
     <label
       htmlFor={switchId}
-      className={`inline-flex items-center select-none ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`}
-      style={{ width: 48, height: 48, minWidth: 48, minHeight: 48, justifyContent: "center" }}
+      className={`inline-flex items-center select-none ${
+        disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+      } ${className}`}
+      style={{
+        width: 48,
+        height: 48,
+        minWidth: 48,
+        minHeight: 48,
+        justifyContent: "center",
+      }}
     >
       <span
         className="relative flex items-center justify-center"
@@ -32,9 +40,9 @@ const Switch: React.FC<SwitchProps> = ({
           type="checkbox"
           checked={checked}
           disabled={disabled}
-          onChange={e => onChange(e.target.checked)}
+          onChange={(e) => onChange(e.target.checked)}
           className="peer opacity-0 absolute left-0 top-0 m-0 cursor-pointer"
-          style={{ width: 48, height: 48 }}
+          style={{ width: 48, height: 48, margin: 0 }}
         />
         {/* 背景レイヤー */}
         <span
@@ -45,7 +53,7 @@ const Switch: React.FC<SwitchProps> = ({
             background: "var(--surface-dim)",
             borderRadius: 999,
             zIndex: 1,
-            pointerEvents: "none"
+            pointerEvents: "none",
           }}
         />
         {/* サム（正円） */}
@@ -57,10 +65,12 @@ const Switch: React.FC<SwitchProps> = ({
             width: 32,
             height: 32,
             borderRadius: 999,
-            background: checked ? "var(--on-surface)" : "var(--on-surface-variant)",
+            background: checked
+              ? "var(--on-surface)"
+              : "var(--on-surface-variant)",
             mixBlendMode: "normal",
             zIndex: 2,
-            transition: "left 0.15s, background 0.15s"
+            transition: "left 0.15s, background 0.15s",
           }}
         />
       </span>

@@ -7,7 +7,11 @@ type BaseCountIconButtonProps = {
   className?: string;
   type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  renderIcon: (checked: boolean, size: number, color: string) => React.ReactNode;
+  renderIcon: (
+    checked: boolean,
+    size: number,
+    color: string
+  ) => React.ReactNode;
 };
 
 const BaseCountIconButton: React.FC<BaseCountIconButtonProps> = ({
@@ -32,9 +36,10 @@ const BaseCountIconButton: React.FC<BaseCountIconButtonProps> = ({
         "border-none outline-none",
         "rounded-[var(--radius-full)]",
         disabled ? "cursor-not-allowed" : "",
-        className
+        className,
       ].join(" ")}
       style={{
+        backgroundColor: "transparent", // これを追加
         height: "unset",
         minWidth: "unset",
         padding: "var(--space-8)",
@@ -42,13 +47,21 @@ const BaseCountIconButton: React.FC<BaseCountIconButtonProps> = ({
         color: iconColor,
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s"
+        transition: "opacity 0.15s",
       }}
       disabled={disabled}
       onClick={onClick}
       aria-label="icon count button"
     >
-      <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: size, height: size }}>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: size,
+          height: size,
+        }}
+      >
         {renderIcon(checked, size, iconColor)}
       </span>
       <span
@@ -59,7 +72,7 @@ const BaseCountIconButton: React.FC<BaseCountIconButtonProps> = ({
           fontWeight: 700,
           fontSize: "var(--font-size-large)",
           lineHeight: "var(--line-height-large)",
-          userSelect: "none"
+          userSelect: "none",
         }}
       >
         {count}

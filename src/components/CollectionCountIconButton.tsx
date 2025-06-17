@@ -1,6 +1,6 @@
 import React from "react";
-import AddCollectionFilledIcon from '../icons/size40/add-collection-filled.svg';
-import AddCollectionOutlinedIcon from '../icons/size40/add-collection-outlined.svg';
+import AddCollectionFilledIcon from "../icons/size40/add-collection-filled.svg";
+import AddCollectionOutlinedIcon from "../icons/size40/add-collection-outlined.svg";
 import BaseCountIconButton from "./BaseCountIconButton";
 
 type CollectionCountIconButtonProps = {
@@ -30,9 +30,23 @@ const CollectionCountIconButton: React.FC<CollectionCountIconButtonProps> = ({
       onClick={onClick}
       renderIcon={(checked, size, color) =>
         checked ? (
-          <AddCollectionFilledIcon style={{ color, width: size, height: size }} />
+          <AddCollectionFilledIcon
+            style={{
+              color,
+              width: size,
+              height: size,
+              background: "transparent",
+            }}
+          />
         ) : (
-          <AddCollectionOutlinedIcon style={{ color, width: size, height: size }} />
+          <AddCollectionOutlinedIcon
+            style={{
+              color,
+              width: size,
+              height: size,
+              background: "transparent",
+            }}
+          />
         )
       }
     />
