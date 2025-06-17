@@ -9,8 +9,7 @@ export default function VerifyCodePage() {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    let initialHeight = window.innerHeight;
+    const initialHeight = window.innerHeight;
     const onResize = () => {
       setIsKeyboardOpen(window.innerHeight < initialHeight - 100);
     };
@@ -47,15 +46,21 @@ export default function VerifyCodePage() {
             maxLength={6}
             variant="default"
             autoComplete="off"
+            error={code.length > 0 && !isCodeValid}
+            errorMessage={
+              code.length > 0 && !isCodeValid
+                ? "6桁のコードを入力してください"
+                : ""
+            }
           />
         </div>
         {/* 下部固定のボタン */}
         <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
           <Button variant="primary" fullWidth disabled={!isCodeValid}>
-            確認
+            確認コードを送信
           </Button>
           <Button variant="text-secondary" fullWidth>
-            コードを再送信
+            すでにアカウントをお持ちの方
           </Button>
         </FixedBottomContainer>
       </div>

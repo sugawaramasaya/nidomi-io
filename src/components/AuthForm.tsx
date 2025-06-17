@@ -3,9 +3,18 @@
 import { useRef, useEffect, useState } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import FixedBottomContainer from "@/components/FixedBottomContainer";
 
-export default function AuthForm({ isLogin = false }: { isLogin?: boolean }) {
-  const emailRef = useRef<HTMLInputElement>(null);
+interface AuthFormProps {
+  isLogin?: boolean;
+  buttonLabel?: string;
+}
+
+export default function AuthForm({
+  isLogin = false,
+  buttonLabel,
+}: AuthFormProps) {
+  const emailRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (
@@ -16,23 +25,14 @@ export default function AuthForm({ isLogin = false }: { isLogin?: boolean }) {
     }
   }, []);
 
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    let initialHeight = window.innerHeight;
-    const onResize = () => {
-      setIsKeyboardOpen(window.innerHeight < initialHeight - 100);
-    };
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isFormValid = isEmailValid && password.length > 0;
+
+  const label = buttonLabel || (isLogin ? "ログイン" : "新規登録");
 
   return (
     <div className="h-screen overflow-y-hidden flex flex-col items-center">
@@ -65,17 +65,14 @@ export default function AuthForm({ isLogin = false }: { isLogin?: boolean }) {
             />
           </div>
         </div>
-        <div
-          className="fixed left-1/2 bottom-0 -translate-x-1/2 w-full max-w-[480px] px-[16px] z-20"
-          style={{
-            paddingBottom: isKeyboardOpen ? 16 : 40,
-            background: "var(--background, #fff)",
-          }}
+        <FixedBottomContainer
+          className="px-[16px] gap-[24px] bg-white text-black"
+          withKeyboardAware
         >
           <Button fullWidth variant="primary" disabled={!isFormValid}>
-            {isLogin ? "ログイン" : "新規登録"}
+            {label}
           </Button>
-        </div>
+        </FixedBottomContainer>
       </div>
     </div>
   );
