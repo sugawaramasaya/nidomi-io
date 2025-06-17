@@ -67,23 +67,21 @@
   /* Typography Tokens */
   --font-family-base: "Noto Sans JP", sans-serif;
 
+  /* Weight */
+  --font-weight-bold: 700;
+  --font-weight-regular: 400;
+
   /* Large */
   --font-size-large: 21px;
   --line-height-large: 28px;
-  --font-weight-large-bold: 700;
-  --font-weight-large-regular: 400;
 
   /* Medium */
   --font-size-medium: 18px;
   --line-height-medium: 24px;
-  --font-weight-medium-bold: 700;
-  --font-weight-medium-regular: 400;
 
   /* Small */
   --font-size-small: 12px;
   --line-height-small: 16px;
-  --font-weight-small-bold: 700;
-  --font-weight-small-regular: 400;
 }
 
 /* Removed unsupported @theme at-rule */

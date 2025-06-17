@@ -114,7 +114,13 @@ export const ClickToClose = () => {
             boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
           }}
         >
-          <h2 style={{ color: "#222", fontWeight: 700, fontSize: 24 }}>
+          <h2
+            style={{
+              color: "#222",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: 24,
+            }}
+          >
             クリックで閉じる
           </h2>
           <p style={{ color: "#444", marginTop: 16 }}>
