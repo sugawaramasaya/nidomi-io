@@ -73,7 +73,6 @@ const TextField: React.FC<TextFieldProps> = ({
     <div
       className={className}
       style={{
-        minHeight: 56,
         opacity,
         userSelect: disabled ? "none" : undefined,
       }}
@@ -94,7 +93,6 @@ const TextField: React.FC<TextFieldProps> = ({
       </label>
       <div
         style={{
-          minHeight: 56,
           display: "flex",
           alignItems: "center",
           width: "100%",
@@ -121,17 +119,18 @@ const TextField: React.FC<TextFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             style={{
+              display: "inline-block",
               width: "100%",
-              minHeight: 40,
               height: "auto",
               fontFamily: "var(--font-family-base)",
               fontWeight: 700,
               fontSize: "var(--font-size-large)",
               lineHeight: "var(--line-height-large)",
+              color: "var(--on-surface)",
               background: "transparent",
               border: "none",
               outline: "none",
-              padding: 0,
+              padding: "14px 0",
               marginBottom: 8,
               boxSizing: "border-box",
               overflowWrap: "break-word",
@@ -170,18 +169,19 @@ const TextField: React.FC<TextFieldProps> = ({
             disabled={disabled}
             maxLength={maxLength}
             style={{
+              display: "inline-block",
               width: "100%",
-              minHeight: 40,
               height: "auto",
               resize: "none",
               fontFamily: "var(--font-family-base)",
               fontWeight: 700,
               fontSize: "var(--font-size-large)",
               lineHeight: "var(--line-height-large)",
+              color: "var(--on-surface)",
               background: "transparent",
               border: "none",
               outline: "none",
-              padding: 0,
+              padding: "14px 0",
               marginBottom: 8,
               overflowWrap: "break-word",
               wordBreak: "break-word",

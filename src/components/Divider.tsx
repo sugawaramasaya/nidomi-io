@@ -22,7 +22,7 @@ type DividerProps = {
 const Divider: React.FC<DividerProps> = ({
   width = "100%",
   thickness = "1px",
-  color = "#E0E0E0",
+  color = "var(--outline-variant)", // globals.cssの--outline-variantを使用
   className = "",
 }) => (
   <hr
