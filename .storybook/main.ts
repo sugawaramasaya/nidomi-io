@@ -14,6 +14,9 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
+  docs: {
+    autodocs: "tag",
+  },
   webpackFinal: async (config) => {
     const fileLoaderRule = config.module?.rules?.find(
       (rule): rule is RuleSetRule =>
