@@ -65,10 +65,7 @@ export default function AuthForm({
             />
           </div>
         </div>
-        <FixedBottomContainer
-          className="px-[16px] gap-[24px] bg-white text-black"
-          withKeyboardAware
-        >
+        <FixedBottomContainer withKeyboardAware>
           <Button fullWidth variant="primary" disabled={!isFormValid}>
             {label}
           </Button>
