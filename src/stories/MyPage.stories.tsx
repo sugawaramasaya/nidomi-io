@@ -1,9 +1,9 @@
 import { Meta } from "@storybook/react";
-import HomePage from "../app/(me)/home/page";
+import MyPage from "../app/(me)/mypage/page";
 
 const meta = {
-  component: HomePage,
-  title: "Pages/HomePage",
+  component: MyPage,
+  title: "Pages/MyPage",
   parameters: {
     layout: "fullscreen",
   },
