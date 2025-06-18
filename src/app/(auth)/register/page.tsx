@@ -36,10 +36,22 @@ export default function SignupPage() {
                   fontSize: "var(--font-size-small)",
                   lineHeight: "var(--line-height-small)",
                   fontWeight: "var(--font-weight-bold)",
-                  color: "var(--on-surface)",
+                  color: "var(--on-surface-variant)",
                 }}
               >
-                続行することで、利用規約とプライバシーポリシー（Cookieの使用を含む）に同意したとみなされます。
+                <span>続行することで、</span>Add commentMore actions
+                <a href="#" className="text-nidomi-blue-70 underline">
+                  利用規約
+                </a>
+                <span>と</span>
+                <a href="#" className="text-nidomi-blue-70 underline">
+                  プライバシーポリシー
+                </a>
+                <span>（</span>
+                <a href="#" className="text-nidomi-blue-70 underline">
+                  Cookieの使用
+                </a>
+                <span>を含む）に同意したとみなされます。</span>
               </div>
             </div>
           </div>
