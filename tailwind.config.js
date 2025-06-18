@@ -6,7 +6,9 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/icons/**/*.{js,ts,jsx,tsx,svg}",
+    "./src/styles/globals.css", // 👈 このように globals.css を追加
   ],
+  safelist: ["text-nidomi-blue-70"], // ✅ 明示的に safelist に追加
   theme: {
     container: {
       center: true,
