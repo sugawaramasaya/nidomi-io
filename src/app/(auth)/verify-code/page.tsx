@@ -55,7 +55,7 @@ export default function VerifyCodePage() {
           />
         </div>
         {/* 下部固定のボタン */}
-        <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
+        <FixedBottomContainer>
           <Button variant="primary" fullWidth disabled={!isCodeValid}>
             確認コードを送信
           </Button>
