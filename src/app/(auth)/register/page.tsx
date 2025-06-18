@@ -57,7 +57,7 @@ export default function SignupPage() {
           </div>
         </div>
         {/* 下部固定のログインボタン */}
-        <FixedBottomContainer className="px-[16px] gap-[24px] bg-white text-black">
+        <FixedBottomContainer>
           <Button fullWidth variant="secondary">
             ログイン
           </Button>
