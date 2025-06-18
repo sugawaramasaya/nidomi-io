@@ -36,7 +36,7 @@ const FixedBottomContainer: React.FC<Props> = ({
       className={`
         fixed left-1/2 translate-x-[-50%] z-[1000]
         w-[calc(100%-var(--space-32))] max-w-[calc(480px-var(--space-32))]
-        px-[var(--space-16)] pt-0 ${bottomPadding}
+        ${bottomPadding}
         ${className}
       `}
       style={{ bottom: 0 }}
