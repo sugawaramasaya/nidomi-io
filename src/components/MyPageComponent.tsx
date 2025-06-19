@@ -19,12 +19,12 @@ interface Props {
 export default function MyPageComponent({ posts }: Props) {
   if (posts.length === 0) {
     return (
-      <div className="h-screen flex flex-col justify-between">
-        <div className="flex flex-col gap-[12px] p-[24px]">
+      <div className="h-screen flex flex-col">
+        <div className="w-full max-w-[480px] mx-auto flex flex-col gap-[12px] px-[24px] pt-[24px]">
           <div
             style={{
-              fontSize: "var(--font-size-medium)",
-              lineHeight: "var(--line-height-medium)",
+              fontSize: "var(--font-size-large)",
+              lineHeight: "var(--line-height-large)",
               fontWeight: "var(--font-weight-bold)",
               color: "var(--on-surface)",
             }}
@@ -33,8 +33,8 @@ export default function MyPageComponent({ posts }: Props) {
           </div>
           <div
             style={{
-              fontSize: "var(--font-size-medium)",
-              lineHeight: "var(--line-height-medium)",
+              fontSize: "var(--font-size-large)",
+              lineHeight: "var(--line-height-large)",
               fontWeight: "var(--font-weight-bold)",
               color: "var(--on-surface-variant)",
             }}
@@ -42,24 +42,26 @@ export default function MyPageComponent({ posts }: Props) {
             撮影した写真や保存済みの画像を追加できます。またホーム画面でみんなのコレクションを眺めることもできます。
           </div>
         </div>
-        <div className="flex-1 flex items-center justify-center w-full">
-          <div className="aspect-square flex justify-center items-center w-full">
-            <Image
-              src={nidomy.src}
-              alt="nidomy graphic"
-              width={256}
-              height={256}
-              priority
-              className="aspect-square"
-            />
+        <div className="w-full max-w-[480px] mx-auto flex flex-col h-screen">
+          <div className="flex-1 flex items-center justify-center w-full">
+            <div className="aspect-square flex justify-center items-center w-full">
+              <Image
+                src={nidomy.src}
+                alt="nidomy graphic"
+                width={256}
+                height={256}
+                priority
+                className="aspect-square"
+              />
+            </div>
           </div>
         </div>
 
         <div className="fixed bottom-[40px] right-[16px] z-50 flex flex-col items-end space-y-[20px]">
-          <FAB icon={<AddIcon />} />
-          <FAB icon={<HomeIcon />} />
-          <FAB icon={<HeartIcon />} />
           <FAB icon={<SettingIcon />} />
+          <FAB icon={<HeartIcon />} />
+          <FAB icon={<HomeIcon />} />
+          <FAB icon={<AddIcon />} />
         </div>
       </div>
     );
