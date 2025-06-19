@@ -29,10 +29,14 @@ export default function MyPage() {
           where("uid", "==", currentUser.uid)
         );
         const querySnapshot = await getDocs(q);
-        const fetchedPosts: BookPost[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        })) as BookPost[];
+        const fetchedPosts: BookPost[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data() as Omit<BookPost, "id">;
+          console.log(doc.data());
+          return {
+            id: doc.id,
+            ...data,
+          };
+        });
         setPosts(fetchedPosts);
       } else {
         router.push("/login");
