@@ -44,3 +44,5 @@ next-env.d.ts
 storybook-static
 postcss.config.mjs
 vite.config.ts
+.storybook/preview.ts
+.storybook/vitest.setup.ts
