@@ -12,7 +12,11 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: "@storybook/nextjs",
-    options: {},
+    options: {
+      builder: {
+        name: "webpack5",
+      },
+    },
   },
   docs: {
     autodocs: "tag",
@@ -49,6 +53,11 @@ const config: StorybookConfig = {
         "@": path.resolve(__dirname, "../src"),
       };
     }
+
+    // 不要なstorybook-stories.js参照回避（重要）
+    config.entry = config.entry?.filter?.((entry: string) => {
+      return !entry.includes(".storybook");
+    });
 
     return config;
   },
