@@ -72,12 +72,11 @@ export default function MyPageComponent({ posts }: Props) {
   return (
     <div className="relative w-full min-h-screen">
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-0">
-        {posts.map((post) => {
-          console.log("📦 post", post);
+        {posts.map((post) =>
           post.imageUrls?.[0] ? (
             <ImageCard key={post.id} src={post.imageUrls[0]} />
-          ) : null;
-        })}
+          ) : null
+        )}
       </div>
     </div>
   );
