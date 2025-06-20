@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Button from "@/components/Button";
-import FixedBottomContainer from "@/components/FixedBottomContainer";
 import nidomy from "@/assets/nidomy/nidomy.png";
 import LogoSvg from "@/assets/logo.svg";
 
 export default function SignupPage() {
+  const router = useRouter();
+
   return (
     <div className="h-screen flex flex-col justify-between">
       <div className="w-full max-w-[480px] mx-auto flex flex-col items-center h-screen">
@@ -57,7 +59,11 @@ export default function SignupPage() {
               または
             </div>
             <div className="flex flex-col gap-[12px]">
-              <Button fullWidth variant="primary">
+              <Button
+                fullWidth
+                variant="primary"
+                onClick={() => router.push("/register/email")}
+              >
                 メールアドレスで登録
               </Button>
               <div
@@ -85,7 +91,11 @@ export default function SignupPage() {
               </div>
             </div>
           </div>
-          <Button fullWidth variant="secondary">
+          <Button
+            fullWidth
+            variant="secondary"
+            onClick={() => router.push("/login")}
+          >
             ログイン
           </Button>
         </div>

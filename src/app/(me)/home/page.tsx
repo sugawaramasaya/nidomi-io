@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ImageCard from "@/components/ImageCard";
 import FAB from "@/components/FAB";
 import Backdrop from "@/components/Backdrop";
@@ -15,7 +16,7 @@ const images = Array.from(
 
 export default function ExamplePage() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const router = useRouter(); // useRouterを初期化
   const toggleFAB = () => setIsOpen((prev) => !prev);
 
   return (
@@ -29,7 +30,13 @@ export default function ExamplePage() {
       {isOpen && <Backdrop onClick={() => setIsOpen(false)} />}
 
       <div className="fixed bottom-[40px] right-[16px] z-50 flex flex-col items-end space-y-[20px]">
-        {isOpen && <FAB icon={<UserIcon />} />}
+        {/* FABボタンをタップすると/mypageへ遷移 */}
+        {isOpen && (
+          <FAB
+            icon={<UserIcon />}
+            onClick={() => router.push("/mypage")} // 遷移処理を追加
+          />
+        )}
         <FAB icon={isOpen ? <AddIcon /> : <MenuIcon />} onClick={toggleFAB} />
       </div>
     </div>

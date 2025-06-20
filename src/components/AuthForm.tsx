@@ -1,6 +1,7 @@
 // src/components/AuthForm.tsx
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
@@ -15,6 +16,7 @@ export default function AuthForm({
   buttonLabel,
 }: AuthFormProps) {
   const emailRef = useRef<HTMLInputElement | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (
@@ -66,7 +68,22 @@ export default function AuthForm({
           </div>
         </div>
         <FixedBottomContainer withKeyboardAware>
-          <Button fullWidth variant="primary" disabled={!isFormValid}>
+          <Button
+            fullWidth
+            variant="primary"
+            disabled={!isFormValid}
+            onClick={() => {
+              if (isLogin) {
+                // ログイン処理
+                console.log("Logging in with email:", email);
+                router.push("/home");
+              } else {
+                // 新規登録処理
+                console.log("Registering with email:", email);
+                router.push("/verify-code");
+              }
+            }}
+          >
             {label}
           </Button>
         </FixedBottomContainer>

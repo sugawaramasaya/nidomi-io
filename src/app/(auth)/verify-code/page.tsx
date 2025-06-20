@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
@@ -7,6 +8,7 @@ import FixedBottomContainer from "@/components/FixedBottomContainer";
 export default function VerifyCodePage() {
   const [code, setCode] = useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const initialHeight = window.innerHeight;
@@ -52,10 +54,24 @@ export default function VerifyCodePage() {
       </div>
       {/* 下部固定のボタン */}
       <FixedBottomContainer>
-        <Button variant="primary" fullWidth disabled={!isCodeValid}>
+        <Button
+          variant="primary"
+          fullWidth
+          disabled={!isCodeValid}
+          onClick={() => {
+            if (isCodeValid) {
+              console.log("Sending verification code:", code);
+              router.push("/home");
+            }
+          }}
+        >
           確認コードを送信
         </Button>
-        <Button variant="text-secondary" fullWidth>
+        <Button
+          variant="text-secondary"
+          fullWidth
+          onClick={() => router.push("/login")}
+        >
           すでにアカウントをお持ちの方
         </Button>
       </FixedBottomContainer>

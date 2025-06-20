@@ -3,9 +3,13 @@
 "use client";
 
 import { BookPost } from "@/types/bookPost";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import ImageCard from "@/components/ImageCard";
 import FAB from "@/components/FAB";
+import Backdrop from "@/components/Backdrop";
+import MenuIcon from "@/icons/size40/menu.svg";
 import AddIcon from "@/icons/size40/add.svg";
 import HomeIcon from "@/icons/size40/home-outlined.svg";
 import HeartIcon from "@/icons/size40/heart-outlined.svg";
@@ -17,7 +21,10 @@ interface Props {
 }
 
 export default function MyPageComponent({ posts }: Props) {
-  console.log("🐛 MyPageComponent posts:", posts); // ←ここに追加！
+  console.log("🐛 MyPageComponent posts:", posts);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleFAB = () => setIsOpen((prev) => !prev);
+  const router = useRouter();
 
   if (posts.length === 0) {
     return (
@@ -62,8 +69,8 @@ export default function MyPageComponent({ posts }: Props) {
         <div className="fixed bottom-[40px] right-[16px] z-50 flex flex-col items-end space-y-[20px]">
           <FAB icon={<SettingIcon />} />
           <FAB icon={<HeartIcon />} />
-          <FAB icon={<HomeIcon />} />
-          <FAB icon={<AddIcon />} />
+          <FAB icon={<HomeIcon />} onClick={() => router.push("/home")} />
+          <FAB icon={<AddIcon />} onClick={() => router.push("/mypage/post")} />
         </div>
       </div>
     );
@@ -77,6 +84,19 @@ export default function MyPageComponent({ posts }: Props) {
             <ImageCard key={post.id} src={post.imageUrls[0]} />
           ) : null
         )}
+      </div>
+
+      {isOpen && <Backdrop onClick={() => setIsOpen(false)} />}
+
+      <div className="fixed bottom-[40px] right-[16px] z-50 flex flex-col items-end space-y-[20px]">
+        {isOpen && (
+          <>
+            <FAB icon={<SettingIcon />} />
+            <FAB icon={<HeartIcon />} />
+            <FAB icon={<HomeIcon />} onClick={() => router.push("/home")} />
+          </>
+        )}
+        <FAB icon={isOpen ? <AddIcon /> : <MenuIcon />} onClick={toggleFAB} />
       </div>
     </div>
   );
