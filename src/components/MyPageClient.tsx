@@ -11,6 +11,7 @@ export default function MyPageClient() {
   const [posts, setPosts] = useState<BookPost[] | null>(null);
 
   useEffect(() => {
+    console.log("🔑 currentUser:", auth.currentUser?.uid);
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const q = query(
