@@ -17,6 +17,8 @@ interface Props {
 }
 
 export default function MyPageComponent({ posts }: Props) {
+  console.log("🐛 MyPageComponent posts:", posts); // ←ここに追加！
+
   if (posts.length === 0) {
     return (
       <div className="h-screen flex flex-col">
@@ -70,11 +72,12 @@ export default function MyPageComponent({ posts }: Props) {
   return (
     <div className="relative w-full min-h-screen">
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-0">
-        {posts.map((post) =>
+        {posts.map((post) => {
+          console.log("📦 post", post);
           post.imageUrls?.[0] ? (
             <ImageCard key={post.id} src={post.imageUrls[0]} />
-          ) : null
-        )}
+          ) : null;
+        })}
       </div>
     </div>
   );

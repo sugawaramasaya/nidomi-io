@@ -1,9 +1,9 @@
 export interface BookPost {
   id: string;
-  title: string;
-  comment?: string;
-  tags?: string[];
   imageUrls: string[];
-  createdAt: any; // Firestore Timestamp
+  title: string;
+  comment: string;
+  tags?: string[];
   userId: string;
+  createdAt?: any; // Timestamp型でもOK
 }

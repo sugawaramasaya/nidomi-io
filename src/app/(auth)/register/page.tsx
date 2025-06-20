@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
@@ -37,7 +38,11 @@ export default function SignupPage() {
           {/* メールアドレスで登録ボタンと注釈 */}
           <div className="flex flex-col gap-[12px]">
             {/* Googleで登録ボタン */}
-            <Button fullWidth variant="primary">
+            <Button
+              fullWidth
+              variant="primary"
+              onClick={() => signIn("google", { callbackUrl: "/home" })}
+            >
               Googleで登録
             </Button>
             <div
