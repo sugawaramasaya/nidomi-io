@@ -14,6 +14,11 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { storage, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
+import type { Session } from "next-auth";
+
+interface ExtendedSession extends Session {
+  idToken?: string;
+}
 
 export default function PostPage() {
   const { data: session } = useSession();
@@ -35,11 +40,18 @@ export default function PostPage() {
     });
 
     const maybeSignInToFirebase = async () => {
-      if (!auth.currentUser && session?.idToken) {
+      const extendedSession = session as ExtendedSession;
+      if (!auth.currentUser && extendedSession?.idToken) {
         try {
-          const credential = GoogleAuthProvider.credential(session.idToken);
+          const credential = GoogleAuthProvider.credential(
+            extendedSession.idToken
+          );
           await signInWithCredential(auth, credential);
-          console.log("✅ Firebase login successful:", auth.currentUser?.uid);
+
+          const currentUser = auth.currentUser as User | null;
+          if (currentUser) {
+            console.log("✅ Firebase login successful:", currentUser.uid);
+          }
         } catch (error) {
           console.error("🔥 Firebase login error:", error);
         }
