@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, token }) {
-      session.user.id = token.sub;
+      session.user!.id = token.sub; // 型定義が適用される
       return session;
     },
   },
