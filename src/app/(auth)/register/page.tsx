@@ -11,12 +11,12 @@ export default function SignupPage() {
   const router = useRouter();
 
   return (
-    <div className="h-screen flex flex-col justify-between">
+    <div className="h-screen flex flex-col justify-between bg-[var(--surface)] text-[var(--on-surface)]">
       <div className="w-full max-w-[480px] mx-auto flex flex-col items-center h-screen">
         {/* ロゴ・nidomy画像を縦flexで並べる。下部ブロック分スペースを空ける */}
         <div className="flex flex-col w-full items-center flex-1 min-h-0">
           {/* ロゴ */}
-          <div className="w-full flex justify-center items-center pt-[24px] px-[24px] z-20">
+          <div className="w-full flex justify-center items-center pt-[var(--space-24)] px-[var(--space-24)] z-20">
             <div className="w-full aspect-[100/18]">
               <LogoSvg className="w-full h-full block" />
             </div>
@@ -36,9 +36,9 @@ export default function SignupPage() {
           </div>
         </div>
         {/* メインコンテンツ */}
-        <div className="flex flex-col w-full px-[16px] pb-[40px] gap-[24px]">
+        <div className="flex flex-col w-full px-[var(--space-16)] pb-[var(--space-40)] gap-[var(--space-24)]">
           {/* メールアドレスで登録ボタンと注釈 */}
-          <div className="flex flex-col gap-[12px]">
+          <div className="flex flex-col gap-[var(--space-12)]">
             {/* Googleで登録ボタン */}
             <Button
               fullWidth
@@ -47,57 +47,10 @@ export default function SignupPage() {
             >
               Googleで登録
             </Button>
-            <div
-              className="text-center"
-              style={{
-                fontSize: "var(--font-size-medium)",
-                lineHeight: "var(--line-height-medium)",
-                fontWeight: "var(--font-weight-bold)",
-                color: "var(--on-surface-variant)",
-              }}
-            >
-              または
-            </div>
-            <div className="flex flex-col gap-[12px]">
-              <Button
-                fullWidth
-                variant="primary"
-                onClick={() => router.push("/register/email")}
-              >
-                メールアドレスで登録
-              </Button>
-              <div
-                className="text-center px-[24px]"
-                style={{
-                  fontSize: "var(--font-size-small)",
-                  lineHeight: "var(--line-height-small)",
-                  fontWeight: "var(--font-weight-bold)",
-                  color: "var(--on-surface-variant)",
-                }}
-              >
-                <span>続行することで、</span>
-                <a href="#" className="text-nidomi-blue-70 underline">
-                  利用規約
-                </a>
-                <span>と</span>
-                <a href="#" className="text-nidomi-blue-70 underline">
-                  プライバシーポリシー
-                </a>
-                <span>（</span>
-                <a href="#" className="text-nidomi-blue-70 underline">
-                  Cookieの使用
-                </a>
-                <span>を含む）に同意したとみなされます。</span>
-              </div>
+            <div className="text-[var(--on-surface-variant)] text-small text-center">
+              Googleアカウントを使用して登録します。
             </div>
           </div>
-          <Button
-            fullWidth
-            variant="secondary"
-            onClick={() => router.push("/login")}
-          >
-            ログイン
-          </Button>
         </div>
       </div>
     </div>
