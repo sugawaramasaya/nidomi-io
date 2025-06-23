@@ -24,11 +24,17 @@ export default function HomePage() {
 
   if (posts === null) {
     return (
-      <div className="h-screen flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center text-[var(--on-surface)]">
         Loading...
       </div>
     );
   }
 
-  return <PostPageWrapper posts={posts} screen="home" />;
+  return (
+    <PostPageWrapper
+      posts={posts}
+      screen="home"
+      className="bg-[var(--surface)] text-[var(--on-surface)]"
+    />
+  );
 }

@@ -9,11 +9,13 @@ import FixedBottomContainer from "@/components/FixedBottomContainer";
 interface AuthFormProps {
   isLogin?: boolean;
   buttonLabel?: string;
+  className?: string;
 }
 
 export default function AuthForm({
   isLogin = false,
   buttonLabel,
+  className = "",
 }: AuthFormProps) {
   const emailRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
@@ -37,7 +39,9 @@ export default function AuthForm({
   const label = buttonLabel || (isLogin ? "ログイン" : "新規登録");
 
   return (
-    <div className="h-screen overflow-y-hidden flex flex-col items-center">
+    <div
+      className={`h-screen overflow-y-hidden flex flex-col items-center ${className}`}
+    >
       <div className="w-full max-w-[480px] flex flex-col items-center h-screen">
         <div className="flex flex-col w-full items-center flex-1 min-h-0 pb-[120px]">
           <div className="w-full p-[24px] flex flex-col gap-[48px]">

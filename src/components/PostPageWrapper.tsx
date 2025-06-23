@@ -12,11 +12,13 @@ import { db, storage } from "@/lib/firebase";
 interface Props {
   posts: BookPost[];
   screen?: "mypage" | "home";
+  className?: string;
 }
 
 export default function PostPageWrapper({
   posts: initialPosts,
   screen = "mypage",
+  className = "",
 }: Props) {
   const [posts, setPosts] = useState<BookPost[]>(
     [...initialPosts].sort(
@@ -114,7 +116,9 @@ export default function PostPageWrapper({
   }
 
   return (
-    <div className="relative w-full min-h-screen bg-[color:var(--surface)]">
+    <div
+      className={`relative w-full min-h-screen bg-[color:var(--surface)] ${className}`}
+    >
       <PostGridView
         posts={posts}
         isSelecting={isSelecting}

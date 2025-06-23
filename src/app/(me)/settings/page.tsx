@@ -12,47 +12,34 @@ export default function SettingsPage() {
   const router = useRouter();
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
-  const textLargeStyle = {
-    fontSize: "var(--font-size-large)",
-    lineHeight: "var(--line-height-large)",
-    fontWeight: "var(--font-weight-bold)",
-    color: "var(--on-surface)",
-  };
-
-  const textMediumStyle = {
-    fontSize: "var(--font-size-medium)",
-    lineHeight: "var(--line-height-medium)",
-    fontWeight: "var(--font-weight-bold)",
-    color: "var(--on-surface-variant)",
-  };
-
   return (
-    <div className="w-full max-w-[480px] mx-auto pb-[112px]">
+    <div className="w-full max-w-[480px] mx-auto pb-[var(--space-112)]">
       {/* 戻るボタン */}
-      <div className="fixed bottom-[40px] left-[16px] z-50 flex flex-col items-start space-y-[20px]">
+      <div className="fixed bottom-[var(--space-40)] left-[var(--space-16)] z-50 flex flex-col items-start gap-[var(--space-20)]">
         <FAB icon={<BackIcon />} onClick={() => router.back()} />
       </div>
 
       {/* ユーザー名 */}
-      <div className="px-[24px] py-[16px] gap-[4px] flex flex-col items-start">
-        <div style={textLargeStyle}>ユーザー名</div>
-        <div style={textMediumStyle}>sugawara</div>
+      <div className="px-[var(--space-24)] py-[var(--space-16)] gap-[var(--space-4)] flex flex-col items-start">
+        <div className="text-large">ユーザー名</div>
+        <div className="text-medium text-[var(--on-surface-variant)]">
+          sugawara
+        </div>
       </div>
       <Divider />
 
       {/* メールアドレス */}
-      <div className="px-[24px] py-[16px] gap-[4px] flex flex-col items-start">
-        <div style={textLargeStyle}>メールアドレス</div>
-        <div style={textMediumStyle}>masaya.sugawara@gmail.com</div>
+      <div className="px-[var(--space-24)] py-[var(--space-16)] gap-[var(--space-4)] flex flex-col items-start">
+        <div className="text-large">メールアドレス</div>
+        <div className="text-medium text-[var(--on-surface-variant)]">
+          masaya.sugawara@gmail.com
+        </div>
       </div>
       <Divider />
 
       {/* 通知 */}
-      <div className="flex items-center justify-between px-[24px] py-[16px] gap-[4px]">
-        <div>
-          <div style={textLargeStyle}>通知</div>
-          <div style={textMediumStyle}>アプリからの通知</div>
-        </div>
+      <div className="px-[var(--space-24)] py-[var(--space-16)] gap-[var(--space-4)] flex flex-col items-start">
+        <div className="text-large">通知</div>
         <Switch
           checked={notificationsEnabled}
           onChange={setNotificationsEnabled}
@@ -61,23 +48,25 @@ export default function SettingsPage() {
       <Divider />
 
       {/* テーマ */}
-      <div className="px-[24px] py-[16px] gap-[4px] flex flex-col items-start">
-        <div style={textLargeStyle}>テーマ</div>
-        <div style={textMediumStyle}>システムデフォルト</div>
+      <div className="px-[var(--space-24)] py-[var(--space-16)] gap-[var(--space-4)] flex flex-col items-start">
+        <div className="text-large">テーマ</div>
+        <div className="text-medium text-[var(--on-surface-variant)]">
+          システムデフォルト
+        </div>
       </div>
       <Divider />
 
       {/* フォロー中 */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           フォロー中
         </div>
@@ -85,16 +74,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* フォロワー */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           フォロワー
         </div>
@@ -102,16 +91,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* ハート */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           ハート
         </div>
@@ -119,16 +108,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* プライバシーポリシー */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           プライバシーポリシー
         </div>
@@ -136,16 +125,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* 利用規約 */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           利用規約
         </div>
@@ -153,16 +142,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* ログアウト */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           ログアウト
         </div>
@@ -170,16 +159,16 @@ export default function SettingsPage() {
       <Divider />
 
       {/* アカウントを削除 */}
-      <div className="px-[24px] py-[16px]">
+      <div className="px-[var(--space-24)] py-[var(--space-16)]">
         <div
           style={{
-            ...textLargeStyle,
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
             height: "40px",
             textAlign: "center",
           }}
+          className="text-large"
         >
           アカウントを削除
         </div>
