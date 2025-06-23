@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { BookPost } from "@/types/bookPost";
-import MyPageComponent from "@/components/MyPageComponent";
+import PostPageWrapper from "@/components/PostPageWrapper";
 
 export default function HomePage() {
   const [posts, setPosts] = useState<BookPost[] | null>(null);
@@ -30,5 +30,5 @@ export default function HomePage() {
     );
   }
 
-  return <MyPageComponent posts={posts} screen="home" />;
+  return <PostPageWrapper posts={posts} screen="home" />;
 }
