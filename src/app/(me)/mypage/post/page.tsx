@@ -14,6 +14,7 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { storage, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
+import Button from "@/components/Button";
 import type { Session } from "next-auth";
 
 interface ExtendedSession extends Session {
@@ -102,7 +103,9 @@ export default function PostPage() {
   if (!authReady) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <p className="text-gray-500">認証情報を確認中です...</p>
+        <p className="text-[var(--on-surface-variant)] text-medium">
+          認証情報を確認中です...
+        </p>
       </div>
     );
   }
@@ -110,14 +113,18 @@ export default function PostPage() {
   if (!authUser) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <p className="text-red-500">ログインしてください。</p>
+        <p className="text-[var(--error)] text-medium">
+          ログインしてください。
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">投稿テスト画面</h1>
+    <div className="p-[var(--space-16)]">
+      <h1 className="text-large font-bold mb-[var(--space-16)]">
+        投稿テスト画面
+      </h1>
       <input
         type="file"
         accept="image/*"
@@ -125,15 +132,14 @@ export default function PostPage() {
           if (e.target.files?.[0]) setFile(e.target.files[0]);
         }}
       />
-      <button
-        onClick={handleUpload}
+      <Button
+        variant="primary"
+        fullWidth
         disabled={!file || uploading}
-        className={`mt-4 px-4 py-2 rounded ${
-          uploading ? "bg-gray-400" : "bg-blue-600"
-        } text-white`}
+        onClick={handleUpload}
       >
         {uploading ? "アップロード中..." : "アップロード"}
-      </button>
+      </Button>
     </div>
   );
 }
