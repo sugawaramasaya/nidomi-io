@@ -18,15 +18,19 @@ import nidomy from "@/assets/nidomy/kyoton.png";
 
 interface Props {
   posts: BookPost[];
+  screen?: "mypage" | "home"; // 追加
 }
 
-export default function MyPageComponent({ posts }: Props) {
-  console.log("🐛 MyPageComponent posts:", posts);
+export default function MyPageComponent({ posts, screen = "mypage" }: Props) {
+  // デバッグ用のログ出力
+  console.log("🔑 MyPageComponent screen:", screen);
   const [isOpen, setIsOpen] = useState(false);
   const toggleFAB = () => setIsOpen((prev) => !prev);
   const router = useRouter();
 
-  if (posts.length === 0) {
+  const showEmptyState = screen === "mypage" && posts.length === 0;
+
+  if (showEmptyState) {
     return (
       <div className="h-screen flex flex-col">
         <div className="w-full max-w-[480px] mx-auto flex flex-col gap-[12px] px-[24px] pt-[24px]">
@@ -91,9 +95,15 @@ export default function MyPageComponent({ posts }: Props) {
       <div className="fixed bottom-[40px] right-[16px] z-50 flex flex-col items-end space-y-[20px]">
         {isOpen && (
           <>
-            <FAB icon={<SettingIcon />} />
-            <FAB icon={<HeartIcon />} />
-            <FAB icon={<HomeIcon />} onClick={() => router.push("/home")} />
+            {screen === "mypage" ? (
+              <>
+                <FAB icon={<SettingIcon />} />
+                <FAB icon={<HeartIcon />} />
+                <FAB icon={<HomeIcon />} onClick={() => router.push("/home")} />
+              </>
+            ) : (
+              <FAB icon={<UserIcon />} onClick={() => router.push("/mypage")} />
+            )}
           </>
         )}
         <FAB icon={isOpen ? <AddIcon /> : <MenuIcon />} onClick={toggleFAB} />
