@@ -23,7 +23,7 @@ const Checkbox: React.FC<Checkbox> = ({
         "border-none outline-none bg-transparent",
         "select-none transition-opacity duration-150",
         disabled ? "cursor-not-allowed" : "cursor-pointer",
-        className
+        className,
       ].join(" ")}
       style={{
         width: 56,
@@ -31,7 +31,7 @@ const Checkbox: React.FC<Checkbox> = ({
         padding: 8,
         background: "transparent",
         opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s"
+        transition: "opacity 0.15s",
       }}
       onClick={() => !disabled && onChange?.(!checked)}
       disabled={disabled}
@@ -43,13 +43,21 @@ const Checkbox: React.FC<Checkbox> = ({
         <CircleCheckFilledIcon
           width={40}
           height={40}
-          style={{ color: "var(--surface)", mixBlendMode: "multiply" }}
+          style={{
+            color: "var(--surface)",
+            mixBlendMode: "multiply",
+            filter: "invert(100%)",
+          }}
         />
       ) : (
         <CircleIcon
           width={40}
           height={40}
-          style={{ color: "var(--surface)", mixBlendMode: "multiply" }}
+          style={{
+            color: "var(--surface)",
+            mixBlendMode: "multiply",
+            filter: "invert(100%)",
+          }}
         />
       )}
     </button>
