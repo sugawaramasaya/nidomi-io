@@ -20,16 +20,25 @@ const TagDeleteButton: React.FC<TagDeleteButtonProps> = ({
   return (
     <button
       type="button"
-      className={`inline-flex items-center rounded-[var(--radius-full)] border-none outline-none bg-transparent select-none transition-opacity duration-150 ${
-        disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-      } ${className}`}
+      className={[
+        "inline-flex items-center",
+        "rounded-[var(--radius-full)]",
+        "border-none outline-none bg-transparent",
+        "select-none transition-opacity duration-150",
+        disabled ? "cursor-not-allowed" : "cursor-pointer",
+        className,
+      ].join(" ")}
       style={{
         padding: "var(--space-8)",
+        background: "transparent",
         color: "var(--on-surface)",
+        borderRadius: "var(--radius-full)",
+        opacity: disabled ? 0.1 : 1,
+        transition: "opacity 0.15s",
       }}
       onClick={onClick}
       disabled={disabled}
-      aria-label={`${label}を削除`}
+      aria-label={label + "を削除"}
     >
       <span style={{ display: "flex", alignItems: "center" }}>
         <CloseIcon
@@ -37,6 +46,19 @@ const TagDeleteButton: React.FC<TagDeleteButtonProps> = ({
           height={20}
           style={{ color: "var(--on-surface)" }}
         />
+      </span>
+      <span
+        style={{
+          fontFamily: "var(--font-family-base)",
+          fontWeight: "var(--font-weight-bold)",
+          fontSize: "var(--font-size-large)",
+          lineHeight: "var(--line-height-large)",
+          paddingLeft: "var(--space-8)",
+          paddingRight: "var(--space-8)",
+          userSelect: "none",
+        }}
+      >
+        {label}
       </span>
     </button>
   );
