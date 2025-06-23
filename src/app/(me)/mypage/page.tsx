@@ -33,17 +33,11 @@ export default function MyPage() {
 
   if (posts === null) {
     return (
-      <div className="h-screen flex items-center justify-center text-[var(--on-surface)]">
+      <div className="h-screen flex items-center justify-center">
         Loading...
       </div>
     );
   }
 
-  return (
-    <PostPageWrapper
-      posts={posts}
-      screen="mypage"
-      className="bg-[var(--surface)] text-[var(--on-surface)]"
-    />
-  );
+  return <PostPageWrapper posts={posts} screen="mypage" />;
 }
