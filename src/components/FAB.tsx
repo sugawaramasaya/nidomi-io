@@ -1,21 +1,19 @@
 import React, { ReactElement } from "react";
 
-type FABProps = {
-  icon: ReactElement<{ style?: React.CSSProperties }> | React.ReactNode;
-  disabled?: boolean;
-  size?: number;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const FAB: React.FC<FABProps> = ({
+const FAB = ({
   icon,
   disabled = false,
   size = 56,
   className = "",
   type = "button",
   onClick,
+}: {
+  icon: React.ReactNode;
+  disabled?: boolean;
+  size?: number;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }) => {
   const bgColor = "var(--surface-tint)";
   const iconColor = "var(--on-surface)";
@@ -30,10 +28,10 @@ const FAB: React.FC<FABProps> = ({
   const iconWithStyle =
     isValidStyledIcon && React.isValidElement(icon)
       ? React.cloneElement(
-          icon as any, // 型アサーションをより柔軟に
+          icon as React.ReactElement<{ style?: React.CSSProperties }>,
           {
             style: {
-              ...(icon as any).props?.style,
+              ...((icon.props as { style?: React.CSSProperties })?.style || {}),
               color: iconColor,
               width: size - 16,
               height: size - 16,
@@ -45,40 +43,19 @@ const FAB: React.FC<FABProps> = ({
   return (
     <button
       type={type}
-      className={[
-        "inline-flex items-center justify-center",
-        "select-none transition-colors duration-150",
-        "border-none outline-none",
-        "rounded-[var(--radius-full)]",
-        disabled ? "cursor-not-allowed" : "",
-        className,
-      ].join(" ")}
+      className={`inline-flex items-center justify-center select-none transition-colors duration-150 border-none outline-none rounded-[var(--radius-full)] ${
+        disabled ? "cursor-not-allowed" : "cursor-pointer"
+      } ${className}`}
       style={{
         width: size,
         height: size,
-        padding: 0,
-        borderRadius: "var(--radius-full)",
-        background: bgColor,
-        color: iconColor,
-        cursor: disabled ? "not-allowed" : "pointer",
-        opacity: disabled ? 0.1 : 1,
-        transition: "opacity 0.15s",
+        padding: "var(--space-8)",
+        backgroundColor: bgColor,
       }}
       disabled={disabled}
       onClick={onClick}
-      aria-label="fab button"
     >
-      <span
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: size - 16,
-          height: size - 16,
-        }}
-      >
-        {iconWithStyle}
-      </span>
+      {iconWithStyle}
     </button>
   );
 };

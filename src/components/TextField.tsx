@@ -16,7 +16,6 @@ export type TextFieldProps = {
   className?: string;
   id?: string;
   autoComplete?: string;
-  // 修正後（nullも許容するように変更）
   inputRef?: React.RefObject<HTMLInputElement | null>;
   onFocus?: () => void;
   onBlur?: () => void;
@@ -37,7 +36,7 @@ const TextField: React.FC<TextFieldProps> = ({
   className = "",
   id,
   autoComplete,
-  inputRef, // ← 追加
+  inputRef,
   onFocus,
   onBlur,
 }) => {
@@ -46,214 +45,89 @@ const TextField: React.FC<TextFieldProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const internalInputRef = useRef<HTMLInputElement>(null);
 
-  // カウンター表示
-  const counter =
-    typeof maxLength === "number"
-      ? `${value.length} / ${maxLength}`
-      : undefined;
-  const showError = error && !!errorMessage;
-  const showHelper = (!!helperText || !!counter) && !showError;
-
-  // Dividerカラー
-  const dividerColor = focused ? "var(--outline)" : "var(--outline-variant)";
-
-  // Disabled時のopacity
-  const opacity = disabled ? 0.2 : 1;
-
-  // textareaの高さ自動調整
-  useEffect(() => {
-    if (variant !== "password" && textareaRef.current) {
-      const el = textareaRef.current;
-      el.style.height = "auto";
-      el.style.height = el.scrollHeight + "px";
-    }
-  }, [value, variant]);
-
   return (
-    <div
-      className={className}
-      style={{
-        opacity,
-        userSelect: disabled ? "none" : undefined,
-      }}
-    >
-      <label
-        htmlFor={inputId}
-        style={{
-          color: "var(--on-surface-variant)",
-          fontFamily: "var(--font-family-base)",
-          fontWeight: "var(--font-weight-bold)",
-          fontSize: "var(--font-size-medium)",
-          lineHeight: "var(--line-height-medium)",
-          marginBottom: 8,
-          display: "block",
-        }}
-      >
-        {label}
-      </label>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        {variant === "password" ? (
-          <input
-            className={clsx("textfield-input", className)}
-            id={inputId}
-            type={type || "password"}
-            value={value}
-            onChange={(e) => {
-              if (!disabled) onChange(e.target.value);
-            }}
-            onFocus={() => {
-              setFocused(true);
-              if (onFocus) onFocus();
-            }}
-            onBlur={() => {
-              setFocused(false);
-              if (onBlur) onBlur();
-            }}
-            placeholder={placeholder}
-            disabled={disabled}
-            maxLength={maxLength}
-            style={{
-              display: "inline-block",
-              width: "100%",
-              height: "auto",
-              fontFamily: "var(--font-family-base)",
-              fontWeight: "var(--font-weight-bold)",
-              fontSize: "var(--font-size-large)",
-              lineHeight: "var(--line-height-large)",
-              color: "var(--on-surface)",
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              padding: "14px 0",
-              marginBottom: 8,
-              boxSizing: "border-box",
-              overflowWrap: "break-word",
-              wordBreak: "break-word",
-            }}
-            aria-invalid={error}
-            aria-describedby={
-              showError
-                ? `${inputId}-error`
-                : showHelper
-                ? `${inputId}-helper`
-                : undefined
-            }
-            autoComplete={autoComplete || "off"}
-            spellCheck={false}
-            ref={inputRef || internalInputRef} // ← 外部から渡されてなければ内部で用意したrefを使う
-          />
-        ) : (
-          <textarea
-            className="textfield-input"
-            ref={textareaRef}
-            id={inputId}
-            value={value}
-            onChange={(e) => {
-              if (!disabled) onChange(e.target.value);
-            }}
-            onFocus={() => {
-              setFocused(true);
-              if (onFocus) onFocus();
-            }}
-            onBlur={() => {
-              setFocused(false);
-              if (onBlur) onBlur();
-            }}
-            placeholder={placeholder}
-            disabled={disabled}
-            maxLength={maxLength}
-            style={{
-              display: "inline-block",
-              width: "100%",
-              height: "auto",
-              resize: "none",
-              fontFamily: "var(--font-family-base)",
-              fontWeight: "var(--font-weight-bold)",
-              fontSize: "var(--font-size-large)",
-              lineHeight: "var(--line-height-large)",
-              color: "var(--on-surface)",
-              background: "transparent",
-              border: "none",
-              outline: "none",
-              padding: "14px 0",
-              marginBottom: 8,
-              overflowWrap: "break-word",
-              wordBreak: "break-word",
-              boxSizing: "border-box",
-            }}
-            aria-invalid={error}
-            aria-describedby={
-              showError
-                ? `${inputId}-error`
-                : showHelper
-                ? `${inputId}-helper`
-                : undefined
-            }
-            rows={1}
-            autoComplete={autoComplete || "off"}
-            spellCheck={false}
-          />
-        )}
-      </div>
-      <div
-        style={{
-          width: "100%",
-          height: 2,
-          borderRadius: 999,
-          background: dividerColor,
-          marginBottom: 12,
-        }}
-      />
-      <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-        {showError && (errorMessage || counter) && (
-          <span
-            id={`${inputId}-error`}
-            style={{
-              color: "var(--error)",
-              fontFamily: "var(--font-family-base)",
-              fontWeight: "var(--font-weight-bold)",
-              fontSize: "var(--font-size-small)",
-              lineHeight: "var(--line-height-small)",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            {errorMessage}
-            {counter && (
-              <span style={{ marginLeft: errorMessage ? 8 : 0 }}>
-                {counter}
-              </span>
-            )}
-          </span>
-        )}
-        {showHelper && (helperText || counter) && (
-          <span
-            id={`${inputId}-helper`}
-            style={{
-              color: "var(--on-surface)",
-              fontFamily: "var(--font-family-base)",
-              fontWeight: "var(--font-weight-bold)",
-              fontSize: "var(--font-size-small)",
-              lineHeight: "var(--line-height-small)",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            {helperText}
-            {counter && (
-              <span style={{ marginLeft: helperText ? 8 : 0 }}>{counter}</span>
-            )}
-          </span>
-        )}
-      </div>
+    <div className={clsx("flex flex-col", className)}>
+      {label && (
+        <label
+          htmlFor={inputId}
+          className="text-[var(--on-surface)] text-medium mb-[var(--space-8)]"
+        >
+          {label}
+        </label>
+      )}
+      {variant === "password" ? (
+        <input
+          id={inputId}
+          ref={inputRef || internalInputRef}
+          type={type}
+          value={value}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          disabled={disabled}
+          onFocus={() => {
+            setFocused(true);
+            onFocus?.();
+          }}
+          onBlur={() => {
+            setFocused(false);
+            onBlur?.();
+          }}
+          onChange={(e) => onChange(e.target.value)}
+          className={clsx(
+            "px-[var(--space-16)] py-[var(--space-12)]",
+            "rounded-[var(--radius-12)] border border-[var(--outline)]",
+            "text-[var(--on-surface)] text-medium",
+            "focus:border-[var(--outline-variant)]",
+            disabled && "cursor-not-allowed opacity-50",
+            error && "border-[var(--error)]",
+            className
+          )}
+          style={{
+            backgroundColor: "var(--surface)",
+          }}
+        />
+      ) : (
+        <textarea
+          id={inputId}
+          ref={textareaRef}
+          value={value}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          disabled={disabled}
+          onFocus={() => {
+            setFocused(true);
+            onFocus?.();
+          }}
+          onBlur={() => {
+            setFocused(false);
+            onBlur?.();
+          }}
+          onChange={(e) => onChange(e.target.value)}
+          className={clsx(
+            "px-[var(--space-16)] py-[var(--space-12)]",
+            "rounded-[var(--radius-12)] border border-[var(--outline)]",
+            "text-[var(--on-surface)] text-medium",
+            "focus:border-[var(--outline-variant)]",
+            disabled && "cursor-not-allowed opacity-50",
+            error && "border-[var(--error)]",
+            className
+          )}
+          style={{
+            backgroundColor: "var(--surface)",
+            resize: "none",
+          }}
+        />
+      )}
+      {helperText && (
+        <span className="text-[var(--on-surface-variant)] text-small mt-[var(--space-8)]">
+          {helperText}
+        </span>
+      )}
+      {errorMessage && error && (
+        <span className="text-[var(--error)] text-small mt-[var(--space-8)]">
+          {errorMessage}
+        </span>
+      )}
     </div>
   );
 };
