@@ -1,16 +1,68 @@
 // components/PostPageWrapper.tsx
+import { useState, useCallback } from "react";
 import { BookPost } from "@/types/bookPost";
 import PostGridView from "@/components/PostGridView";
 import PostFABMenu from "@/components/PostFABMenu";
 import Image from "next/image";
 import nidomy from "@/assets/nidomy/kyoton.png";
+import { deleteDoc, doc } from "firebase/firestore";
+import { ref, deleteObject } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 
 interface Props {
   posts: BookPost[];
   screen?: "mypage" | "home";
 }
 
-export default function PostPageWrapper({ posts, screen = "mypage" }: Props) {
+export default function PostPageWrapper({
+  posts: initialPosts,
+  screen = "mypage",
+}: Props) {
+  const [posts, setPosts] = useState<BookPost[]>(initialPosts);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectedPostIds, setSelectedPostIds] = useState<string[]>([]);
+
+  const handleLongPress = (postId: string) => {
+    setIsSelecting(true);
+    setSelectedPostIds([postId]);
+  };
+
+  const toggleSelect = (postId: string) => {
+    setSelectedPostIds((prev) => {
+      const next = prev.includes(postId)
+        ? prev.filter((id) => id !== postId)
+        : [...prev, postId];
+      if (next.length === 0) setIsSelecting(false);
+      return next;
+    });
+  };
+
+  const handleDelete = useCallback(async () => {
+    const targets = posts.filter((post) => selectedPostIds.includes(post.id));
+    await Promise.all(
+      targets.map(async (post) => {
+        await deleteDoc(doc(db, "posts", post.id));
+        await Promise.all(
+          post.imageUrls.map(async (url) => {
+            const path = new URL(url).pathname.split("/o/")[1].split("?")[0];
+            const decodedPath = decodeURIComponent(path);
+            const fileRef = ref(storage, decodedPath);
+            try {
+              await deleteObject(fileRef);
+            } catch (error) {
+              console.warn(`⚠️ Failed to delete file: ${decodedPath}`, error);
+            }
+          })
+        );
+      })
+    );
+    setPosts((prev) =>
+      prev.filter((post) => !selectedPostIds.includes(post.id))
+    );
+    setSelectedPostIds([]);
+    setIsSelecting(false);
+  }, [posts, selectedPostIds]);
+
   const showEmptyState = screen === "mypage" && posts.length === 0;
 
   if (showEmptyState) {
@@ -59,8 +111,18 @@ export default function PostPageWrapper({ posts, screen = "mypage" }: Props) {
 
   return (
     <div className="relative w-full min-h-screen bg-[color:var(--surface)]">
-      <PostGridView posts={posts} />
-      <PostFABMenu screen={screen} />
+      <PostGridView
+        posts={posts}
+        isSelecting={isSelecting}
+        selectedPostIds={selectedPostIds}
+        onLongPress={handleLongPress}
+        onToggleSelect={toggleSelect}
+      />
+      <PostFABMenu
+        screen={screen}
+        isSelecting={isSelecting}
+        onDeleteSelected={handleDelete}
+      />
     </div>
   );
 }
