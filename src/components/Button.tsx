@@ -1,7 +1,18 @@
 // src/components/Button.tsx
 import React from "react";
 
-const Button = ({
+export type ButtonProps = {
+  children?: React.ReactNode;
+  variant?: "primary" | "secondary" | "text-primary" | "text-secondary";
+  size?: "large" | "medium";
+  disabled?: boolean;
+  fullWidth?: boolean;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void; // ✅ オプショナルに変更
+};
+
+const Button: React.FC<ButtonProps> = ({
   children,
   variant = "primary",
   size = "medium",
