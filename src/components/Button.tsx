@@ -1,18 +1,7 @@
 // src/components/Button.tsx
 import React from "react";
 
-export type ButtonProps = {
-  children?: React.ReactNode;
-  variant?: "primary" | "secondary" | "text-primary" | "text-secondary";
-  size?: "large" | "medium";
-  disabled?: boolean;
-  fullWidth?: boolean;
-  className?: string;
-  type?: "button" | "submit" | "reset";
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
-
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   children,
   variant = "primary",
   size = "medium",
@@ -47,13 +36,11 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      type={type}
-      className={`relative inline-flex items-center justify-center select-none border-none outline-none overflow-hidden ${
+      className={`relative inline-flex items-center justify-center select-none border-none outline-none overflow-hidden rounded-[var(--radius-full)] text-[var(--on-surface)] bg-[var(--surface)] ${
         fullWidth ? "w-full" : ""
       } ${disabled ? "cursor-not-allowed" : ""} ${className}`}
       style={{
         width: fullWidth ? "100%" : undefined,
-        borderRadius: "var(--radius-full)",
         fontFamily: "var(--font-family-base)",
         fontWeight: "var(--font-weight-bold)",
         fontSize,
@@ -61,46 +48,10 @@ const Button: React.FC<ButtonProps> = ({
         cursor: disabled ? "not-allowed" : "pointer",
       }}
       disabled={disabled}
+      type={type}
       onClick={onClick}
     >
-      {/* 常に表示される surface 背景レイヤー */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "var(--surface)",
-          borderRadius: "var(--radius-full)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      />
-
-      {/* ボタン背景レイヤー（variantに応じた背景色 & padding） */}
-      <div
-        className="relative z-10 w-full inline-flex items-center justify-center"
-        style={{
-          background: isText ? "transparent" : mainColor,
-          borderRadius: "var(--radius-full)",
-          padding: "var(--space-8) var(--space-16)",
-          opacity: disabled ? 0.1 : 1,
-          transition: "opacity 0.15s",
-        }}
-      >
-        {/* ラベル */}
-        <span
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "40px",
-            paddingLeft: "var(--space-8)",
-            paddingRight: "var(--space-8)",
-            textAlign: "center",
-            color: onMainColor,
-          }}
-        >
-          {children}
-        </span>
-      </div>
+      {children}
     </button>
   );
 };
