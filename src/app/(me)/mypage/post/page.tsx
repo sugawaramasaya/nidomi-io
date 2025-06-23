@@ -15,6 +15,7 @@ import { storage, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import Button from "@/components/Button";
+import TextField from "@/components/TextField";
 import type { Session } from "next-auth";
 
 interface ExtendedSession extends Session {
@@ -27,6 +28,7 @@ export default function PostPage() {
   const [uploading, setUploading] = useState(false);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const [title, setTitle] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -48,13 +50,8 @@ export default function PostPage() {
             extendedSession.idToken
           );
           await signInWithCredential(auth, credential);
-
-          const currentUser = auth.currentUser as User | null;
-          if (currentUser) {
-            console.log("✅ Firebase login successful:", currentUser.uid);
-          }
         } catch (error) {
-          console.error("🔥 Firebase login error:", error);
+          console.error("Failed to sign in to Firebase:", error);
         }
       }
     };
@@ -68,33 +65,26 @@ export default function PostPage() {
   }, [session]);
 
   const handleUpload = async () => {
-    const userId = authUser?.uid;
-    if (!userId || !file) {
-      console.warn("⛔ userId or file not ready");
-      return;
-    }
+    if (!file || !authUser) return;
 
     setUploading(true);
 
     try {
-      const filename = `${Date.now()}_${nanoid()}`;
-      const storageRef = ref(storage, `posts/${filename}`);
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
+      const fileId = nanoid();
+      const fileRef = ref(storage, `uploads/${authUser.uid}/${fileId}`);
+      await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(fileRef);
 
       await addDoc(collection(db, "posts"), {
-        userId,
+        title,
         imageUrls: [downloadURL],
-        title: "", // 仮
-        comment: "", // 仮
-        tags: [],
         createdAt: Timestamp.now(),
+        userId: authUser.uid,
       });
 
       router.push("/mypage");
-    } catch (err) {
-      console.error("🔥 Upload error:", err);
-      alert("アップロードに失敗しました。再試行してください。");
+    } catch (error) {
+      console.error("Failed to upload file:", error);
     } finally {
       setUploading(false);
     }
@@ -121,24 +111,26 @@ export default function PostPage() {
   }
 
   return (
-    <div className="p-[var(--space-16)]">
-      <h1 className="text-large font-bold mb-[var(--space-16)]">
-        投稿テスト画面
-      </h1>
+    <div className="w-full max-w-[480px] mx-auto px-[var(--space-24)] py-[var(--space-16)]">
+      <TextField
+        label="タイトル"
+        value={title}
+        onChange={setTitle}
+        placeholder="投稿のタイトルを入力してください"
+        className="mb-[var(--space-16)]"
+      />
       <input
         type="file"
-        accept="image/*"
-        onChange={(e) => {
-          if (e.target.files?.[0]) setFile(e.target.files[0]);
-        }}
+        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        className="mb-[var(--space-16)]"
       />
       <Button
-        variant="primary"
         fullWidth
-        disabled={!file || uploading}
+        variant="primary"
         onClick={handleUpload}
+        disabled={uploading || !file || !title}
       >
-        {uploading ? "アップロード中..." : "アップロード"}
+        {uploading ? "アップロード中..." : "投稿する"}
       </Button>
     </div>
   );
