@@ -18,7 +18,11 @@ export default function PostPageWrapper({
   posts: initialPosts,
   screen = "mypage",
 }: Props) {
-  const [posts, setPosts] = useState<BookPost[]>(initialPosts);
+  const [posts, setPosts] = useState<BookPost[]>(
+    [...initialPosts].sort(
+      (a, b) => b.createdAt.toMillis() - a.createdAt.toMillis()
+    )
+  );
   const [isSelecting, setIsSelecting] = useState(false);
   const [selectedPostIds, setSelectedPostIds] = useState<string[]>([]);
 
