@@ -15,6 +15,8 @@ import { storage, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import type { Session } from "next-auth";
+import FAB from "@/components/FAB";
+import BackIcon from "@/icons/size40/back.svg";
 
 interface ExtendedSession extends Session {
   idToken?: string;
@@ -117,6 +119,11 @@ export default function PostPage() {
 
   return (
     <div className="p-4">
+      {/* 戻るボタン */}
+      <div className="fixed bottom-[40px] left-[16px] z-50 flex flex-col items-start space-y-[20px]">
+        <FAB icon={<BackIcon />} onClick={() => router.back()} />
+      </div>
+
       <h1 className="text-xl font-bold mb-4">投稿テスト画面</h1>
       <input
         type="file"
