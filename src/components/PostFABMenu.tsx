@@ -60,16 +60,7 @@ export default function PostFABMenu({
               </>
             )}
             {isOpen && screen === "home" && (
-              <>
-                <FAB
-                  icon={<SettingIcon />}
-                  onClick={() => router.push("/settings")}
-                />
-                <FAB
-                  icon={<UserIcon />}
-                  onClick={() => router.push("/mypage")}
-                />
-              </>
+              <FAB icon={<UserIcon />} onClick={() => router.push("/mypage")} />
             )}
             <FAB
               icon={
