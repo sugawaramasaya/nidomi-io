@@ -1,7 +1,8 @@
 // components/PostFABMenu.tsx
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { usePostImageStore } from "@/store/postImage";
 import FAB from "@/components/FAB";
 import Backdrop from "@/components/Backdrop";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
@@ -13,7 +14,6 @@ import HeartIcon from "@/icons/size40/heart-outlined.svg";
 import SettingIcon from "@/icons/size40/setting.svg";
 import UserIcon from "@/icons/size40/user-outlined.svg";
 import DeleteIcon from "@/icons/size40/delete.svg";
-
 interface Props {
   screen?: "mypage" | "home";
   isSelecting?: boolean;
@@ -28,6 +28,27 @@ export default function PostFABMenu({
   const [isOpen, setIsOpen] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const setImageFile = usePostImageStore((s) => s.setImageFile);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      router.push("/mypage/post");
+    }
+  };
+
+  const handlePickImage = (mode: "camera" | "gallery") => {
+    if (inputRef.current) {
+      if (mode === "camera") {
+        inputRef.current.setAttribute("capture", "environment");
+      } else {
+        inputRef.current.removeAttribute("capture");
+      }
+      inputRef.current.click();
+    }
+  };
 
   const handleToggle = () => {
     if (!isSelecting) setIsOpen((prev: boolean) => !prev);
@@ -38,8 +59,9 @@ export default function PostFABMenu({
     setIsOpen(false);
   };
 
-  const handleGoToPost = () => {
-    router.push("/mypage/post");
+  // 修正①: 関数の引数に mode を追加
+  const handleGoToPost = (mode: "camera" | "gallery") => {
+    router.push(`/mypage/post?mode=${mode}`);
   };
 
   return (
@@ -54,13 +76,30 @@ export default function PostFABMenu({
         />
       )}
 
+      {/* 非表示のinput */}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+
       {/* 追加モード時のボタン表示 */}
       {isAddMode && (
         <FixedBottomContainer withKeyboardAware>
-          <Button variant="primary" fullWidth onClick={handleGoToPost}>
+          <Button
+            variant="primary"
+            fullWidth
+            onClick={() => handlePickImage("camera")}
+          >
             写真を撮る
           </Button>
-          <Button variant="primary" fullWidth onClick={handleGoToPost}>
+          <Button
+            variant="primary"
+            fullWidth
+            onClick={() => handlePickImage("gallery")}
+          >
             画像を選択
           </Button>
         </FixedBottomContainer>

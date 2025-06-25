@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react"; // useRefを追加
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import {
   getAuth,
   onAuthStateChanged,
@@ -17,6 +18,7 @@ import { nanoid } from "nanoid";
 import type { Session } from "next-auth";
 import FAB from "@/components/FAB";
 import BackIcon from "@/icons/size40/back.svg";
+import { usePostImageStore } from "@/store/postImage";
 
 interface ExtendedSession extends Session {
   idToken?: string;
@@ -24,11 +26,11 @@ interface ExtendedSession extends Session {
 
 export default function PostPage() {
   const { data: session } = useSession();
-  const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
   const router = useRouter();
+  const file = usePostImageStore((s) => s.imageFile);
 
   useEffect(() => {
     const auth = getAuth();
@@ -123,15 +125,7 @@ export default function PostPage() {
       <div className="fixed bottom-[40px] left-[16px] z-50 flex flex-col items-start space-y-[20px]">
         <FAB icon={<BackIcon />} onClick={() => router.back()} />
       </div>
-
       <h1 className="text-xl font-bold mb-4">投稿テスト画面</h1>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => {
-          if (e.target.files?.[0]) setFile(e.target.files[0]);
-        }}
-      />
       <button
         onClick={handleUpload}
         disabled={!file || uploading}
