@@ -29,9 +29,7 @@ export default function RootLayout({
       <body
         className={`${notoSans.variable} ${robotoMono.variable} antialiased`}
       >
-        <NextAuthSessionProvider session={null}>
-          {children}
-        </NextAuthSessionProvider>
+        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
       </body>
     </html>
   );
