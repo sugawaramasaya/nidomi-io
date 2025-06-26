@@ -19,6 +19,7 @@ import FAB from "@/components/FAB";
 import BackIcon from "@/icons/size40/back.svg";
 import { usePostImageStore } from "@/store/postImage";
 import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
+import { auth } from "@/lib/firebase"; // ← これでOK
 
 interface ExtendedSession extends Session {
   idToken?: string;
