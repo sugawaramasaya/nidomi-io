@@ -9,6 +9,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt", // ← ✅ これがないとトークンが発行されないことがある！
+  },
   callbacks: {
     async session({ session, token }) {
       session.user!.id = token.sub!; //「絶対ある」と TypeScript に伝える
