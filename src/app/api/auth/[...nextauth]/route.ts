@@ -1,28 +1,6 @@
+// ✅ src/app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import { authOptions } from "@/lib/auth"; // ← 共通化した設定を読み込む
 
-const handler = NextAuth({
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-  ],
-  callbacks: {
-    async jwt({ token, account }) {
-      if (account?.id_token) {
-        token.idToken = account.id_token;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token?.idToken) {
-        session.idToken = token.idToken;
-      }
-      return session;
-    },
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-});
-
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
