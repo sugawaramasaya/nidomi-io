@@ -1,13 +1,15 @@
+// src/app/(me)/home/page.tsx
 "use client";
-
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { BookPost } from "@/types/bookPost";
 import PostPageWrapper from "@/components/PostPageWrapper";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
 
 export default function HomePage() {
   const [posts, setPosts] = useState<BookPost[] | null>(null);
+  useFirebaseAuth(); // ✅ 呼び出しだけでOK
 
   useEffect(() => {
     const fetchPosts = async () => {

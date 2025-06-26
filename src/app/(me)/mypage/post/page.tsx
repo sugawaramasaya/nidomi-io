@@ -1,8 +1,7 @@
+// src/app/(me)/mypage/post/page.tsx
 "use client";
-
 import { useEffect, useState, useRef } from "react"; // useRefを追加
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import {
   getAuth,
   onAuthStateChanged,
@@ -19,6 +18,7 @@ import type { Session } from "next-auth";
 import FAB from "@/components/FAB";
 import BackIcon from "@/icons/size40/back.svg";
 import { usePostImageStore } from "@/store/postImage";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
 
 interface ExtendedSession extends Session {
   idToken?: string;
@@ -29,46 +29,18 @@ export default function PostPage() {
   const [uploading, setUploading] = useState(false);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
+
+  useFirebaseAuth(); // ✅ 呼び出し
   const router = useRouter();
   const file = usePostImageStore((s) => s.imageFile);
 
   useEffect(() => {
-    const auth = getAuth();
-    let isMounted = true;
-
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (isMounted) {
-        setAuthUser(user);
-        setAuthReady(true);
-      }
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setAuthUser(user);
+      setAuthReady(true);
     });
-
-    const maybeSignInToFirebase = async () => {
-      const extendedSession = session as ExtendedSession;
-      if (!auth.currentUser && extendedSession?.idToken) {
-        try {
-          const credential = GoogleAuthProvider.credential(
-            extendedSession.idToken
-          );
-          await signInWithCredential(auth, credential);
-
-          const currentUser = auth.currentUser as User | null;
-          if (currentUser) {
-            console.log("✅ Firebase login successful:", currentUser.uid);
-          }
-        } catch (error) {
-          console.error("🔥 Firebase login error:", error);
-        }
-      }
-    };
-
-    maybeSignInToFirebase();
-
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
-  }, [session]);
+    return () => unsubscribe();
+  }, []);
 
   const handleUpload = async () => {
     const userId = authUser?.uid;
