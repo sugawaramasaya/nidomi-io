@@ -4,8 +4,8 @@ service cloud.firestore {
   match /databases/{database}/documents {
     // posts コレクションのルール
     match /posts/{postId} {
-      // 読み取り: 認証済みユーザーはすべての投稿を読める
-      allow read: if request.auth != null;
+      // 読み取り: 誰でもOK
+      allow read: if true;
       
       // 作成: 認証済みユーザーが自分のuserIdを設定する場合のみ
       allow create: if request.auth != null 
