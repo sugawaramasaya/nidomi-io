@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    // Next.js/React/TypeScript
+    "dbaeumer.vscode-eslint",           // ESLint
+    "esbenp.prettier-vscode",           // Prettier
+    "bradlc.vscode-tailwindcss",        // Tailwind CSS IntelliSense
+    "dsznajder.es7-react-js-snippets",  // React/Redux/GraphQL/React-Native snippets
+    "pulkitgangwar.nextjs-snippets",    // Next.js Snippets
+    "WillLuke.nextjs",                  // Prisma NextJS (Next.js support)
+    // TypeScript
+    "ms-vscode.vscode-typescript-next", // JavaScript and TypeScript Nightly
+    "yoavbls.pretty-ts-errors",         // Pretty TypeScript Errors
+    "pmneo.tsimporter",                 // TypeScript Importer
+    // Firebase
+    "toba.vsfire",                      // Firestore Security Rules syntax highlighting
+    // その他便利系
+    "formulahendry.auto-rename-tag",    // Auto Rename Tag
+    "formulahendry.auto-close-tag",     // Auto Close Tag
+    "aaron-bond.better-comments"        // Better Comments
+  ]
+} 
