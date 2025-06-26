@@ -9,13 +9,24 @@ export const useFirebaseAuth = () => {
 
   useEffect(() => {
     const extendedSession = session as any;
+
+    console.log("🔍 useFirebaseAuth - session:", extendedSession);
+    console.log("🔍 Firebase currentUser before:", auth.currentUser);
+
     if (
       status === "authenticated" &&
       !auth.currentUser &&
       extendedSession?.idToken
     ) {
       const credential = GoogleAuthProvider.credential(extendedSession.idToken);
-      signInWithCredential(auth, credential);
+
+      signInWithCredential(auth, credential)
+        .then((userCred) => {
+          console.log("✅ Firebase login successful:", userCred.user.uid);
+        })
+        .catch((error) => {
+          console.error("🔥 Firebase login failed:", error);
+        });
     }
   }, [session, status]);
 };
