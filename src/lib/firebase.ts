@@ -1,9 +1,10 @@
 // src/lib/firebase.ts
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
+import { auth } from "./firebase"; // 同ファイル内なので問題なし
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -21,3 +22,11 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+export async function loginWithFirebase(idToken: string) {
+  const credential = GoogleAuthProvider.credential(idToken);
+  await signInWithCredential(auth, credential);
+}
+// Firebaseの認証状態を監視するための関数
+export function onAuthStateChanged(callback: (user: any) => void) {
+  return auth.onAuthStateChanged(callback);
+}

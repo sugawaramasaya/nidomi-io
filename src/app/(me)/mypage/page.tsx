@@ -1,14 +1,16 @@
+// src/app/(me)/mypage/page.tsx
 "use client";
-
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
 import { BookPost } from "@/types/bookPost";
 import PostPageWrapper from "@/components/PostPageWrapper";
+import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
 
 export default function MyPage() {
   const [posts, setPosts] = useState<BookPost[] | null>(null);
+  useFirebaseAuth(); // ✅ 追加
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
