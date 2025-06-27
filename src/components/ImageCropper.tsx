@@ -1,6 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
+import Button from "@/components/Button";
 
 interface Point {
   x: number;
@@ -105,9 +106,24 @@ export default function ImageCropper({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-4 max-w-md w-full mx-4">
-        <h3 className="text-lg font-semibold mb-4 text-center">
+    <div
+      className="fixed inset-0 flex items-center justify-center z-50"
+      style={{ backgroundColor: "var(--surface-tint)" }}
+    >
+      <div
+        className="bg-white p-4 max-w-md w-full mx-4"
+        style={{ borderRadius: "var(--radius-24)" }}
+      >
+        <h3
+          className="mb-4 text-center"
+          style={{
+            fontFamily: "var(--font-family-base)",
+            fontSize: "var(--font-size-large)",
+            lineHeight: "var(--line-height-large)",
+            fontWeight: "var(--font-weight-bold)",
+            color: "var(--on-surface)",
+          }}
+        >
           画像をトリミング
         </h3>
 
@@ -132,7 +148,16 @@ export default function ImageCropper({
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            className="block mb-2"
+            style={{
+              fontFamily: "var(--font-family-base)",
+              fontSize: "var(--font-size-small)",
+              lineHeight: "var(--line-height-small)",
+              fontWeight: "var(--font-weight-bold)",
+              color: "var(--on-surface)",
+            }}
+          >
             ズーム: {zoom.toFixed(2)}
           </label>
           <input
@@ -142,23 +167,70 @@ export default function ImageCropper({
             step={0.1}
             value={zoom}
             onChange={(e) => setZoom(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            className="w-full appearance-none cursor-pointer"
+            style={{
+              height: "32px",
+              background: "transparent",
+              outline: "none",
+            }}
           />
+          <style jsx>{`
+            input[type="range"] {
+              -webkit-appearance: none;
+              appearance: none;
+            }
+
+            input[type="range"]::-webkit-slider-track {
+              width: 100%;
+              height: 8px;
+              background: var(--on-surface-variant);
+              border-radius: 4px;
+              cursor: pointer;
+            }
+
+            input[type="range"]::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              background: var(--on-surface);
+              border-radius: 50%;
+              cursor: pointer;
+              border: none;
+              margin-top: -6px;
+            }
+
+            input[type="range"]::-moz-range-track {
+              width: 100%;
+              height: 8px;
+              background: var(--on-surface-variant);
+              border-radius: 4px;
+              cursor: pointer;
+              border: none;
+            }
+
+            input[type="range"]::-moz-range-thumb {
+              width: 20px;
+              height: 20px;
+              background: var(--on-surface);
+              border-radius: 50%;
+              cursor: pointer;
+              border: none;
+            }
+          `}</style>
         </div>
 
         <div className="flex space-x-2">
-          <button
-            onClick={onCancel}
-            className="flex-1 px-4 py-2 text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-          >
+          <Button variant="secondary" onClick={onCancel} className="flex-1">
             キャンセル
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
             onClick={handleCropComplete}
-            className="flex-1 px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex-1"
           >
             完了
-          </button>
+          </Button>
         </div>
       </div>
     </div>
