@@ -113,3 +113,20 @@ textarea:-webkit-autofill,
   caret-color: var(--on-surface) !important;
   transition: background-color 9999s ease-in-out 0s;
 }
+
+/* モーダル背景色用クラス */
+.modal-bg {
+  background-color: var(--surface-tint);
+}
+
+/* スライダーのトラック用グローバルCSS */
+input[type="range"]::-webkit-slider-track {
+  background: var(--on-surface-variant);
+  height: 8px;
+  border-radius: 4px;
+}
+input[type="range"]::-moz-range-track {
+  background: var(--on-surface-variant);
+  height: 8px;
+  border-radius: 4px;
+}
