@@ -20,6 +20,7 @@ import BackIcon from "@/icons/size40/back.svg";
 import { usePostImageStore } from "@/store/postImage";
 import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
 import { auth } from "@/lib/firebase"; // ← これでOK
+import ImageCropper from "@/components/ImageCropper";
 
 interface ExtendedSession extends Session {
   idToken?: string;
@@ -30,6 +31,9 @@ export default function PostPage() {
   const [uploading, setUploading] = useState(false);
   const [authUser, setAuthUser] = useState<User | null>(null);
   const [authReady, setAuthReady] = useState(false);
+  const [showCropper, setShowCropper] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [croppedImage, setCroppedImage] = useState<File | null>(null);
 
   useFirebaseAuth(); // ✅ 呼び出し
   const router = useRouter();
@@ -43,10 +47,39 @@ export default function PostPage() {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+      setShowCropper(true);
+    }
+  }, [file]);
+
+  const handleCropComplete = (croppedFile: File) => {
+    setCroppedImage(croppedFile);
+    setShowCropper(false);
+    if (selectedImage) {
+      URL.revokeObjectURL(selectedImage);
+      setSelectedImage(null);
+    }
+  };
+
+  const handleCropCancel = () => {
+    setShowCropper(false);
+    if (selectedImage) {
+      URL.revokeObjectURL(selectedImage);
+      setSelectedImage(null);
+    }
+    // 画像選択をリセット
+    usePostImageStore.getState().setImageFile(null);
+  };
+
   const handleUpload = async () => {
     const userId = authUser?.uid;
-    if (!userId || !file) {
-      console.warn("⛔ userId or file not ready");
+    const imageToUpload = croppedImage || file;
+
+    if (!userId || !imageToUpload) {
+      console.warn("⛔ userId or image not ready");
       return;
     }
 
@@ -55,7 +88,7 @@ export default function PostPage() {
     try {
       const filename = `${Date.now()}_${nanoid()}`;
       const storageRef = ref(storage, `posts/${filename}`);
-      await uploadBytes(storageRef, file);
+      await uploadBytes(storageRef, imageToUpload);
       const downloadURL = await getDownloadURL(storageRef);
 
       await addDoc(collection(db, "posts"), {
@@ -92,6 +125,16 @@ export default function PostPage() {
     );
   }
 
+  if (showCropper && selectedImage) {
+    return (
+      <ImageCropper
+        image={selectedImage}
+        onCropComplete={handleCropComplete}
+        onCancel={handleCropCancel}
+      />
+    );
+  }
+
   return (
     <div className="p-4">
       {/* 戻るボタン */}
@@ -99,9 +142,24 @@ export default function PostPage() {
         <FAB icon={<BackIcon />} onClick={() => router.back()} />
       </div>
       <h1 className="text-xl font-bold mb-4">投稿テスト画面</h1>
+
+      {/* プレビュー */}
+      {croppedImage && (
+        <div className="mb-4">
+          <h3 className="text-sm font-medium text-gray-700 mb-2">
+            トリミング済み画像
+          </h3>
+          <img
+            src={URL.createObjectURL(croppedImage)}
+            alt="Cropped preview"
+            className="w-32 h-32 object-cover rounded-lg"
+          />
+        </div>
+      )}
+
       <button
         onClick={handleUpload}
-        disabled={!file || uploading}
+        disabled={(!croppedImage && !file) || uploading}
         className={`mt-4 px-4 py-2 rounded ${
           uploading ? "bg-gray-400" : "bg-blue-600"
         } text-white`}
