@@ -121,12 +121,29 @@ textarea:-webkit-autofill,
 
 /* スライダーのトラック用グローバルCSS */
 input[type="range"]::-webkit-slider-track {
-  background: var(--on-surface-variant);
-  height: 8px;
-  border-radius: 4px;
+  background: var(--on-surface-variant) !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 20px !important;
+  height: 20px !important;
+  background: var(--on-surface) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  border: none !important;
+  margin-top: -6px !important;
 }
 input[type="range"]::-moz-range-track {
-  background: var(--on-surface-variant);
-  height: 8px;
-  border-radius: 4px;
+  background: var(--on-surface-variant) !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px !important;
+  height: 20px !important;
+  background: var(--on-surface) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  border: none !important;
 }
