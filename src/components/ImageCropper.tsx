@@ -106,10 +106,7 @@ export default function ImageCropper({
   };
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center z-50"
-      style={{ backgroundColor: "var(--surface-tint)" }}
-    >
+    <div className="fixed inset-0 flex items-center justify-center z-50 modal-bg">
       <div
         className="bg-white p-4 max-w-md w-full mx-4"
         style={{ borderRadius: "var(--radius-24)" }}
@@ -174,50 +171,6 @@ export default function ImageCropper({
               outline: "none",
             }}
           />
-          <style jsx>{`
-            input[type="range"] {
-              -webkit-appearance: none;
-              appearance: none;
-            }
-
-            input[type="range"]::-webkit-slider-track {
-              width: 100%;
-              height: 8px;
-              background: var(--on-surface-variant);
-              border-radius: 4px;
-              cursor: pointer;
-            }
-
-            input[type="range"]::-webkit-slider-thumb {
-              -webkit-appearance: none;
-              appearance: none;
-              width: 20px;
-              height: 20px;
-              background: var(--on-surface);
-              border-radius: 50%;
-              cursor: pointer;
-              border: none;
-              margin-top: -6px;
-            }
-
-            input[type="range"]::-moz-range-track {
-              width: 100%;
-              height: 8px;
-              background: var(--on-surface-variant);
-              border-radius: 4px;
-              cursor: pointer;
-              border: none;
-            }
-
-            input[type="range"]::-moz-range-thumb {
-              width: 20px;
-              height: 20px;
-              background: var(--on-surface);
-              border-radius: 50%;
-              cursor: pointer;
-              border: none;
-            }
-          `}</style>
         </div>
 
         <div className="flex space-x-2">
