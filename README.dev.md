@@ -12,6 +12,28 @@
 - **Icons/SVG**: @svgr/webpack による SVG 読み込み対応済み
 - **Hosting**: Vercel
 - **Backend**: Firebase（Auth / Firestore / Storage）
+- **バージョン管理**: mise（Node.js, pnpm のバージョン管理）
+
+### ✅ mise の設定
+
+プロジェクトルートの `.mise.toml` にて以下のツールのバージョンを管理しています：
+
+```toml
+[tools]
+node = "20.11.1"
+pnpm = "8.15.4"
+```
+
+新規で開発環境をセットアップする場合は以下のコマンドを実行してください：
+
+```bash
+# miseのインストール（macOS）
+brew install mise
+
+# プロジェクトの依存関係をインストール
+mise install
+pnpm install
+```
 
 ---
 
