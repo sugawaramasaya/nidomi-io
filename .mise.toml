@@ -1,3 +1,49 @@
 [tools]
-node = "22"
-firebase-tools = "latest"
+node = "20"
+
+[env]
+# DEBUG = "true"  # 必要なら
+
+[tasks.setup]
+description = "初期セットアップ"
+run = "npm install"
+
+[tasks.typecheck]
+description = "TypeScript型チェック"
+run = "npx tsc --noEmit"
+
+[tasks.vercel-build]
+description = "Vercelビルド"
+run = "vercel build"
+
+[tasks.clean]
+description = "キャッシュ・storybook静的ファイル削除"
+run = "rm -rf node_modules/.cache storybook-static"
+
+[tasks.storybook]
+description = "Storybook起動"
+run = "npm run storybook"
+
+[tasks.git-add-all]
+description = "すべての変更をステージングエリアに追加"
+run = "git add ."
+
+[tasks.git-commit]
+description = "ステージングエリアの変更をリポジトリに保存"
+run = "git commit"
+
+[tasks.git-push]
+description = "ローカルリポジトリの変更をリモートリポジトリに送信"
+run = "git push"
+
+[tasks.git-branch]
+description = "ブランチを作成・表示・切り替え"
+run = "git branch"
+
+[tasks.git-status]
+description = "作業ディレクトリとステージングエリアの状態を表示"
+run = "git status"
+
+[tasks.git-diff]
+description = "ファイルの変更差分を表示"
+run = "git diff"
