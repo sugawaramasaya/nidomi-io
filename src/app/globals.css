@@ -120,12 +120,21 @@ textarea:-webkit-autofill,
 }
 
 /* スライダーのトラック用グローバルCSS */
+input[type="range"] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
 input[type="range"]::-webkit-slider-track {
   background: var(--on-surface-variant) !important;
   height: 8px !important;
   border-radius: 4px !important;
+  border: none !important;
 }
+
 input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
   width: 20px !important;
   height: 20px !important;
   background: var(--on-surface) !important;
@@ -133,12 +142,16 @@ input[type="range"]::-webkit-slider-thumb {
   cursor: pointer !important;
   border: none !important;
   margin-top: -6px !important;
+  box-shadow: none !important;
 }
+
 input[type="range"]::-moz-range-track {
   background: var(--on-surface-variant) !important;
   height: 8px !important;
   border-radius: 4px !important;
+  border: none !important;
 }
+
 input[type="range"]::-moz-range-thumb {
   width: 20px !important;
   height: 20px !important;
@@ -146,4 +159,23 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50% !important;
   cursor: pointer !important;
   border: none !important;
+  box-shadow: none !important;
+}
+
+/* Edge用 */
+input[type="range"]::-ms-track {
+  background: var(--on-surface-variant) !important;
+  height: 8px !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px !important;
+  height: 20px !important;
+  background: var(--on-surface) !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: none !important;
 }

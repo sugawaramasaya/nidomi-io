@@ -106,11 +106,8 @@ export default function ImageCropper({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 modal-bg">
-      <div
-        className="bg-white p-4 max-w-md w-full mx-4"
-        style={{ borderRadius: "var(--radius-24)" }}
-      >
+    <div className="fixed inset-0 z-50 bg-surface flex flex-col">
+      <div className="flex-1 flex flex-col p-4">
         <h3
           className="mb-4 text-center"
           style={{
@@ -124,7 +121,7 @@ export default function ImageCropper({
           画像をトリミング
         </h3>
 
-        <div className="relative w-full h-64 mb-4">
+        <div className="flex-1 relative w-full mb-4">
           <Cropper
             image={image}
             crop={crop}
@@ -138,7 +135,7 @@ export default function ImageCropper({
               containerStyle: {
                 width: "100%",
                 height: "100%",
-                backgroundColor: "#f0f0f0",
+                backgroundColor: "var(--surface-dim)",
               },
             }}
           />
@@ -173,7 +170,7 @@ export default function ImageCropper({
           />
         </div>
 
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 mt-auto">
           <Button variant="secondary" onClick={onCancel} className="flex-1">
             キャンセル
           </Button>
