@@ -2,6 +2,8 @@
 import { useState, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import Button from "@/components/Button";
+import IconButton from "@/components/IconButton";
+import CloseIcon from "@/icons/size40/close.svg";
 
 interface Point {
   x: number;
@@ -106,22 +108,16 @@ export default function ImageCropper({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-surface flex flex-col">
-      <div className="flex-1 flex flex-col p-4">
-        <h3
-          className="mb-4 text-center"
-          style={{
-            fontFamily: "var(--font-family-base)",
-            fontSize: "var(--font-size-large)",
-            lineHeight: "var(--line-height-large)",
-            fontWeight: "var(--font-weight-bold)",
-            color: "var(--on-surface)",
-          }}
-        >
-          画像をトリミング
-        </h3>
+    <div className="fixed inset-0 z-50 modal-bg flex flex-col p-0">
+      {/* 上部バー */}
+      <div className="flex items-center justify-between h-[64px] px-[16px] pt-[16px]">
+        <IconButton icon={<CloseIcon />} onClick={onCancel} />
+        <div className="w-[40px]" /> {/* 右側スペース */}
+      </div>
 
-        <div className="flex-1 relative w-full mb-4">
+      {/* Cropperエリア */}
+      <div className="flex-1 flex items-center justify-center">
+        <div className="relative w-full max-w-[360px] aspect-square bg-[var(--surface-dim)] overflow-hidden">
           <Cropper
             image={image}
             crop={crop}
@@ -140,48 +136,31 @@ export default function ImageCropper({
             }}
           />
         </div>
+      </div>
 
-        <div className="mb-4">
-          <label
-            className="block mb-2"
-            style={{
-              fontFamily: "var(--font-family-base)",
-              fontSize: "var(--font-size-small)",
-              lineHeight: "var(--line-height-small)",
-              fontWeight: "var(--font-weight-bold)",
-              color: "var(--on-surface)",
-            }}
-          >
-            ズーム: {zoom.toFixed(2)}
-          </label>
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.1}
-            value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
-            className="w-full appearance-none cursor-pointer"
-            style={{
-              height: "32px",
-              background: "transparent",
-              outline: "none",
-            }}
-          />
-        </div>
+      {/* スライダー */}
+      <div className="px-[24px] mt-[24px]">
+        <input
+          type="range"
+          min={1}
+          max={3}
+          step={0.1}
+          value={zoom}
+          onChange={(e) => setZoom(Number(e.target.value))}
+          className="w-full appearance-none cursor-pointer"
+          style={{
+            height: "32px",
+            background: "transparent",
+            outline: "none",
+          }}
+        />
+      </div>
 
-        <div className="flex space-x-2 mt-auto">
-          <Button variant="secondary" onClick={onCancel} className="flex-1">
-            キャンセル
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleCropComplete}
-            className="flex-1"
-          >
-            完了
-          </Button>
-        </div>
+      {/* 完了ボタン */}
+      <div className="px-[16px] pb-[40px]">
+        <Button variant="primary" fullWidth onClick={handleCropComplete}>
+          完了
+        </Button>
       </div>
     </div>
   );
