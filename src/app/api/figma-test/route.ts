@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    return NextResponse.json({ name: data.name });
   } catch (error) {
     console.error("Figma API Error:", error);
     return NextResponse.json(
