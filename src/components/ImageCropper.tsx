@@ -108,52 +108,54 @@ export default function ImageCropper({
   };
 
   return (
-    <div className="fixed inset-0 z-50 modal-bg flex flex-col p-0">
+    <div className="fixed inset-0 z-50 modal-bg flex flex-col p-0 max-w-[calc(480px-var(--space-32))]">
       {/* 上部バー */}
       <div className="flex items-center justify-between h-[64px] px-[16px] pt-[16px]">
         <IconButton icon={<CloseIcon />} onClick={onCancel} />
         <div className="w-[40px]" /> {/* 右側スペース */}
       </div>
 
-      {/* Cropperエリア */}
-      <div className="flex-1 flex items-center justify-center">
-        <div className="relative w-full max-w-[360px] aspect-square bg-[var(--surface-dim)] overflow-hidden">
-          <Cropper
-            image={image}
-            crop={crop}
-            zoom={zoom}
-            aspect={1}
-            onCropChange={onCropChange}
-            onCropComplete={onCropAreaChange}
-            onZoomChange={onZoomChange}
-            showGrid={true}
+      <div className="w-full flex flex-col gap-[var(--space-24)]">
+        {/* Cropperエリア */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="relative w-full max-w-[360px] aspect-square bg-[var(--surface-dim)] overflow-hidden">
+            <Cropper
+              image={image}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              onCropChange={onCropChange}
+              onCropComplete={onCropAreaChange}
+              onZoomChange={onZoomChange}
+              showGrid={true}
+              style={{
+                containerStyle: {
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "var(--surface-dim)",
+                },
+              }}
+            />
+          </div>
+        </div>
+
+        {/* スライダー */}
+        <div className="px-[24px] mt-[24px]">
+          <input
+            type="range"
+            min={1}
+            max={3}
+            step={0.1}
+            value={zoom}
+            onChange={(e) => setZoom(Number(e.target.value))}
+            className="w-full appearance-none cursor-pointer"
             style={{
-              containerStyle: {
-                width: "100%",
-                height: "100%",
-                backgroundColor: "var(--surface-dim)",
-              },
+              height: "32px",
+              // background: "transparent",
+              outline: "none",
             }}
           />
         </div>
-      </div>
-
-      {/* スライダー */}
-      <div className="px-[24px] mt-[24px]">
-        <input
-          type="range"
-          min={1}
-          max={3}
-          step={0.1}
-          value={zoom}
-          onChange={(e) => setZoom(Number(e.target.value))}
-          className="w-full appearance-none cursor-pointer"
-          style={{
-            height: "32px",
-            background: "transparent",
-            outline: "none",
-          }}
-        />
       </div>
 
       {/* 完了ボタン */}
