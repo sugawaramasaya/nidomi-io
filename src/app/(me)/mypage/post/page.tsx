@@ -12,7 +12,7 @@ import {
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { storage, db } from "@/lib/firebase";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import type { Session } from "next-auth";
 import FAB from "@/components/FAB";
@@ -37,7 +37,6 @@ export default function PostPage() {
 
   useFirebaseAuth(); // ✅ 呼び出し
   const router = useRouter();
-  const searchParams = useSearchParams();
   const file = usePostImageStore((s) => s.imageFile);
 
   useEffect(() => {
