@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ImageCropper from "../components/ImageCropper";
 
-const sampleImage = "/sample1.png";
+const sampleImage = "/sample-cropper.jpg";
 
 export default {
   title: "Components/ImageCropper",
