@@ -35,7 +35,7 @@ export default function PostFABMenu({
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
-      router.push("/mypage/post");
+      router.push(`/mypage/post?from=${screen}`);
     }
   };
 

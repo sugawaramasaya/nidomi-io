@@ -111,12 +111,12 @@ export default function ImageCropper({
   return (
     <div className="fixed inset-0 z-50 modal-bg flex flex-col p-0 w-[100vw] h-[100vh]">
       {/* 上部バー */}
-      <div className="flex items-center justify-between h-[64px] px-[16px] pt-[16px] z-10 relative">
+      <div className="absolute top-0 left-0 w-full h-[64px] flex items-center justify-between px-[16px] pt-[16px] z-10">
         <IconButton icon={<CloseIcon />} onClick={onCancel} />
       </div>
 
       {/* メインコンテンツエリア */}
-      <div className="flex-1 flex flex-col items-center justify-center gap-[var(--space-24)]">
+      <div className="flex flex-1 items-center justify-center">
         {/* Cropperエリア */}
         <div className="relative w-full max-w-[480px] aspect-square bg-[var(--surface-dim)] overflow-hidden">
           <Cropper
