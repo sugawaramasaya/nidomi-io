@@ -62,7 +62,7 @@ export default function PostPage() {
       URL.revokeObjectURL(selectedImage);
       setSelectedImage(null);
     }
-    router.push("/mypage/post");
+    router.push("/mypage/post/form");
   };
 
   const handleCropCancel = () => {
