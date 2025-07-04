@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { usePostImageStore } from "@/store/postImage";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import IconButton from "@/components/IconButton";
@@ -18,6 +19,7 @@ const PostForm = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [showTagDialog, setShowTagDialog] = useState(false);
   const router = useRouter();
+  const croppedImage = usePostImageStore((s) => s.croppedImage);
 
   const handlePost = () => {
     // 投稿処理（仮）
@@ -28,11 +30,17 @@ const PostForm = () => {
     <div className="min-h-screen w-full max-w-[480px] mx-auto flex flex-col items-center">
       {/* 画像エリア */}
       <div className="w-full flex-1 flex flex-col items-center justify-center relative pb-[24px]">
-        <img
-          src={sampleImage}
-          alt="投稿画像"
-          className="w-full max-w-[480px] aspect-square object-contain mx-auto"
-        />
+        {croppedImage ? (
+          <img
+            src={URL.createObjectURL(croppedImage)}
+            alt="投稿画像"
+            className="w-full max-w-[480px] aspect-square object-contain mx-auto"
+          />
+        ) : (
+          <div className="w-full max-w-[480px] aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+            画像がありません
+          </div>
+        )}
         {/* 画像追加ボタン */}
         <div className="absolute right-[16px] bottom-[32px]">
           <IconButton icon={<PlusIcon />} />

@@ -55,8 +55,10 @@ export default function PostPage() {
     }
   }, [file]);
 
+  const setCroppedImageStore = usePostImageStore((s) => s.setCroppedImage);
   const handleCropComplete = (croppedFile: File) => {
     setCroppedImage(croppedFile);
+    setCroppedImageStore(croppedFile);
     setShowCropper(false);
     if (selectedImage) {
       URL.revokeObjectURL(selectedImage);
