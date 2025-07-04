@@ -27,39 +27,44 @@ const PostForm = () => {
   return (
     <div className="min-h-screen w-full max-w-[480px] mx-auto flex flex-col items-center">
       {/* 画像エリア */}
-      <div className="flex-1 flex flex-col items-center justify-center relative pt-[48px] pb-[32px] bg-[var(--background)]">
+      <div className="flex-1 flex flex-col items-center justify-center relative pb-[24px]">
         <img
           src={sampleImage}
           alt="投稿画像"
-          className="w-[320px] h-[420px] object-contain rounded-lg shadow-xl mx-auto"
-          style={{ boxShadow: "0 4px 24px 0 #00000026" }}
+          className="w-full max-w-[480px] aspect-square object-contain mx-auto"
         />
         {/* 画像追加ボタン */}
-        <div className="absolute right-[32px] bottom-[32px]">
+        <div className="absolute right-[16px] bottom-[16px]">
           <IconButton icon={<PlusIcon />} />
         </div>
       </div>
-
-      {/* 入力エリア */}
-      <div className="w-full bg-[var(--surface)] rounded-t-[32px] px-[24px] pt-[32px] pb-[120px] flex flex-col gap-[32px]">
-        {/* タイトル */}
-        <div>
-          <TextField label="タイトル" value={title} onChange={setTitle} />
+      <div className="w-full pb-[120px] flex flex-col">
+        {/* 入力エリア */}
+        <div className="w-full px-[24px] flex flex-col gap-[36px]">
+          {/* タイトル */}
+          <div>
+            <TextField label="タイトル" value={title} onChange={setTitle} />
+          </div>
+          {/* ひとこと */}
+          <div>
+            <TextField
+              label="ひとこと"
+              value={description}
+              maxLength={32}
+              onChange={setDescription}
+            />
+          </div>
         </div>
-        {/* ひとこと */}
-        <div>
-          <TextField
-            label="ひとこと"
-            value={description}
-            maxLength={32}
-            onChange={setDescription}
-          />
-        </div>
-        {/* タグ */}
-        <div>
-          <Button variant="secondary" onClick={() => setShowTagDialog(true)}>
-            タグ
-          </Button>
+        <div className="w-full flex flex-col gap-[36px]">
+          {/* タグ */}
+          <div>
+            <Button
+              variant="text-secondary"
+              onClick={() => setShowTagDialog(true)}
+            >
+              タグ
+            </Button>
+          </div>
         </div>
       </div>
 
