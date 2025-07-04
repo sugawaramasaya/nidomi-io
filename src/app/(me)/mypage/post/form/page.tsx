@@ -27,18 +27,18 @@ const PostForm = () => {
   return (
     <div className="min-h-screen w-full max-w-[480px] mx-auto flex flex-col items-center">
       {/* 画像エリア */}
-      <div className="flex-1 flex flex-col items-center justify-center relative pb-[24px]">
+      <div className="w-full flex-1 flex flex-col items-center justify-center relative pb-[24px]">
         <img
           src={sampleImage}
           alt="投稿画像"
           className="w-full max-w-[480px] aspect-square object-contain mx-auto"
         />
         {/* 画像追加ボタン */}
-        <div className="absolute right-[16px] bottom-[16px]">
+        <div className="absolute right-[16px] bottom-[32px]">
           <IconButton icon={<PlusIcon />} />
         </div>
       </div>
-      <div className="w-full pb-[120px] flex flex-col">
+      <div className="w-full pb-[120px] flex flex-col gap-[36px]">
         {/* 入力エリア */}
         <div className="w-full px-[24px] flex flex-col gap-[36px]">
           {/* タイトル */}
@@ -55,7 +55,7 @@ const PostForm = () => {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col gap-[36px]">
+        <div className="w-full flex flex-col">
           {/* タグ */}
           <div>
             <Button
