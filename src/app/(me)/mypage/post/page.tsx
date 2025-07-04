@@ -9,6 +9,7 @@ import IconButton from "@/components/IconButton";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
 import PlusIcon from "@/icons/size40/add.svg";
 import TagDialog from "./TagDialog";
+import ImageCropper from "@/components/ImageCropper";
 
 // 仮の画像URL
 const sampleImage = "/sample-cropper.png";
@@ -20,11 +21,39 @@ const PostForm = () => {
   const [showTagDialog, setShowTagDialog] = useState(false);
   const router = useRouter();
   const croppedImage = usePostImageStore((s) => s.croppedImage);
+  const imageFile = usePostImageStore((s) => s.imageFile);
+  const setCroppedImage = usePostImageStore((s) => s.setCroppedImage);
+  const setImageFile = usePostImageStore((s) => s.setImageFile);
+
+  // トリミング完了時
+  const handleCropComplete = (croppedFile: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCroppedImage(reader.result as string);
+      setImageFile(null); // トリミング後はimageFileをクリア
+    };
+    reader.readAsDataURL(croppedFile);
+  };
+
+  // トリミングキャンセル時
+  const handleCropCancel = () => {
+    setImageFile(null);
+  };
 
   const handlePost = () => {
     // 投稿処理（仮）
     router.push("/mypage");
   };
+
+  if (imageFile) {
+    return (
+      <ImageCropper
+        image={URL.createObjectURL(imageFile)}
+        onCropComplete={handleCropComplete}
+        onCancel={handleCropCancel}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen w-full max-w-[480px] mx-auto flex flex-col items-center">
