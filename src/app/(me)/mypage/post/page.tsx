@@ -32,7 +32,7 @@ const PostForm = () => {
       <div className="w-full flex-1 flex flex-col items-center justify-center relative pb-[24px]">
         {croppedImage ? (
           <img
-            src={URL.createObjectURL(croppedImage)}
+            src={croppedImage}
             alt="投稿画像"
             className="w-full max-w-[480px] aspect-square object-contain mx-auto"
           />
@@ -42,7 +42,7 @@ const PostForm = () => {
           </div>
         )}
         {/* 画像追加ボタン */}
-        <div className="absolute right-[16px] bottom-[32px]">
+        <div className="absolute right-[16px] bottom-[40px]">
           <IconButton icon={<PlusIcon />} />
         </div>
       </div>
