@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import IconButton from "@/components/IconButton";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
 import PlusIcon from "@/icons/size40/add.svg";
-import TagDialog from "./TagDialog";
+import TagDialog from "../TagDialog";
 
 // 仮の画像URL
 const sampleImage = "/sample-cropper.png";
