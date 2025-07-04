@@ -1,5 +1,5 @@
 import React from "react";
-import PostForm from "../app/(me)/mypage/post/form/page";
+import PostForm from "../app/(me)/mypage/post/page";
 
 export default {
   title: "Pages/PostForm",

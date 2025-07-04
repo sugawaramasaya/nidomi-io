@@ -1,176 +1,92 @@
-// src/app/(me)/mypage/post/page.tsx
 "use client";
-import { useEffect, useState, useRef } from "react"; // useRefを追加
-import { useSession } from "next-auth/react";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithCredential,
-  GoogleAuthProvider,
-  User,
-} from "firebase/auth";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { storage, db } from "@/lib/firebase";
+
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { nanoid } from "nanoid";
-import type { Session } from "next-auth";
-import FAB from "@/components/FAB";
-import BackIcon from "@/icons/size40/back.svg";
 import { usePostImageStore } from "@/store/postImage";
-import { useFirebaseAuth } from "@/hooks/useFirebaseAuth"; // ✅ 追加
-import { auth } from "@/lib/firebase"; // ← これでOK
-import ImageCropper from "@/components/ImageCropper";
+import TextField from "@/components/TextField";
+import Button from "@/components/Button";
+import IconButton from "@/components/IconButton";
+import FixedBottomContainer from "@/components/FixedBottomContainer";
+import PlusIcon from "@/icons/size40/add.svg";
+import TagDialog from "../TagDialog";
 
-interface ExtendedSession extends Session {
-  idToken?: string;
-}
+// 仮の画像URL
+const sampleImage = "/sample-cropper.png";
 
-export default function PostPage() {
-  const { data: session } = useSession();
-  const [uploading, setUploading] = useState(false);
-  const [authUser, setAuthUser] = useState<User | null>(null);
-  const [authReady, setAuthReady] = useState(false);
-  const [showCropper, setShowCropper] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [croppedImage, setCroppedImage] = useState<File | null>(null);
-
-  useFirebaseAuth(); // ✅ 呼び出し
+const PostForm = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [showTagDialog, setShowTagDialog] = useState(false);
   const router = useRouter();
-  const file = usePostImageStore((s) => s.imageFile);
+  const croppedImage = usePostImageStore((s) => s.croppedImage);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setAuthUser(user);
-      setAuthReady(true);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-      setShowCropper(true);
-    }
-  }, [file]);
-
-  const setCroppedImageStore = usePostImageStore((s) => s.setCroppedImage);
-  const handleCropComplete = (croppedFile: File) => {
-    setCroppedImage(croppedFile);
-    setCroppedImageStore(croppedFile);
-    setShowCropper(false);
-    if (selectedImage) {
-      URL.revokeObjectURL(selectedImage);
-      setSelectedImage(null);
-    }
-    router.push("/mypage/post/form");
-  };
-
-  const handleCropCancel = () => {
-    setShowCropper(false);
-    if (selectedImage) {
-      URL.revokeObjectURL(selectedImage);
-      setSelectedImage(null);
-    }
-    // 画像選択をリセット
-    usePostImageStore.getState().setImageFile(null);
-    // 必ずmypageへ遷移
+  const handlePost = () => {
+    // 投稿処理（仮）
     router.push("/mypage");
   };
 
-  const handleUpload = async () => {
-    const userId = authUser?.uid;
-    const imageToUpload = croppedImage || file;
-
-    if (!userId || !imageToUpload) {
-      console.warn("⛔ userId or image not ready");
-      return;
-    }
-
-    setUploading(true);
-
-    try {
-      const filename = `${Date.now()}_${nanoid()}`;
-      const storageRef = ref(storage, `posts/${filename}`);
-      await uploadBytes(storageRef, imageToUpload);
-      const downloadURL = await getDownloadURL(storageRef);
-
-      await addDoc(collection(db, "posts"), {
-        userId,
-        imageUrls: [downloadURL],
-        title: "", // 仮
-        comment: "", // 仮
-        tags: [],
-        createdAt: Timestamp.now(),
-      });
-
-      router.push("/mypage");
-    } catch (err) {
-      console.error("🔥 Upload error:", err);
-      alert("アップロードに失敗しました。再試行してください。");
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  if (!authReady) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <p className="text-gray-500">認証情報を確認中です...</p>
-      </div>
-    );
-  }
-
-  if (!authUser) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <p className="text-red-500">ログインしてください。</p>
-      </div>
-    );
-  }
-
-  if (showCropper && selectedImage) {
-    return (
-      <ImageCropper
-        image={selectedImage}
-        onCropComplete={handleCropComplete}
-        onCancel={handleCropCancel}
-      />
-    );
-  }
-
   return (
-    <div className="p-4">
-      {/* 戻るボタン */}
-      <div className="fixed bottom-[40px] left-[16px] z-50 flex flex-col items-start space-y-[20px]">
-        <FAB icon={<BackIcon />} onClick={() => router.back()} />
-      </div>
-      <h1 className="text-xl font-bold mb-4">投稿テスト画面</h1>
-
-      {/* プレビュー */}
-      {croppedImage && (
-        <div className="mb-4">
-          <h3 className="text-sm font-medium text-gray-700 mb-2">
-            トリミング済み画像
-          </h3>
+    <div className="min-h-screen w-full max-w-[480px] mx-auto flex flex-col items-center">
+      {/* 画像エリア */}
+      <div className="w-full flex-1 flex flex-col items-center justify-center relative pb-[24px]">
+        {croppedImage ? (
           <img
             src={URL.createObjectURL(croppedImage)}
-            alt="Cropped preview"
-            className="w-32 h-32 object-cover rounded-lg"
+            alt="投稿画像"
+            className="w-full max-w-[480px] aspect-square object-contain mx-auto"
           />
+        ) : (
+          <div className="w-full max-w-[480px] aspect-square bg-gray-200 flex items-center justify-center text-gray-400">
+            画像がありません
+          </div>
+        )}
+        {/* 画像追加ボタン */}
+        <div className="absolute right-[16px] bottom-[32px]">
+          <IconButton icon={<PlusIcon />} />
         </div>
-      )}
+      </div>
+      <div className="w-full pb-[120px] flex flex-col gap-[36px]">
+        {/* 入力エリア */}
+        <div className="w-full px-[24px] flex flex-col gap-[36px]">
+          {/* タイトル */}
+          <div>
+            <TextField label="タイトル" value={title} onChange={setTitle} />
+          </div>
+          {/* ひとこと */}
+          <div>
+            <TextField
+              label="ひとこと"
+              value={description}
+              maxLength={32}
+              onChange={setDescription}
+            />
+          </div>
+        </div>
+        <div className="w-full flex flex-col">
+          {/* タグ */}
+          <div>
+            <Button
+              variant="text-secondary"
+              onClick={() => setShowTagDialog(true)}
+            >
+              タグ
+            </Button>
+          </div>
+        </div>
+      </div>
 
-      <button
-        onClick={handleUpload}
-        disabled={(!croppedImage && !file) || uploading}
-        className={`mt-4 px-4 py-2 rounded ${
-          uploading ? "bg-gray-400" : "bg-blue-600"
-        } text-white`}
-      >
-        {uploading ? "アップロード中..." : "アップロード"}
-      </button>
+      {/* 投稿ボタン（下部固定） */}
+      <FixedBottomContainer>
+        <Button variant="primary" fullWidth onClick={handlePost}>
+          投稿
+        </Button>
+      </FixedBottomContainer>
+
+      {/* タグ追加ダイアログ */}
+      {showTagDialog && <TagDialog onClose={() => setShowTagDialog(false)} />}
     </div>
   );
-}
+};
+
+export default PostForm;
