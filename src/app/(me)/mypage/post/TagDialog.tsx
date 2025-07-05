@@ -92,7 +92,7 @@ const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags =
           ))}
         </div>
       </div>
-      {/* 追加ボタン */}
+      {/* 追加ボタン - タグを追加して投稿画面に戻る */}
       <FixedBottomContainer>
         <Button
           variant="primary"
