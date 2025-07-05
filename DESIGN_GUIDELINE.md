@@ -9,6 +9,44 @@
 - コンポーネントやスタイルの一貫性を保つ
 - Figma → コード変換時のルール明示
 - リファクタや共同開発を円滑に進める
+- **AI実装時のデザイン精度向上**
+
+---
+
+## 🚫 AI実装時の絶対禁止事項
+
+### デザイン変更の禁止
+- **Figmaデザインにない要素の追加は絶対禁止**
+- **既存デザインの色、サイズ、余白の変更は事前確認必須**
+- **コンポーネントの見た目を勝手に調整することを禁止**
+
+### 実装制限
+- **任意の値（arbitrary values）の使用制限**
+  - ❌ `w-[200px]` `text-[#ff0000]`
+  - ✅ `w-[var(--space-200)]` `text-[var(--error)]`
+- **カスタムCSS追加の禁止**
+  - スタイルは必ずTailwindクラス + 定義済み変数で記述
+
+---
+
+## 📋 AI実装時のチェックリスト
+
+### 実装前の確認事項
+- [ ] 参照するFigmaデザインのリンクとノード番号を確認
+- [ ] 使用するコンポーネントが既存のものか新規作成か確認
+- [ ] 必要な色・サイズ・余白が既存トークンに定義されているか確認
+- [ ] レスポンシブ対応の必要性を確認
+
+### 実装中の確認事項
+- [ ] すべてのカラーが`--color-name`形式で定義されているか
+- [ ] すべてのスペーシングが`--space-*`形式で定義されているか
+- [ ] タイポグラフィが定義済みユーティリティを使用しているか
+- [ ] 任意の値を使用していないか
+
+### 実装後の確認事項
+- [ ] Figmaデザインと1px単位で一致しているか
+- [ ] レスポンシブ表示が正しく動作するか
+- [ ] 既存コンポーネントとの整合性が取れているか
 
 ---
 
@@ -26,7 +64,22 @@ border-[var(--outline)]
 - 特別に使用頻度の高いカラー（例：nidomi-blue）は `tailwind.config.js` に拡張し、次のように記述：
 
 ```tsx
-text - nidomi - blue - 70;
+text-nidomi-blue-70
+```
+
+### 使用可能カラートークン一覧
+```css
+/* 基本カラー */
+--surface
+--on-surface
+--outline
+--surface-tint
+--error
+--on-error
+
+/* プロジェクト専用カラー */
+--nidomi-blue-70
+--nidomi-blue-50
 ```
 
 ---
@@ -40,6 +93,18 @@ text - nidomi - blue - 70;
 gap-[var(--space-16)]
 px-[var(--space-24)]
 py-[var(--space-12)]
+```
+
+### 使用可能スペーシングトークン一覧
+```css
+--space-4    /* 4px */
+--space-8    /* 8px */
+--space-12   /* 12px */
+--space-16   /* 16px */
+--space-24   /* 24px */
+--space-32   /* 32px */
+--space-48   /* 48px */
+--space-64   /* 64px */
 ```
 
 - ブレークポイントは `tailwind.config.js` の `screens` に合わせて `xs`（480px）をベースに構成
@@ -78,7 +143,38 @@ py-[var(--space-12)]
 }
 ```
 
-> 📝 このユーティリティは `globals.css` に直接書くか、`src/styles/utilities.css` として分離して `tailwind.config.js` で読み込む想定です。
+### 使用例
+```tsx
+// ✅ 正しい使用例
+<h1 className="text-large text-[var(--on-surface)]">見出し</h1>
+
+// ❌ 間違った使用例
+<h1 className="text-2xl text-black">見出し</h1>
+```
+
+---
+
+## 🔧 実装手順
+
+### 1. 実装前準備
+1. Figmaデザインの詳細を確認
+2. 必要なトークンが定義されているか確認
+3. 使用するコンポーネントを特定
+
+### 2. マークアップ実装
+1. 構造のみを先に実装（スタイリングなし）
+2. 既存コンポーネントの活用を優先
+3. 新規コンポーネントは最小限に
+
+### 3. スタイリング実装
+1. 定義済みトークンのみを使用
+2. レスポンシブ対応を考慮
+3. 任意の値は使用禁止
+
+### 4. 動作確認
+1. Figmaデザインとの照合
+2. 複数画面サイズでの表示確認
+3. 既存コンポーネントとの整合性確認
 
 ---
 
@@ -94,13 +190,13 @@ py-[var(--space-12)]
 - Tailwind ユーティリティ + カスタム変数で構成：
 
 ```tsx
-className = "text-[var(--on-surface)] bg-[var(--surface)] px-[var(--space-16)]";
+className="text-[var(--on-surface)] bg-[var(--surface)] px-[var(--space-16)]"
 ```
 
 - カスタムユーティリティ使用時：
 
 ```tsx
-className = "text-medium text-nidomi-blue-70";
+className="text-medium text-nidomi-blue-70"
 ```
 
 ---
@@ -129,10 +225,54 @@ className = "text-medium text-nidomi-blue-70";
 
 ---
 
+## ❌ よくある間違い
+
+### 間違った実装例
+```tsx
+// ❌ 任意の値を使用
+<div className="w-[200px] text-[#333333] p-[10px]">
+
+// ❌ 標準のTailwindクラスを使用
+<div className="text-gray-800 p-4">
+
+// ❌ デザインにない要素を追加
+<div className="shadow-lg border-2">
+```
+
+### 正しい実装例
+```tsx
+// ✅ 定義済みトークンを使用
+<div className="w-[var(--space-200)] text-[var(--on-surface)] p-[var(--space-16)]">
+
+// ✅ カスタムユーティリティを使用
+<div className="text-medium text-nidomi-blue-70">
+
+// ✅ Figmaデザインに忠実
+<div className="bg-[var(--surface)] border-[var(--outline)]">
+```
+
+---
+
+## 🚨 エラー時の対応
+
+### AIが間違いを犯した場合
+1. **すぐに実装を停止**
+2. **間違いの具体的な指摘**
+3. **正しい実装例を提示**
+4. **再実装を依頼**
+
+### 不明な点がある場合
+1. **実装前に必ず確認**
+2. **推測での実装は禁止**
+3. **デザイナーに確認を依頼**
+
+---
+
 ## ✅ 今後の方針
 
 - 本ガイドラインは MVP フェーズ用に簡易版として運用
 - 開発が安定したら Figma のスタイル名と連携した命名設計を本格導入予定
+- **AI実装時の精度向上を継続的に改善**
 
 ---
 
