@@ -49,11 +49,6 @@ const PostForm = () => {
       return;
     }
 
-    if (!title.trim()) {
-      alert("タイトルを入力してください。");
-      return;
-    }
-
     setIsUploading(true);
 
     try {
@@ -74,8 +69,8 @@ const PostForm = () => {
 
       // Firestoreに投稿データを保存
       await addDoc(collection(db, "posts"), {
-        title: title.trim(),
-        comment: description.trim(),
+        title: title.trim() || "",
+        comment: description.trim() || "",
         tags: tags,
         imageUrls: [imageUrl],
         userId: user.uid,
@@ -161,7 +156,7 @@ const PostForm = () => {
           variant="primary" 
           fullWidth 
           onClick={handlePost}
-          disabled={isUploading || !croppedImage || !title.trim()}
+          disabled={isUploading || !croppedImage}
         >
           {isUploading ? "投稿中..." : "投稿"}
         </Button>
