@@ -144,8 +144,21 @@ const PostForm = () => {
               variant="text-secondary"
               onClick={() => setShowTagDialog(true)}
             >
-              タグ
+              タグ {tags.length > 0 && `(${tags.length})`}
             </Button>
+            {/* 追加されたタグを表示 */}
+            {tags.length > 0 && (
+              <div className="mt-2 px-6 flex flex-wrap gap-2">
+                {tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -163,7 +176,16 @@ const PostForm = () => {
       </FixedBottomContainer>
 
       {/* タグ追加ダイアログ */}
-      {showTagDialog && <TagDialog onClose={() => setShowTagDialog(false)} />}
+      {showTagDialog && (
+        <TagDialog 
+          onClose={() => setShowTagDialog(false)} 
+          onAddTags={(newTags) => {
+            setTags(newTags);
+            setShowTagDialog(false);
+          }}
+          initialTags={tags}
+        />
+      )}
     </div>
   );
 };

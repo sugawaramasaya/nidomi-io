@@ -8,12 +8,14 @@ import TagDeleteButton from "@/components/TagDeleteButton";
 
 interface TagDialogProps {
   onClose?: () => void;
+  onAddTags?: (tags: string[]) => void;
+  initialTags?: string[];
 }
 
-const TagDialog: React.FC<TagDialogProps> = ({ onClose }) => {
+const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags = [] }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(initialTags);
 
   useEffect(() => {
     const input = inputRef.current;
@@ -95,8 +97,24 @@ const TagDialog: React.FC<TagDialogProps> = ({ onClose }) => {
         <Button
           variant="primary"
           fullWidth
-          onClick={handleAddTag}
-          disabled={!input.trim()}
+          onClick={() => {
+            // 最終的なタグリストを計算
+            let finalTags = [...tags];
+            
+            // 入力中のタグがあれば追加
+            if (input.trim()) {
+              const newTags = input
+                .split(",")
+                .map((t) => t.trim())
+                .filter((t) => t.length > 0 && !finalTags.includes(t));
+              finalTags = [...finalTags, ...newTags];
+            }
+            
+            // 全てのタグを親コンポーネントに渡す
+            onAddTags?.(finalTags);
+            // ダイアログを閉じる
+            handleClose();
+          }}
         >
           追加
         </Button>
