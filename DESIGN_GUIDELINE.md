@@ -276,4 +276,30 @@ className="text-medium text-nidomi-blue-70"
 
 ---
 
+## 🤖 AI実装時の追加ルール
+
+### 基本方針
+- **全ての実装・リファクタリング時は `docs/AI_IMPLEMENTATION_RULES.md` に従うこと**
+- **リファクタリング時は `docs/REFACTORING_GUIDE.md` の段階的手順に従うこと**
+- **実装指示は `docs/templates/` のテンプレートを活用すること**
+
+### 簡潔な指示パターン
+```bash
+# 新規実装時
+docs/AI_IMPLEMENTATION_RULES.mdに従って、[具体的な内容]を実装してください。
+
+# リファクタリング時  
+docs/REFACTORING_GUIDE.mdに従って、[具体的な内容]をリファクタリングしてください。
+
+# テンプレート使用時
+docs/templates/implementation-template.mdの形式で[具体的な内容]を実行してください。
+```
+
+### 効果測定指標
+- AIが間違いを犯す頻度の減少
+- 実装→確認→修正のサイクル時間短縮  
+- Figmaデザインとの一致精度向上
+
+---
+
 以上が `nidomi.io` におけるデザイン実装の基本方針です。 運用しながら随時アップデートしていきます ✨
