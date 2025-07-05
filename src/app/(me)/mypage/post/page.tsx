@@ -3,6 +3,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePostImageStore } from "@/store/postImage";
+import { auth, db, storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import IconButton from "@/components/IconButton";
@@ -19,11 +23,10 @@ const PostForm = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [showTagDialog, setShowTagDialog] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
-  const croppedImage = usePostImageStore((s) => s.croppedImage);
-  const imageFile = usePostImageStore((s) => s.imageFile);
-  const setCroppedImage = usePostImageStore((s) => s.setCroppedImage);
-  const setImageFile = usePostImageStore((s) => s.setImageFile);
+  const [user] = useAuthState(auth);
+  const { croppedImage, imageFile, setCroppedImage, setImageFile, clearAll } = usePostImageStore();
 
   // トリミング完了時
   const handleCropComplete = (croppedFile: File) => {
@@ -40,9 +43,56 @@ const PostForm = () => {
     setImageFile(null);
   };
 
-  const handlePost = () => {
-    // 投稿処理（仮）
-    router.push("/mypage");
+  const handlePost = async () => {
+    if (!croppedImage || !user) {
+      alert("画像が選択されていないか、ログインしていません。");
+      return;
+    }
+
+    if (!title.trim()) {
+      alert("タイトルを入力してください。");
+      return;
+    }
+
+    setIsUploading(true);
+
+    try {
+      // Base64データからBlobを作成
+      const response = await fetch(croppedImage);
+      const blob = await response.blob();
+
+      // 一意なファイル名を生成
+      const timestamp = Date.now();
+      const fileName = `posts/${user.uid}/${timestamp}.jpg`;
+
+      // Firebase Storageにアップロード
+      const storageRef = ref(storage, fileName);
+      await uploadBytes(storageRef, blob);
+
+      // ダウンロードURLを取得
+      const imageUrl = await getDownloadURL(storageRef);
+
+      // Firestoreに投稿データを保存
+      await addDoc(collection(db, "posts"), {
+        title: title.trim(),
+        comment: description.trim(),
+        tags: tags,
+        imageUrls: [imageUrl],
+        userId: user.uid,
+        createdAt: serverTimestamp(),
+      });
+
+      // 投稿後にstoreをクリア
+      clearAll();
+      
+      alert("投稿が完了しました！");
+      router.push("/mypage");
+    } catch (error) {
+      console.error("投稿エラー:", error);
+      alert("投稿に失敗しました。もう一度お試しください。");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   if (imageFile) {
@@ -107,8 +157,13 @@ const PostForm = () => {
 
       {/* 投稿ボタン（下部固定） */}
       <FixedBottomContainer>
-        <Button variant="primary" fullWidth onClick={handlePost}>
-          投稿
+        <Button 
+          variant="primary" 
+          fullWidth 
+          onClick={handlePost}
+          disabled={isUploading || !croppedImage || !title.trim()}
+        >
+          {isUploading ? "投稿中..." : "投稿"}
         </Button>
       </FixedBottomContainer>
 
