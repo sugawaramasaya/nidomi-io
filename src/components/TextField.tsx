@@ -136,8 +136,8 @@ interface InputElementProps {
   showHelper: boolean;
   autoComplete: string;
   inputRef?: React.RefObject<HTMLInputElement | null>;
-  internalInputRef: React.RefObject<HTMLInputElement>;
-  textareaRef: React.RefObject<HTMLTextAreaElement>;
+  internalInputRef: React.RefObject<HTMLInputElement | null>;
+  textareaRef: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 const InputElement: React.FC<InputElementProps> = ({
@@ -302,8 +302,8 @@ const TextField: React.FC<TextFieldProps> = ({
 }) => {
   const [focused, setFocused] = useState(false);
   const inputId = id || generateId();
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const internalInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const internalInputRef = useRef<HTMLInputElement | null>(null);
 
   // Calculate derived state
   const counter = typeof maxLength === "number" 
