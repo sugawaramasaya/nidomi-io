@@ -1,14 +1,20 @@
 import { useState, useCallback } from "react";
 
+interface FigmaData {
+  name?: string;
+  lastModified?: string;
+  [key: string]: unknown;
+}
+
 interface UseFigmaAPIResult {
-  data: any;
+  data: FigmaData | null;
   loading: boolean;
   error: string | null;
   fetchFigmaFile: (fileId: string) => Promise<void>;
 }
 
 export const useFigmaAPI = (): UseFigmaAPIResult => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<FigmaData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

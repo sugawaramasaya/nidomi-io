@@ -1,16 +1,26 @@
-import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import TagDeleteButton from "./TagDeleteButton";
 
-export default {
+const meta: Meta<typeof TagDeleteButton> = {
   component: TagDeleteButton,
   title: "Components/TagDeleteButton",
   tags: ["autodocs"],
 };
 
-export const Default = () => (
-  <TagDeleteButton label="タグ名" onClick={() => {}} />
-);
+const metaExport = meta;
+export default metaExport;
 
-export const Disabled = () => (
-  <TagDeleteButton label="タグ名" disabled onClick={() => {}} />
-);
+type Story = StoryObj<typeof TagDeleteButton>;
+
+export const Default: Story = {
+  args: {
+    label: "タグ名",
+  },
+};
+
+export const Disabled: Story = {
+  args: {
+    label: "タグ名",
+    disabled: true,
+  },
+};

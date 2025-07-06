@@ -59,11 +59,6 @@ export default function PostFABMenu({
     setIsOpen(false);
   };
 
-  // 修正①: 関数の引数に mode を追加
-  const handleGoToPost = (mode: "camera" | "gallery") => {
-    router.push(`/mypage/post?mode=${mode}`);
-  };
-
   return (
     <>
       {/* バックドロップ */}

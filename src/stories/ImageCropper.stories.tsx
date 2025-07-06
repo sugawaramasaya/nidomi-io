@@ -1,29 +1,19 @@
-import React, { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import ImageCropper from "../components/ImageCropper";
 
-const sampleImage = "/sample-cropper.jpg";
-
-export default {
-  title: "Components/ImageCropper",
+const meta: Meta<typeof ImageCropper> = {
   component: ImageCropper,
+  title: "Components/ImageCropper",
+  tags: ["autodocs"],
 };
 
-export const Default = () => {
-  const [open, setOpen] = useState(true);
+const metaExport = meta;
+export default metaExport;
 
-  if (!open) return <div>（完了 or キャンセルで非表示）</div>;
+type Story = StoryObj<typeof ImageCropper>;
 
-  return (
-    <ImageCropper
-      image={sampleImage}
-      onCropComplete={(file) => {
-        alert("トリミング完了: " + file.name);
-        setOpen(false);
-      }}
-      onCancel={() => {
-        alert("キャンセル");
-        setOpen(false);
-      }}
-    />
-  );
+export const Default: Story = {
+  args: {
+    image: "https://placehold.co/400x400?text=Sample+Image",
+  },
 };

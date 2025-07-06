@@ -1,12 +1,17 @@
-import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import PostForm from "../app/(me)/mypage/post/page";
 
-export default {
-  title: "Pages/PostForm",
+const meta: Meta<typeof PostForm> = {
   component: PostForm,
+  title: "Pages/PostForm",
   parameters: {
     layout: "fullscreen",
   },
 };
 
-export const Default = () => <PostForm />;
+const metaExport = meta;
+export default metaExport;
+
+type Story = StoryObj<typeof PostForm>;
+
+export const Default: Story = {};

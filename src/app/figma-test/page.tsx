@@ -6,7 +6,7 @@ interface FigmaData {
   name: string;
   lastModified: string;
   // 他の必要なプロパティ
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default function FigmaTestPage() {

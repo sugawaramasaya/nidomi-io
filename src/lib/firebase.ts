@@ -1,6 +1,6 @@
 // src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, User } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
@@ -26,6 +26,6 @@ export async function loginWithFirebase(idToken: string) {
   await signInWithCredential(auth, credential);
 }
 // Firebaseの認証状態を監視するための関数
-export function onAuthStateChanged(callback: (user: any) => void) {
+export function onAuthStateChanged(callback: (user: User | null) => void) {
   return auth.onAuthStateChanged(callback);
 }

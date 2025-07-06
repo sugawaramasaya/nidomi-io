@@ -34,7 +34,7 @@ export default function PostGridView({
             )}
             <div
               onPointerDown={(e) => {
-                let timeout = setTimeout(() => {
+                const timeout = setTimeout(() => {
                   onLongPress?.(post.id);
                 }, 500);
                 const cancel = () => clearTimeout(timeout);

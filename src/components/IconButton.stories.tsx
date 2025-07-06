@@ -1,13 +1,20 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import IconButton from "./IconButton";
-import CloseIcon from '../icons/size40/close.svg';
+import MenuIcon from "@/icons/size40/menu.svg";
 
-export default {
+const meta: Meta<typeof IconButton> = {
   component: IconButton,
   title: "Components/IconButton",
   tags: ["autodocs"],
 };
 
-export const Filled = () => <IconButton icon={<CloseIcon />} />;
-export const Disabled = () => <IconButton icon={<CloseIcon />} disabled />;
-export const Inverse = () => <IconButton icon={<CloseIcon />} variant="inverse" />;
-export const InverseDisabled = () => <IconButton icon={<CloseIcon />} variant="inverse" disabled />;
+const metaExport = meta;
+export default metaExport;
+
+type Story = StoryObj<typeof IconButton>;
+
+export const Default: Story = {
+  args: {
+    icon: <MenuIcon />,
+  },
+};

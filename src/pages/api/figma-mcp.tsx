@@ -44,8 +44,9 @@ export default async function handler(
         token
       );
       return res.status(200).json(data);
-    } catch (e: any) {
-      return res.status(500).json({ error: e.message });
+    } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : "Unknown error";
+      return res.status(500).json({ error: errorMessage });
     }
   }
 

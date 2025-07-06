@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { usePostImageStore } from "@/store/postImage";
 import { auth, db, storage } from "@/lib/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -15,9 +16,6 @@ import PlusIcon from "@/icons/size40/add.svg";
 import TagDialog from "./TagDialog";
 import ImageCropper from "@/components/ImageCropper";
 
-// 仮の画像URL
-const sampleImage = "/sample-cropper.png";
-
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -26,7 +24,8 @@ const PostForm = () => {
   const [isUploading, setIsUploading] = useState(false);
   const router = useRouter();
   const [user] = useAuthState(auth);
-  const { croppedImage, imageFile, setCroppedImage, setImageFile, clearAll } = usePostImageStore();
+  const { croppedImage, imageFile, setCroppedImage, setImageFile, clearAll } =
+    usePostImageStore();
 
   // トリミング完了時
   const handleCropComplete = (croppedFile: File) => {
@@ -79,7 +78,7 @@ const PostForm = () => {
 
       // 投稿後にstoreをクリア
       clearAll();
-      
+
       alert("投稿が完了しました！");
       router.push("/mypage");
     } catch (error) {
@@ -105,9 +104,11 @@ const PostForm = () => {
       {/* 画像エリア */}
       <div className="w-full flex-1 flex flex-col items-center justify-center relative pb-[24px]">
         {croppedImage ? (
-          <img
+          <Image
             src={croppedImage}
             alt="投稿画像"
+            width={480}
+            height={480}
             className="w-full max-w-[480px] aspect-square object-contain mx-auto"
           />
         ) : (
@@ -165,9 +166,9 @@ const PostForm = () => {
 
       {/* 投稿ボタン（下部固定） */}
       <FixedBottomContainer>
-        <Button 
-          variant="primary" 
-          fullWidth 
+        <Button
+          variant="primary"
+          fullWidth
           onClick={handlePost}
           disabled={isUploading || !croppedImage}
         >
@@ -177,8 +178,8 @@ const PostForm = () => {
 
       {/* タグ追加ダイアログ */}
       {showTagDialog && (
-        <TagDialog 
-          onClose={() => setShowTagDialog(false)} 
+        <TagDialog
+          onClose={() => setShowTagDialog(false)}
           onAddTags={(newTags) => {
             setTags(newTags);
             setShowTagDialog(false);
