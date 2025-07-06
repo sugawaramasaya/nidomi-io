@@ -1,7 +1,7 @@
 import React from "react";
 
 type IconButtonProps = {
-  icon: React.ReactElement<any, any>; // ← ここを修正
+  icon: React.ReactElement<{ style?: React.CSSProperties }>;
   variant?: "filled" | "inverse" | "fab";
   disabled?: boolean;
   size?: number; // px, default 40

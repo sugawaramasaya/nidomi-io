@@ -7,6 +7,7 @@ import FixedBottomContainer from "@/components/FixedBottomContainer";
 
 export default function VerifyCodePage() {
   const [code, setCode] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const router = useRouter();
 

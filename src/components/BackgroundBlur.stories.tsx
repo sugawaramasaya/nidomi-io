@@ -5,6 +5,56 @@ import Nidomy from "@/assets/nidomy/nidomy.png";
 import MenuIcon from "@/icons/size40/menu.svg";
 import CloseIcon from "@/icons/size40/close.svg";
 import Button from "./Button";
+import type { Meta, StoryObj } from "@storybook/react";
+
+const meta: Meta<typeof BackgroundBlur> = {
+  component: BackgroundBlur,
+  title: "Components/BackgroundBlur",
+  tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
+};
+
+const metaExport = meta;
+export default metaExport;
+
+type Story = StoryObj<typeof BackgroundBlur>;
+
+export const Default: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        backgroundImage: `url(${Nidomy.src})`,
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+      }}
+    >
+      <BackgroundBlur>
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 40,
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            paddingLeft: 16,
+            paddingRight: 16,
+            alignItems: "stretch",
+          }}
+        >
+          <Button fullWidth>ボタン1</Button>
+          <Button fullWidth>ボタン2</Button>
+        </div>
+      </BackgroundBlur>
+    </div>
+  ),
+};
 
 export const WithBackground = () => (
   <div
@@ -18,45 +68,6 @@ export const WithBackground = () => (
     }}
   >
     <BackgroundBlur />
-  </div>
-);
-
-export default {
-  component: BackgroundBlur,
-  title: "Components/BackgroundBlur",
-  tags: ["autodocs"],
-};
-
-export const Default = () => (
-  <div
-    style={{
-      width: "100vw",
-      height: "100vh",
-      backgroundImage: `url(${Nidomy.src})`,
-      position: "fixed",
-      inset: 0,
-      zIndex: 0,
-    }}
-  >
-    <BackgroundBlur>
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 40,
-          display: "flex",
-          flexDirection: "column",
-          gap: 20,
-          paddingLeft: 16,
-          paddingRight: 16,
-          alignItems: "stretch",
-        }}
-      >
-        <Button fullWidth>ボタン1</Button>
-        <Button fullWidth>ボタン2</Button>
-      </div>
-    </BackgroundBlur>
   </div>
 );
 

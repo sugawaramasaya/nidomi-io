@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import ImageCard from "../components/ImageCard";
 
 const meta = {

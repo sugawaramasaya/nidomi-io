@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
@@ -12,10 +12,28 @@ interface TagDialogProps {
   initialTags?: string[];
 }
 
-const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags = [] }) => {
+const TagDialog: React.FC<TagDialogProps> = ({
+  onClose,
+  onAddTags,
+  initialTags = [],
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
   const [tags, setTags] = useState<string[]>(initialTags);
+
+  // タグ追加処理
+  const handleAddTag = useCallback(() => {
+    if (!input.trim()) return;
+    // カンマ区切りで分割し、空白除去・重複排除
+    const newTags = input
+      .split(",")
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0 && !tags.includes(t));
+    if (newTags.length === 0) return;
+    setTags([...tags, ...newTags]);
+    setInput("");
+    inputRef.current?.focus();
+  }, [input, tags]);
 
   useEffect(() => {
     const input = inputRef.current;
@@ -30,29 +48,7 @@ const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags =
       input.addEventListener("keydown", handleKeyDown);
       return () => input.removeEventListener("keydown", handleKeyDown);
     }
-  }, [inputRef, input]);
-
-  // タグ追加処理
-  const handleAddTag = () => {
-    if (!input.trim()) return;
-    // カンマ区切りで分割し、空白除去・重複排除
-    const newTags = input
-      .split(",")
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0 && !tags.includes(t));
-    if (newTags.length === 0) return;
-    setTags([...tags, ...newTags]);
-    setInput("");
-    inputRef.current?.focus();
-  };
-
-  // Enterキーで追加
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleAddTag();
-    }
-  };
+  }, [inputRef, handleAddTag]);
 
   // タグ削除
   const handleDeleteTag = (tag: string) => {
@@ -100,7 +96,7 @@ const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags =
           onClick={() => {
             // 最終的なタグリストを計算
             let finalTags = [...tags];
-            
+
             // 入力中のタグがあれば追加
             if (input.trim()) {
               const newTags = input
@@ -109,7 +105,7 @@ const TagDialog: React.FC<TagDialogProps> = ({ onClose, onAddTags, initialTags =
                 .filter((t) => t.length > 0 && !finalTags.includes(t));
               finalTags = [...finalTags, ...newTags];
             }
-            
+
             // 全てのタグを親コンポーネントに渡す
             onAddTags?.(finalTags);
             // ダイアログを閉じる

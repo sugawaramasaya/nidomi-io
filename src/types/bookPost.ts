@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface BookPost {
   id: string;
   imageUrls: string[];
@@ -5,5 +7,5 @@ export interface BookPost {
   comment: string;
   tags?: string[];
   userId: string;
-  createdAt?: any; // Timestamp型でもOK
+  createdAt?: Timestamp;
 }

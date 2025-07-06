@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import VerifyCodePage from "@/app/(auth)/verify-code/page";
 
 const meta = {

@@ -1,10 +1,20 @@
-import IconButton from "./IconButton";
-import MenuIcon from '../icons/size40/menu.svg';
+import type { Meta, StoryObj } from "@storybook/react";
+import FAB from "./FAB";
+import AddIcon from "@/icons/size40/add.svg";
 
-export default {
-  component: IconButton,
-  title: "Components/IconButton",
+const meta: Meta<typeof FAB> = {
+  component: FAB,
+  title: "Components/FAB",
   tags: ["autodocs"],
 };
 
-export const Fab = () => <IconButton icon={<MenuIcon />} variant="fab" />;
+const metaExport = meta;
+export default metaExport;
+
+type Story = StoryObj<typeof FAB>;
+
+export const Default: Story = {
+  args: {
+    icon: <AddIcon />,
+  },
+};

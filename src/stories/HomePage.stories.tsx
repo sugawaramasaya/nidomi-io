@@ -1,4 +1,3 @@
-import { Meta } from "@storybook/react";
 import HomePage from "../app/(me)/home/page";
 
 const meta = {

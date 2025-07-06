@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const accessToken = process.env.FIGMA_ACCESS_TOKEN;
   const fileId = "pjwYh0evbCR17YmoGEy8VH";
 
