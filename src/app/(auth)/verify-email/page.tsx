@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { auth } from "@/lib/firebase";
 import { sendEmailVerification, reload } from "firebase/auth";
 import Button from "@/components/Button";
-import FixedBottomContainer from "@/components/FixedBottomContainer";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -116,7 +115,7 @@ export default function VerifyEmailPage() {
                 メールが届かない場合は、迷惑メールフォルダもご確認ください。
               </p>
               <Button
-                variant="outline"
+                variant="secondary"
                 onClick={handleResendEmail}
                 disabled={isLoading}
               >
