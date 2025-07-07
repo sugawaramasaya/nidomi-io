@@ -105,46 +105,48 @@ export const WithIcons: Story = {
   ),
 };
 
-export const ClickToClose: Story = {
-  render: () => {
-    const [open, setOpen] = React.useState(true);
-    return open ? (
-      <div
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundImage: `url(${Nidomy.src})`,
-          position: "fixed",
-          inset: 0,
-          zIndex: 0,
-        }}
-      >
-        <BackgroundBlur onClick={() => setOpen(false)}>
-          <div
+const ClickToCloseComponent = () => {
+  const [open, setOpen] = React.useState(true);
+  return open ? (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        backgroundImage: `url(${Nidomy.src})`,
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+      }}
+    >
+      <BackgroundBlur onClick={() => setOpen(false)}>
+        <div
+          style={{
+            background: "#fff",
+            borderRadius: 16,
+            padding: 32,
+            boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
+          }}
+        >
+          <h2
             style={{
-              background: "#fff",
-              borderRadius: 16,
-              padding: 32,
-              boxShadow: "0 4px 32px rgba(0,0,0,0.12)",
+              color: "#222",
+              fontWeight: "var(--font-weight-bold)",
+              fontSize: 24,
             }}
           >
-            <h2
-              style={{
-                color: "#222",
-                fontWeight: "var(--font-weight-bold)",
-                fontSize: 24,
-              }}
-            >
-              クリックで閉じる
-            </h2>
-            <p style={{ color: "#444", marginTop: 16 }}>
-              背景をクリックすると消えます。
-            </p>
-          </div>
-        </BackgroundBlur>
-      </div>
-    ) : (
-      <button onClick={() => setOpen(true)}>再表示</button>
-    );
-  },
+            クリックで閉じる
+          </h2>
+          <p style={{ color: "#444", marginTop: 16 }}>
+            背景をクリックすると消えます。
+          </p>
+        </div>
+      </BackgroundBlur>
+    </div>
+  ) : (
+    <button onClick={() => setOpen(true)}>再表示</button>
+  );
+};
+
+export const ClickToClose: Story = {
+  render: () => <ClickToCloseComponent />,
 };

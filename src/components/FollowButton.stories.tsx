@@ -11,43 +11,49 @@ export default meta;
 
 type Story = StoryObj<typeof FollowButton>;
 
+const FollowButtonWithState = (args: any) => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <FollowButton
+      {...args}
+      checked={checked}
+      onClick={() => setChecked((v: boolean) => !v)}
+    />
+  );
+};
+
+const FollowButtonWithStateLarge = (args: any) => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <FollowButton
+      {...args}
+      checked={checked}
+      onClick={() => setChecked((v: boolean) => !v)}
+      size="large"
+    />
+  );
+};
+
+const FollowButtonWithStateMedium = (args: any) => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <FollowButton
+      {...args}
+      checked={checked}
+      onClick={() => setChecked((v: boolean) => !v)}
+      size="medium"
+    />
+  );
+};
+
 export const Default: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(false);
-    return (
-      <FollowButton
-        {...args}
-        checked={checked}
-        onClick={() => setChecked((v: boolean) => !v)}
-      />
-    );
-  },
+  render: (args) => <FollowButtonWithState {...args} />,
 };
 
 export const ToggleLarge: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(false);
-    return (
-      <FollowButton
-        {...args}
-        checked={checked}
-        onClick={() => setChecked((v: boolean) => !v)}
-        size="large"
-      />
-    );
-  },
+  render: (args) => <FollowButtonWithStateLarge {...args} />,
 };
 
 export const ToggleMedium: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(false);
-    return (
-      <FollowButton
-        {...args}
-        checked={checked}
-        onClick={() => setChecked((v: boolean) => !v)}
-        size="medium"
-      />
-    );
-  },
+  render: (args) => <FollowButtonWithStateMedium {...args} />,
 };

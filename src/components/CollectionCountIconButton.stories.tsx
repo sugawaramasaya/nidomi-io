@@ -11,6 +11,19 @@ export default meta;
 
 type Story = StoryObj<typeof CollectionCountIconButton>;
 
+const CollectionCountIconButtonWithState = (args: any) => {
+  const [checked, setChecked] = useState(false);
+  const count = checked ? 1 : 0;
+  return (
+    <CollectionCountIconButton
+      {...args}
+      checked={checked}
+      count={count}
+      onClick={() => setChecked((v) => !v)}
+    />
+  );
+};
+
 export const Default: Story = {
   args: {
     count: 42,
@@ -18,16 +31,5 @@ export const Default: Story = {
 };
 
 export const Toggle: Story = {
-  render: (args) => {
-    const [checked, setChecked] = useState(false);
-    const count = checked ? 1 : 0;
-    return (
-      <CollectionCountIconButton
-        {...args}
-        checked={checked}
-        count={count}
-        onClick={() => setChecked((v) => !v)}
-      />
-    );
-  },
+  render: (args) => <CollectionCountIconButtonWithState {...args} />,
 };
