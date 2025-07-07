@@ -14,6 +14,6 @@ type Story = StoryObj<typeof TagDialog>;
 
 export const Default: Story = {
   args: {
-    initialTags: ["タグ1", "タグ2", "タグ3"],
+    initialTags: [],
   },
 };

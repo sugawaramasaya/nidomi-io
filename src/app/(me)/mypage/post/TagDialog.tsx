@@ -59,7 +59,7 @@ const TagDialog: React.FC<TagDialogProps> = ({
   const handleClose = onClose || (() => {});
 
   return (
-    <div className="fixed inset-0 z-50 bg-[var(--surface)] flex flex-col min-h-screen w-full max-w-[480px] mx-auto  gap-[24px]">
+    <div className="fixed inset-0 z-[100] bg-[var(--surface)] flex flex-col min-h-screen w-full max-w-[480px] mx-auto  gap-[24px]">
       {/* 閉じるボタン */}
       <div className="h-[64px] flex items-center px-[16px]">
         <IconButton icon={<CloseIcon />} onClick={handleClose} />
