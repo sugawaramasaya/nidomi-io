@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import FixedBottomContainer from "@/components/FixedBottomContainer";
+import { registerWithEmail, loginWithEmail } from "@/lib/firebase";
 
 interface AuthFormProps {
   isLogin?: boolean;
@@ -30,11 +31,67 @@ export default function AuthForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailFocused, setEmailFocused] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  const isFormValid = isEmailValid && password.length > 0;
+  const isFormValid = isEmailValid && password.length >= 6;
 
   const label = buttonLabel || (isLogin ? "ログイン" : "新規登録");
+
+  const handleSubmit = async () => {
+    if (!isFormValid) return;
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      if (isLogin) {
+        // ログイン処理
+        const result = await loginWithEmail(email, password);
+        if (result.success) {
+          console.log("✅ ログイン成功:", result.user?.email);
+          router.push("/home");
+        } else {
+          setError(getErrorMessage(result.code));
+        }
+      } else {
+        // 新規登録処理
+        const result = await registerWithEmail(email, password);
+        if (result.success) {
+          console.log("✅ 新規登録成功:", result.user?.email);
+          // メール認証の確認ページに遷移
+          router.push("/verify-email");
+        } else {
+          setError(getErrorMessage(result.code));
+        }
+      }
+    } catch (error) {
+      console.error("認証エラー:", error);
+      setError("予期しないエラーが発生しました。しばらく後でお試しください。");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getErrorMessage = (code: string | undefined) => {
+    switch (code) {
+      case "auth/email-already-in-use":
+        return "このメールアドレスは既に使用されています。";
+      case "auth/invalid-email":
+        return "メールアドレスの形式が正しくありません。";
+      case "auth/weak-password":
+        return "パスワードは6文字以上で入力してください。";
+      case "auth/user-not-found":
+        return "このメールアドレスは登録されていません。";
+      case "auth/wrong-password":
+        return "パスワードが間違っています。";
+      case "auth/invalid-credential":
+        return "メールアドレスまたはパスワードが正しくありません。";
+      default:
+        return "エラーが発生しました。しばらく後でお試しください。";
+    }
+  };
 
   return (
     <div className="h-screen overflow-y-hidden flex flex-col items-center">
@@ -56,6 +113,7 @@ export default function AuthForm({
               }
               onFocus={() => setEmailFocused(true)}
               onBlur={() => setEmailFocused(false)}
+              disabled={isLoading}
             />
             <TextField
               label="パスワード"
@@ -63,28 +121,30 @@ export default function AuthForm({
               value={password}
               onChange={setPassword}
               variant="password"
-              autoComplete="new-password"
+              autoComplete={isLogin ? "current-password" : "new-password"}
+              error={password.length > 0 && password.length < 6}
+              errorMessage={
+                password.length > 0 && password.length < 6
+                  ? "パスワードは6文字以上で入力してください"
+                  : ""
+              }
+              disabled={isLoading}
             />
+            {error && (
+              <div className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-md">
+                {error}
+              </div>
+            )}
           </div>
         </div>
         <FixedBottomContainer withKeyboardAware>
           <Button
             fullWidth
             variant="primary"
-            disabled={!isFormValid}
-            onClick={() => {
-              if (isLogin) {
-                // ログイン処理
-                console.log("Logging in with email:", email);
-                router.push("/home");
-              } else {
-                // 新規登録処理
-                console.log("Registering with email:", email);
-                router.push("/verify-code");
-              }
-            }}
+            disabled={!isFormValid || isLoading}
+            onClick={handleSubmit}
           >
-            {label}
+            {isLoading ? "処理中..." : label}
           </Button>
         </FixedBottomContainer>
       </div>
