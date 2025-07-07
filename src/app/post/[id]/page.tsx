@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import PostDetailView from "@/components/PostDetailView";
 import { BookPost } from "@/types/bookPost";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { Timestamp } from "firebase/firestore";
 
 interface PostDetailPageProps {
   params: {
@@ -10,24 +9,22 @@ interface PostDetailPageProps {
   };
 }
 
-// 投稿データを取得する関数
+// 投稿データを取得する関数（一時的にモックデータを返す）
 async function getPost(id: string): Promise<BookPost | null> {
   try {
-    const postDoc = await getDoc(doc(db, "posts", id));
-    if (!postDoc.exists()) {
-      return null;
-    }
-    
-    const data = postDoc.data();
-    return {
-      id: postDoc.id,
-      imageUrls: data.imageUrls || [],
-      title: data.title || "",
-      comment: data.comment || "",
-      tags: data.tags || [],
-      userId: data.userId || "",
-      createdAt: data.createdAt,
+    // 実際の開発環境では、ここでFirebaseからデータを取得
+    // 現在は一時的にモックデータを返す
+    const mockPost: BookPost = {
+      id: id,
+      imageUrls: ["https://via.placeholder.com/480x480?text=Sample+Image"],
+      title: "サンプル投稿",
+      comment: "これはテスト用の投稿です。",
+      tags: ["テスト", "サンプル"],
+      userId: "test-user",
+      createdAt: Timestamp.now(),
     };
+    
+    return mockPost;
   } catch (error) {
     console.error("Error fetching post:", error);
     return null;
