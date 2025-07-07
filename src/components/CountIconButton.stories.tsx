@@ -11,7 +11,16 @@ export default meta;
 
 type Story = StoryObj<typeof CountIconButton>;
 
-const CountIconButtonWithState = (args: any) => {
+type CountIconButtonProps = {
+  checked: boolean;
+  count: number;
+  disabled?: boolean;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
+
+const CountIconButtonWithState = (args: CountIconButtonProps) => {
   const [checked, setChecked] = useState(false);
   const count = checked ? 1 : 0;
   return (

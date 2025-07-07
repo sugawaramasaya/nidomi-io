@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import FollowButton from "./FollowButton";
+import FollowButton, { FollowButtonProps } from "./FollowButton";
 
 const meta: Meta<typeof FollowButton> = {
   component: FollowButton,
@@ -11,7 +11,7 @@ export default meta;
 
 type Story = StoryObj<typeof FollowButton>;
 
-const FollowButtonWithState = (args: any) => {
+const FollowButtonWithState = (args: FollowButtonProps) => {
   const [checked, setChecked] = useState(false);
   return (
     <FollowButton
@@ -22,7 +22,7 @@ const FollowButtonWithState = (args: any) => {
   );
 };
 
-const FollowButtonWithStateLarge = (args: any) => {
+const FollowButtonWithStateLarge = (args: FollowButtonProps) => {
   const [checked, setChecked] = useState(false);
   return (
     <FollowButton
@@ -34,7 +34,7 @@ const FollowButtonWithStateLarge = (args: any) => {
   );
 };
 
-const FollowButtonWithStateMedium = (args: any) => {
+const FollowButtonWithStateMedium = (args: FollowButtonProps) => {
   const [checked, setChecked] = useState(false);
   return (
     <FollowButton
