@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import Checkbox from "./Checkbox";
+import Checkbox, { Checkbox as CheckboxProps } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
@@ -11,17 +11,17 @@ export default meta;
 
 type Story = StoryObj<typeof Checkbox>;
 
-const CheckboxWithState = (args: any) => {
+const CheckboxWithState = (args: CheckboxProps) => {
   const [checked, setChecked] = useState(false);
   return <Checkbox {...args} checked={checked} onChange={setChecked} />;
 };
 
-const CheckboxWithStateChecked = (args: any) => {
+const CheckboxWithStateChecked = (args: CheckboxProps) => {
   const [checked, setChecked] = useState(true);
   return <Checkbox {...args} checked={checked} onChange={setChecked} />;
 };
 
-const CheckboxWithStateDisabled = (args: any) => {
+const CheckboxWithStateDisabled = (args: CheckboxProps) => {
   const [checked, setChecked] = useState(false);
   return (
     <Checkbox {...args} checked={checked} onChange={setChecked} disabled />

@@ -11,7 +11,16 @@ export default meta;
 
 type Story = StoryObj<typeof CollectionCountIconButton>;
 
-const CollectionCountIconButtonWithState = (args: any) => {
+type CollectionCountIconButtonProps = {
+  checked: boolean;
+  count: number;
+  disabled?: boolean;
+  className?: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
+
+const CollectionCountIconButtonWithState = (args: CollectionCountIconButtonProps) => {
   const [checked, setChecked] = useState(false);
   const count = checked ? 1 : 0;
   return (
