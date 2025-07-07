@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import CountIconButton from "./CountIconButton";
 
@@ -6,14 +7,27 @@ const meta: Meta<typeof CountIconButton> = {
   title: "Components/CountIconButton",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof CountIconButton>;
 
 export const Default: Story = {
   args: {
     count: 42,
+  },
+};
+
+export const Toggle: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    const count = checked ? 1 : 0;
+    return (
+      <CountIconButton
+        {...args}
+        checked={checked}
+        count={count}
+        onClick={() => setChecked((v) => !v)}
+      />
+    );
   },
 };

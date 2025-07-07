@@ -6,9 +6,7 @@ const meta: Meta<typeof ImageCropper> = {
   title: "Components/ImageCropper",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof ImageCropper>;
 

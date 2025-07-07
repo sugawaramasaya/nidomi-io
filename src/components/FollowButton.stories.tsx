@@ -7,31 +7,47 @@ const meta: Meta<typeof FollowButton> = {
   title: "Components/FollowButton",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof FollowButton>;
 
-const FollowButtonWithState = ({ ...args }) => {
-  const [checked, setChecked] = useState(false);
-  return (
-    <FollowButton
-      {...args}
-      checked={checked}
-      onClick={() => setChecked((v: boolean) => !v)}
-    />
-  );
-};
-
 export const Default: Story = {
-  render: (args) => <FollowButtonWithState {...args} />,
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <FollowButton
+        {...args}
+        checked={checked}
+        onClick={() => setChecked((v: boolean) => !v)}
+      />
+    );
+  },
 };
 
 export const ToggleLarge: Story = {
-  render: (args) => <FollowButtonWithState {...args} size="large" />,
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <FollowButton
+        {...args}
+        checked={checked}
+        onClick={() => setChecked((v: boolean) => !v)}
+        size="large"
+      />
+    );
+  },
 };
 
 export const ToggleMedium: Story = {
-  render: (args) => <FollowButtonWithState {...args} size="medium" />,
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <FollowButton
+        {...args}
+        checked={checked}
+        onClick={() => setChecked((v: boolean) => !v)}
+        size="medium"
+      />
+    );
+  },
 };

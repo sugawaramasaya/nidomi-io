@@ -7,9 +7,7 @@ const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof IconButton>;
 

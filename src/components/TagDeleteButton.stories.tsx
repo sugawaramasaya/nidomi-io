@@ -6,9 +6,7 @@ const meta: Meta<typeof TagDeleteButton> = {
   title: "Components/TagDeleteButton",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof TagDeleteButton>;
 

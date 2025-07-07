@@ -7,37 +7,29 @@ const meta: Meta<typeof Checkbox> = {
   title: "Components/Checkbox",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof Checkbox>;
 
-const CheckboxWithState = ({ ...args }) => {
-  const [checked, setChecked] = useState(false);
-  return <Checkbox {...args} checked={checked} onChange={setChecked} />;
-};
-
-const CheckboxWithStateChecked = ({ ...args }) => {
-  const [checked, setChecked] = useState(true);
-  return <Checkbox {...args} checked={checked} onChange={setChecked} />;
-};
-
-const CheckboxWithStateDisabled = ({ ...args }) => {
-  const [checked, setChecked] = useState(false);
-  return (
-    <Checkbox {...args} checked={checked} onChange={setChecked} disabled />
-  );
-};
-
 export const Default: Story = {
-  render: (args) => <CheckboxWithState {...args} />,
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
+  },
 };
 
 export const Checked: Story = {
-  render: (args) => <CheckboxWithStateChecked {...args} />,
+  render: (args) => {
+    const [checked, setChecked] = useState(true);
+    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
+  },
 };
 
 export const Disabled: Story = {
-  render: (args) => <CheckboxWithStateDisabled {...args} />,
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    return (
+      <Checkbox {...args} checked={checked} onChange={setChecked} disabled />
+    );
+  },
 };

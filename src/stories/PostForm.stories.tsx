@@ -8,9 +8,7 @@ const meta: Meta<typeof PostForm> = {
     layout: "fullscreen",
   },
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof PostForm>;
 

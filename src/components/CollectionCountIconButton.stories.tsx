@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import CollectionCountIconButton from "./CollectionCountIconButton";
 
@@ -6,14 +7,27 @@ const meta: Meta<typeof CollectionCountIconButton> = {
   title: "Components/CollectionCountIconButton",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof CollectionCountIconButton>;
 
 export const Default: Story = {
   args: {
     count: 42,
+  },
+};
+
+export const Toggle: Story = {
+  render: (args) => {
+    const [checked, setChecked] = useState(false);
+    const count = checked ? 1 : 0;
+    return (
+      <CollectionCountIconButton
+        {...args}
+        checked={checked}
+        count={count}
+        onClick={() => setChecked((v) => !v)}
+      />
+    );
   },
 };

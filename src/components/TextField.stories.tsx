@@ -7,96 +7,137 @@ const meta: Meta<typeof TextField> = {
   title: "Components/TextField",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof TextField>;
 
-const TextFieldWithState = ({
-  label,
-  ...args
-}: {
-  label: string;
-  [key: string]: unknown;
-}) => {
-  const [value, setValue] = useState("");
-  return (
-    <TextField {...args} label={label} value={value} onChange={setValue} />
-  );
-};
-
 export const Default: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "ラベル",
-    placeholder: "プレースホルダー",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="ラベル"
+        value={value}
+        onChange={setValue}
+        placeholder="プレースホルダー"
+      />
+    );
   },
 };
 
 export const WithHelper: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "ユーザー名",
-    helperText: "32文字以内",
-    maxLength: 32,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="ユーザー名"
+        value={value}
+        onChange={setValue}
+        helperText="32文字以内"
+        maxLength={32}
+      />
+    );
   },
 };
 
 export const WithCounterOnly: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "ニックネーム",
-    maxLength: 16,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="ニックネーム"
+        value={value}
+        onChange={setValue}
+        maxLength={16}
+      />
+    );
   },
 };
 
 export const Error: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "パスワード",
-    error: true,
-    errorMessage: "8文字以上で入力してください",
-    maxLength: 16,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="パスワード"
+        value={value}
+        onChange={setValue}
+        error
+        errorMessage="8文字以上で入力してください"
+        maxLength={16}
+      />
+    );
   },
 };
 
 export const ErrorMessageOnly: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "パスワード",
-    error: true,
-    errorMessage: "8文字以上で入力してください",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="パスワード"
+        value={value}
+        onChange={setValue}
+        error
+        errorMessage="8文字以上で入力してください"
+      />
+    );
   },
 };
 
 export const Disabled: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "メールアドレス",
-    disabled: true,
-    helperText: "入力できません",
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="メールアドレス"
+        value={value}
+        onChange={setValue}
+        disabled
+        helperText="入力できません"
+      />
+    );
   },
 };
 
 export const ErrorWithCounterOnly: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "パスワード",
-    variant: "password",
-    error: true,
-    errorMessage: undefined,
-    maxLength: 16,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="パスワード"
+        variant="password"
+        value={value}
+        onChange={setValue}
+        error
+        errorMessage={undefined}
+        maxLength={16}
+      />
+    );
   },
 };
 
 export const ErrorWithCounterOnlyMaxLength40: Story = {
-  render: (args) => <TextFieldWithState {...args} />,
-  args: {
-    label: "パスワード",
-    variant: "password",
-    error: true,
-    errorMessage: undefined,
-    maxLength: 40,
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextField
+        {...args}
+        label="パスワード"
+        variant="password"
+        value={value}
+        onChange={setValue}
+        error
+        errorMessage={undefined}
+        maxLength={40}
+      />
+    );
   },
 };

@@ -6,9 +6,7 @@ const meta: Meta<typeof TagList> = {
   title: "Components/TagList",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof TagList>;
 

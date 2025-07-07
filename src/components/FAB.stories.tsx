@@ -7,9 +7,7 @@ const meta: Meta<typeof FAB> = {
   title: "Components/FAB",
   tags: ["autodocs"],
 };
-
-const metaExport = meta;
-export default metaExport;
+export default meta;
 
 type Story = StoryObj<typeof FAB>;
 
