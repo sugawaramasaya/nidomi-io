@@ -1,7 +1,10 @@
 // components/PostGridView.tsx
+'use client';
+
 import { BookPost } from "@/types/bookPost";
 import ImageCard from "@/components/ImageCard";
 import Checkbox from "@/components/Checkbox";
+import { useRouter } from "next/navigation";
 
 interface Props {
   posts: BookPost[];
@@ -18,6 +21,14 @@ export default function PostGridView({
   onLongPress,
   onToggleSelect,
 }: Props) {
+  const router = useRouter();
+
+  const handlePostClick = (postId: string) => {
+    if (!isSelecting) {
+      router.push(`/post/${postId}`);
+    }
+  };
+
   return (
     <div className="grid grid-cols-3 sm:grid-cols-4 gap-0">
       {posts.map((post) => {
@@ -45,6 +56,8 @@ export default function PostGridView({
                   once: true,
                 });
               }}
+              onClick={() => handlePostClick(post.id)}
+              className="cursor-pointer"
             >
               <ImageCard src={post.imageUrls[0]} />
             </div>
